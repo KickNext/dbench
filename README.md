@@ -64,21 +64,21 @@ Completed adapters only. Bars are linear and normalized within each CI environme
 ### web
 | Rank | Family | Database | Ops/sec | Relative to fastest |
 | ---: | --- | --- | ---: | --- |
-| 1 | Key-value baseline | memory_baseline | 259740 | `########################` 100.0% |
-| 2 | Key-value baseline | shared_preferences | 33755 | `###.....................` 13.0% |
-| 3 | Key-value baseline | hive_ce | 1803 | `#.......................` 0.7% |
-| 4 | NoSQL | sembast | 814 | `#.......................` 0.3% |
-| 5 | Key-value baseline | get_storage | 613 | `#.......................` 0.2% |
+| 1 | Key-value baseline | memory_baseline | 283708 | `########################` 100.0% |
+| 2 | Key-value baseline | shared_preferences | 39604 | `###.....................` 14.0% |
+| 3 | Key-value baseline | hive_ce | 1806 | `#.......................` 0.6% |
+| 4 | NoSQL | sembast | 1019 | `#.......................` 0.4% |
+| 5 | Key-value baseline | get_storage | 537 | `#.......................` 0.2% |
 
 ### windows
 | Rank | Family | Database | Ops/sec | Relative to fastest |
 | ---: | --- | --- | ---: | --- |
-| 1 | Key-value baseline | memory_baseline | 67789 | `########################` 100.0% |
-| 2 | Key-value baseline | get_storage | 36518 | `#############...........` 53.9% |
-| 3 | Key-value baseline | hive_ce | 870 | `#.......................` 1.3% |
-| 4 | Key-value baseline | shared_preferences | 279 | `#.......................` 0.4% |
-| 5 | NoSQL | sembast | 191 | `#.......................` 0.3% |
-| 6 | SQL | sqflite_common_ffi | 23 | `#.......................` 0.0% |
+| 1 | Key-value baseline | memory_baseline | 94556 | `########################` 100.0% |
+| 2 | Key-value baseline | get_storage | 39619 | `##########..............` 41.9% |
+| 3 | Key-value baseline | hive_ce | 490 | `#.......................` 0.5% |
+| 4 | Key-value baseline | shared_preferences | 315 | `#.......................` 0.3% |
+| 5 | NoSQL | sembast | 106 | `#.......................` 0.1% |
+| 6 | SQL | sqflite_common_ffi | 12 | `#.......................` 0.0% |
 <!-- DBENCH:CI_VISUALIZATION:end -->
 
 ## Results
@@ -86,18 +86,18 @@ Completed adapters only. Bars are linear and normalized within each CI environme
 <!-- DBENCH:BENCHMARK_RESULTS:start -->
 | Environment | Family | Database | Status | Records | Payload | Total ops | Ops/sec | Notes |
 | --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- |
-| web | Key-value baseline | memory_baseline | completed | 1000 | 256 | 4000 | 259740 |  |
-| web | Key-value baseline | shared_preferences | completed | 1000 | 256 | 4000 | 33755 |  |
-| web | Key-value baseline | get_storage | completed | 1000 | 256 | 4000 | 613 |  |
-| web | Key-value baseline | hive_ce | completed | 1000 | 256 | 4000 | 1803 |  |
-| web | NoSQL | sembast | completed | 1000 | 256 | 4000 | 814 |  |
+| web | Key-value baseline | memory_baseline | completed | 1000 | 256 | 4000 | 283708 |  |
+| web | Key-value baseline | shared_preferences | completed | 1000 | 256 | 4000 | 39604 |  |
+| web | Key-value baseline | get_storage | completed | 1000 | 256 | 4000 | 537 |  |
+| web | Key-value baseline | hive_ce | completed | 1000 | 256 | 4000 | 1806 |  |
+| web | NoSQL | sembast | completed | 1000 | 256 | 4000 | 1019 |  |
 | web | SQL | sqflite_sqlite | skipped | 1000 | 256 | 0 | 0 | SQLite adapter is not available on this target. |
-| windows | Key-value baseline | memory_baseline | completed | 1000 | 256 | 4000 | 67789 |  |
-| windows | Key-value baseline | shared_preferences | completed | 1000 | 256 | 4000 | 279 |  |
-| windows | Key-value baseline | get_storage | completed | 1000 | 256 | 4000 | 36518 |  |
-| windows | Key-value baseline | hive_ce | completed | 1000 | 256 | 4000 | 870 |  |
-| windows | NoSQL | sembast | completed | 1000 | 256 | 4000 | 191 |  |
-| windows | SQL | sqflite_common_ffi | completed | 1000 | 256 | 4000 | 23 |  |
+| windows | Key-value baseline | memory_baseline | completed | 1000 | 256 | 4000 | 94556 |  |
+| windows | Key-value baseline | shared_preferences | completed | 1000 | 256 | 4000 | 315 |  |
+| windows | Key-value baseline | get_storage | completed | 1000 | 256 | 4000 | 39619 |  |
+| windows | Key-value baseline | hive_ce | completed | 1000 | 256 | 4000 | 490 |  |
+| windows | NoSQL | sembast | completed | 1000 | 256 | 4000 | 106 |  |
+| windows | SQL | sqflite_common_ffi | completed | 1000 | 256 | 4000 | 12 |  |
 <!-- DBENCH:BENCHMARK_RESULTS:end -->
 
 ## Isolate Behavior
