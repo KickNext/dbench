@@ -68,18 +68,18 @@ The Android device name is recorded as hardware metadata only. It is not used as
 | android | hive_ce | completed | 1000 | 256 | 4000 | 294 |  |
 | android | sembast | completed | 1000 | 256 | 4000 | 85 |  |
 | android | sqflite | completed | 1000 | 256 | 4000 | 235 |  |
-| web | memory_baseline | completed | 1000 | 256 | 4000 | 380952 |  |
-| web | shared_preferences | completed | 1000 | 256 | 4000 | 44843 |  |
-| web | get_storage | completed | 1000 | 256 | 4000 | 612 |  |
-| web | hive_ce | completed | 1000 | 256 | 4000 | 2349 |  |
-| web | sembast | completed | 1000 | 256 | 4000 | 932 |  |
+| web | memory_baseline | completed | 1000 | 256 | 4000 | 322555 |  |
+| web | shared_preferences | completed | 1000 | 256 | 4000 | 37418 |  |
+| web | get_storage | completed | 1000 | 256 | 4000 | 550 |  |
+| web | hive_ce | completed | 1000 | 256 | 4000 | 1803 |  |
+| web | sembast | completed | 1000 | 256 | 4000 | 993 |  |
 | web | sqflite_sqlite | skipped | 1000 | 256 | 0 | 0 | SQLite adapter is not available on this target. |
-| windows | memory_baseline | completed | 1000 | 256 | 4000 | 89411 |  |
-| windows | shared_preferences | completed | 1000 | 256 | 4000 | 233 |  |
-| windows | get_storage | completed | 1000 | 256 | 4000 | 30833 |  |
-| windows | hive_ce | completed | 1000 | 256 | 4000 | 349 |  |
-| windows | sembast | completed | 1000 | 256 | 4000 | 141 |  |
-| windows | sqflite_common_ffi | completed | 1000 | 256 | 4000 | 54 |  |
+| windows | memory_baseline | completed | 1000 | 256 | 4000 | 91910 |  |
+| windows | shared_preferences | completed | 1000 | 256 | 4000 | 246 |  |
+| windows | get_storage | completed | 1000 | 256 | 4000 | 36379 |  |
+| windows | hive_ce | completed | 1000 | 256 | 4000 | 1437 |  |
+| windows | sembast | completed | 1000 | 256 | 4000 | 321 |  |
+| windows | sqflite_common_ffi | completed | 1000 | 256 | 4000 | 45 |  |
 <!-- DBENCH:BENCHMARK_RESULTS:end -->
 
 ## Running Locally
