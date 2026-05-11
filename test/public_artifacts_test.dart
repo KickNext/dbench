@@ -62,6 +62,29 @@ void main() {
     expect(packageNames.difference(adapterCoverageNames()), isEmpty);
   });
 
+  test('pub.dev database catalog is fully covered by benchmark adapters', () {
+    final catalog =
+        (jsonDecode(
+                  File('data/pubdev_database_catalog.json').readAsStringSync(),
+                )
+                as List)
+            .cast<Map<String, Object?>>();
+    final packages =
+        (jsonDecode(File('data/package_matrix.json').readAsStringSync())
+                as List)
+            .cast<Map<String, Object?>>();
+    final matrixNames = packages
+        .map((package) => '${package['package']}')
+        .toSet();
+    final databaseNames = catalog
+        .where((entry) => entry['scope'] == 'database')
+        .map((entry) => '${entry['package']}')
+        .toSet();
+
+    expect(databaseNames.difference(matrixNames), isEmpty);
+    expect(databaseNames.difference(adapterCoverageNames()), isEmpty);
+  });
+
   test('HTML report exposes sortable tables', () {
     final html = File('docs/results.html').readAsStringSync();
 

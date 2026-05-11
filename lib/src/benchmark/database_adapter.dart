@@ -26,8 +26,12 @@ List<BenchmarkScenario> defaultBenchmarkScenarios({
   required int baseRecords,
   required int basePayloadBytes,
 }) {
-  final smallRecords = (baseRecords / 4).round().clamp(25, baseRecords);
-  final stressRecords = (baseRecords * 2).clamp(baseRecords, 10000);
+  final smallRecords = baseRecords <= 25
+      ? baseRecords
+      : (baseRecords / 4).round().clamp(25, baseRecords);
+  final stressRecords = baseRecords >= 10000
+      ? baseRecords
+      : (baseRecords * 2).clamp(baseRecords, 10000);
   return [
     BenchmarkScenario(
       name: 'crud_balanced',

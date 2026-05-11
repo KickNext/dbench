@@ -3,6 +3,20 @@ import 'package:flutter_database_benchmarks/src/benchmark/database_adapter.dart'
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('default scenarios support smoke-sized record counts', () {
+    final tiny = defaultBenchmarkScenarios(
+      baseRecords: 5,
+      basePayloadBytes: 16,
+    );
+    expect(tiny.map((scenario) => scenario.records), containsAll([5, 10]));
+
+    final large = defaultBenchmarkScenarios(
+      baseRecords: 12000,
+      basePayloadBytes: 16,
+    );
+    expect(large.map((scenario) => scenario.records), contains(12000));
+  });
+
   test(
     'runner records operation counts and rates for a supported adapter',
     () async {

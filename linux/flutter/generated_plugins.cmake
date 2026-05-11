@@ -6,7 +6,9 @@ list(APPEND FLUTTER_PLUGIN_LIST
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
+  entidb_flutter
   jni
+  torex_local_store
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)
