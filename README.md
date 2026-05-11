@@ -66,8 +66,7 @@ Ops/sec is every counted operation divided by the median successful sample windo
 <!-- DBENCH:CI_VISUALIZATION:start -->
 Open [docs/results.html](docs/results.html) for the visual dashboard with SVG charts and cross-target tables.
 
-Committed result snapshots currently present: `web`, `windows`.
-`linux` is configured in GitHub Actions but no Linux JSON snapshot is committed in this checkout yet. It should appear only after a real Linux workflow run generates `results/linux.json`.
+Committed result snapshots currently present: `linux`, `web`, `windows`.
 
 Measured packages in committed snapshots: 10 of 19. The remaining packages are explicit adapter/platform gaps, not hidden benchmark numbers.
 
@@ -75,6 +74,7 @@ Measured packages in committed snapshots: 10 of 19. The remaining packages are e
 
 | Environment | Completed adapters | Skipped rows | Failed rows |
 | --- | --- | ---: | ---: |
+| linux | `drift`, `get_storage`, `hive_ce`, `localstore`, `sembast`, `shared_preferences`, `sqflite_common_ffi`, `sqlite3`, `sqlite_async` | 56 | 0 |
 | web | `get_storage`, `hive_ce`, `localstore`, `sembast_web`, `shared_preferences` | 76 | 0 |
 | windows | `drift`, `get_storage`, `hive_ce`, `localstore`, `sembast`, `shared_preferences`, `sqflite_common_ffi`, `sqlite3`, `sqlite_async` | 56 | 0 |
 
@@ -88,16 +88,21 @@ Reasons are kept in the package matrix and raw JSON: generated object-model adap
 
 | Environment | Scenario | Fastest SQL/document adapter | Fastest persistent adapter | Completed | Skipped | Failed |
 | --- | --- | --- | --- | ---: | ---: | ---: |
+| linux | batched_transaction | `sqlite3` 34,883 ops/sec | `sqlite3` 34,883 ops/sec | 4 | 16 | 0 |
+| linux | crud_balanced | `sqlite3` 2,180 ops/sec | `get_storage` 44,928 ops/sec | 10 | 10 | 0 |
+| linux | large_payload | `sqlite3` 2,596 ops/sec | `get_storage` 77,434 ops/sec | 10 | 10 | 0 |
+| linux | read_heavy | `sqlite3` 3,256 ops/sec | `get_storage` 87,475 ops/sec | 10 | 10 | 0 |
+| linux | write_churn_stress | `sqlite3` 2,290 ops/sec | `get_storage` 72,298 ops/sec | 10 | 10 | 0 |
 | web | batched_transaction | - | - | 0 | 20 | 0 |
-| web | crud_balanced | `localstore` 33,042 ops/sec | `shared_preferences` 97,368 ops/sec | 6 | 14 | 0 |
-| web | large_payload | `localstore` 10,145 ops/sec | `shared_preferences` 67,764 ops/sec | 6 | 14 | 0 |
-| web | read_heavy | `localstore` 53,499 ops/sec | `shared_preferences` 122,000 ops/sec | 6 | 14 | 0 |
-| web | write_churn_stress | `localstore` 20,144 ops/sec | `shared_preferences` 136,585 ops/sec | 6 | 14 | 0 |
-| windows | batched_transaction | `sqlite3` 15,337 ops/sec | `sqlite3` 15,337 ops/sec | 4 | 16 | 0 |
-| windows | crud_balanced | `sqlite_async` 2,544 ops/sec | `get_storage` 62,648 ops/sec | 10 | 10 | 0 |
-| windows | large_payload | `sqlite_async` 2,921 ops/sec | `get_storage` 103,397 ops/sec | 10 | 10 | 0 |
-| windows | read_heavy | `sqlite_async` 3,065 ops/sec | `get_storage` 134,717 ops/sec | 10 | 10 | 0 |
-| windows | write_churn_stress | `sqlite_async` 4,234 ops/sec | `get_storage` 105,204 ops/sec | 10 | 10 | 0 |
+| web | crud_balanced | `localstore` 7,058 ops/sec | `shared_preferences` 36,598 ops/sec | 6 | 14 | 0 |
+| web | large_payload | `localstore` 4,964 ops/sec | `shared_preferences` 38,182 ops/sec | 6 | 14 | 0 |
+| web | read_heavy | `localstore` 10,876 ops/sec | `shared_preferences` 60,425 ops/sec | 6 | 14 | 0 |
+| web | write_churn_stress | `localstore` 3,128 ops/sec | `shared_preferences` 63,691 ops/sec | 6 | 14 | 0 |
+| windows | batched_transaction | `sqlite3` 4,488 ops/sec | `sqlite3` 4,488 ops/sec | 4 | 16 | 0 |
+| windows | crud_balanced | `sqlite_async` 1,412 ops/sec | `get_storage` 49,902 ops/sec | 10 | 10 | 0 |
+| windows | large_payload | `sembast` 1,195 ops/sec | `get_storage` 70,258 ops/sec | 10 | 10 | 0 |
+| windows | read_heavy | `sembast` 2,194 ops/sec | `get_storage` 85,078 ops/sec | 10 | 10 | 0 |
+| windows | write_churn_stress | `sqlite_async` 2,005 ops/sec | `get_storage` 66,255 ops/sec | 10 | 10 | 0 |
 <!-- DBENCH:CI_VISUALIZATION:end -->
 
 ## Results
@@ -109,8 +114,9 @@ Measured packages across committed snapshots: 10 of 19.
 
 | Environment | JSON source | Generated | Scenario rows | Measured packages |
 | --- | --- | --- | ---: | ---: |
-| web | [`results/web.json`](results/web.json) | `2026-05-11T13:35:16.083Z` | 100 | 5 |
-| windows | [`results/windows.json`](results/windows.json) | `2026-05-11T13:34:45.105870Z` | 100 | 9 |
+| linux | [`results/linux.json`](results/linux.json) | `2026-05-11T18:32:55.837577Z` | 100 | 9 |
+| web | [`results/web.json`](results/web.json) | `2026-05-11T18:29:30.724Z` | 100 | 5 |
+| windows | [`results/windows.json`](results/windows.json) | `2026-05-11T18:39:09.501893Z` | 100 | 9 |
 <!-- DBENCH:BENCHMARK_RESULTS:end -->
 
 ## Isolate Behavior
@@ -123,6 +129,14 @@ This section checks whether a database can be reopened from a separate Dart isol
 
 | Environment | Database | Status | Shared read across isolates | Notes |
 | --- | --- | --- | --- | --- |
+| linux | memory_baseline | completed | no | Dart isolates have separate heaps; in-memory maps are not shared. |
+| linux | hive_ce | completed | yes | Separate isolate reopened the same box path and read the main isolate record. |
+| linux | sembast | completed | yes | Separate isolate reopened the same database file and read the main isolate record. |
+| linux | sqflite_common_ffi | completed | yes | Separate isolate reopened the same SQLite file through sqflite_common_ffi and read the main isolate record. |
+| linux | sqlite3 | skipped | not tested | Runnable adapter exists, but direct sqlite3 isolate reopening is not probed yet. |
+| linux | shared_preferences | skipped | not tested | Plugin-backed storage is not probed from a background isolate. |
+| linux | get_storage | skipped | not tested | Flutter/widget-bound package; isolate sharing needs a dedicated adapter. |
+| linux | localstore | skipped | not tested | Runnable adapter exists, but file-backed isolate sharing is not probed yet. |
 | web | all | skipped | not tested | Flutter Web does not expose Dart VM isolates for this benchmark. |
 | windows | memory_baseline | completed | no | Dart isolates have separate heaps; in-memory maps are not shared. |
 | windows | hive_ce | completed | yes | Separate isolate reopened the same box path and read the main isolate record. |
