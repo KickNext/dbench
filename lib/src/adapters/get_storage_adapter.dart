@@ -37,6 +37,26 @@ final class GetStorageAdapter implements DatabaseAdapter {
   }
 
   @override
+  Future<List<BenchmarkRecord>> readByGroup(String group) async {
+    final box = _requireOpen();
+    final records = <BenchmarkRecord>[];
+    for (final key in box.getKeys().whereType<String>()) {
+      if (!key.startsWith(_keyPrefix)) {
+        continue;
+      }
+      final value = box.read(key);
+      if (value is! Map) {
+        continue;
+      }
+      final record = BenchmarkRecord.fromJson(value);
+      if (record.group == group) {
+        records.add(record);
+      }
+    }
+    return records;
+  }
+
+  @override
   Future<void> update(BenchmarkRecord record) => write(record);
 
   @override
@@ -57,5 +77,7 @@ final class GetStorageAdapter implements DatabaseAdapter {
     return box;
   }
 
-  static String _key(int id) => 'record_$id';
+  static const _keyPrefix = 'record_';
+
+  static String _key(int id) => '$_keyPrefix$id';
 }

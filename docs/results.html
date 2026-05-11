@@ -1,0 +1,1817 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dbench Results</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #172033;
+  --muted: #5d687c;
+  --line: #d8deea;
+  --panel: #ffffff;
+  --bg: #f5f7fb;
+  --track: #e9edf5;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+main {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 56px;
+}
+.hero {
+  padding: 30px 0 18px;
+}
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+h1, h2, h3, p { margin-top: 0; }
+h1 {
+  margin-bottom: 10px;
+  font-size: clamp(34px, 7vw, 64px);
+  line-height: 1;
+}
+h2 {
+  margin-bottom: 18px;
+  font-size: 24px;
+}
+h3 {
+  margin-bottom: 4px;
+  font-size: 18px;
+}
+.lede {
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 17px;
+}
+.meta, .policy {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin: 22px 0 0;
+}
+.meta div, .policy div {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+dt {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+dd { margin: 3px 0 0; }
+.panel, .chart-card {
+  margin-top: 18px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+.charts h2 { margin: 0; }
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+}
+.summary-card {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcff;
+}
+.summary-key, .summary-family, .note {
+  color: var(--muted);
+}
+.summary-db {
+  margin-top: 8px;
+  font-size: 20px;
+  font-weight: 750;
+}
+.summary-rate {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+.chart-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+.chart-head p { color: var(--muted); }
+.chart-meta {
+  white-space: nowrap;
+  color: var(--muted);
+  font-weight: 650;
+}
+.svg-wrap {
+  overflow-x: auto;
+  padding-top: 8px;
+}
+svg {
+  display: block;
+  min-width: 760px;
+  width: 100%;
+}
+.axis {
+  fill: var(--ink);
+  font-size: 13px;
+  font-weight: 650;
+}
+.value {
+  fill: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.track { fill: var(--track); }
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  margin-top: 30px;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 650;
+}
+.legend span {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.legend i {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+.facts span {
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+.status-details {
+  margin-top: 12px;
+  color: var(--muted);
+}
+.status-details summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+.status-list {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+.table-wrap {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+th, td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+a { color: #1d4ed8; }
+@media (max-width: 760px) {
+  main { width: min(100% - 20px, 1180px); padding-top: 18px; }
+  .panel, .chart-card { padding: 14px; }
+  .section-head { display: block; }
+  .legend { margin-top: 10px; }
+  .chart-head { display: block; }
+  .chart-meta { white-space: normal; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+<p class="eyebrow">Dart / Flutter database benchmark</p>
+<h1>Dbench CI Results</h1>
+<p class="lede">Self-contained visual report generated from committed JSON results. Persistent adapters are charted separately from the synthetic memory ceiling; chart bars use a log scale so slower adapters remain visually comparable.</p>
+<dl class="meta">
+<div><dt>Generated</dt><dd>2026-05-11T13:35:16.083Z &#47; 2026-05-11T13:34:45.105870Z</dd></div>
+<div><dt>Reports</dt><dd>2</dd></div>
+<div><dt>Tracked packages</dt><dd>19</dd></div>
+</dl>
+</header>
+<section class="panel guardrails">
+<h2>Decision Guardrails</h2>
+<ul>
+<li>Key-value baselines are included to set a ceiling, not to recommend them as replacements for SQL, document, or object databases.</li>
+<li>Rows marked skipped are explicit coverage gaps or unsupported targets, not hidden failures.</li>
+<li>Push and pull-request runs are smoke-sized; scheduled CI runs use the larger stress record count declared in the workflow.</li>
+</ul>
+</section>
+<section class="panel">
+<h2>Fastest SQL / Document Adapters</h2>
+<p class="note">This view excludes key-value and settings-style baselines so database engines can be compared without `shared_preferences`, `get_storage`, or memory ceilings.</p>
+<div class="summary-grid"><article class="summary-card">
+  <div class="summary-key">web &#47; crud_balanced</div>
+  <div class="summary-db">localstore</div>
+  <div class="summary-rate">33,042 ops/sec</div>
+  <div class="summary-family">NoSQL</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">web &#47; large_payload</div>
+  <div class="summary-db">localstore</div>
+  <div class="summary-rate">10,145 ops/sec</div>
+  <div class="summary-family">NoSQL</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">web &#47; read_heavy</div>
+  <div class="summary-db">localstore</div>
+  <div class="summary-rate">53,499 ops/sec</div>
+  <div class="summary-family">NoSQL</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">web &#47; write_churn_stress</div>
+  <div class="summary-db">localstore</div>
+  <div class="summary-rate">20,144 ops/sec</div>
+  <div class="summary-family">NoSQL</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">windows &#47; batched_transaction</div>
+  <div class="summary-db">sqlite3</div>
+  <div class="summary-rate">15,337 ops/sec</div>
+  <div class="summary-family">SQL</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">windows &#47; crud_balanced</div>
+  <div class="summary-db">sqlite_async</div>
+  <div class="summary-rate">2,544 ops/sec</div>
+  <div class="summary-family">SQL</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">windows &#47; large_payload</div>
+  <div class="summary-db">sqlite_async</div>
+  <div class="summary-rate">2,921 ops/sec</div>
+  <div class="summary-family">SQL</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">windows &#47; read_heavy</div>
+  <div class="summary-db">sqlite_async</div>
+  <div class="summary-rate">3,065 ops/sec</div>
+  <div class="summary-family">SQL</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">windows &#47; write_churn_stress</div>
+  <div class="summary-db">sqlite_async</div>
+  <div class="summary-rate">4,234 ops/sec</div>
+  <div class="summary-family">SQL</div>
+</article></div>
+</section>
+<section class="panel">
+<h2>Fastest Persistent Adapter By Scenario</h2>
+<div class="summary-grid"><article class="summary-card">
+  <div class="summary-key">web &#47; crud_balanced</div>
+  <div class="summary-db">shared_preferences</div>
+  <div class="summary-rate">97,368 ops/sec</div>
+  <div class="summary-family">Key-value baseline</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">web &#47; large_payload</div>
+  <div class="summary-db">shared_preferences</div>
+  <div class="summary-rate">67,764 ops/sec</div>
+  <div class="summary-family">Key-value baseline</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">web &#47; read_heavy</div>
+  <div class="summary-db">shared_preferences</div>
+  <div class="summary-rate">122,000 ops/sec</div>
+  <div class="summary-family">Key-value baseline</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">web &#47; write_churn_stress</div>
+  <div class="summary-db">shared_preferences</div>
+  <div class="summary-rate">136,585 ops/sec</div>
+  <div class="summary-family">Key-value baseline</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">windows &#47; batched_transaction</div>
+  <div class="summary-db">sqlite3</div>
+  <div class="summary-rate">15,337 ops/sec</div>
+  <div class="summary-family">SQL</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">windows &#47; crud_balanced</div>
+  <div class="summary-db">get_storage</div>
+  <div class="summary-rate">62,648 ops/sec</div>
+  <div class="summary-family">Key-value baseline</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">windows &#47; large_payload</div>
+  <div class="summary-db">get_storage</div>
+  <div class="summary-rate">103,397 ops/sec</div>
+  <div class="summary-family">Key-value baseline</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">windows &#47; read_heavy</div>
+  <div class="summary-db">get_storage</div>
+  <div class="summary-rate">134,717 ops/sec</div>
+  <div class="summary-family">Key-value baseline</div>
+</article>
+<article class="summary-card">
+  <div class="summary-key">windows &#47; write_churn_stress</div>
+  <div class="summary-db">get_storage</div>
+  <div class="summary-rate">105,204 ops/sec</div>
+  <div class="summary-family">Key-value baseline</div>
+</article></div>
+</section>
+<section class="charts">
+<div class="section-head">
+<h2>Scenario Charts</h2>
+<div class="legend" aria-label="Chart color legend">
+  <span><i style="background:#2563eb"></i>SQL</span>
+  <span><i style="background:#047857"></i>NoSQL / document / object</span>
+  <span><i style="background:#b45309"></i>Key-value baseline</span>
+</div>
+</div>
+<article class="chart-card">
+  <div class="chart-head">
+    <div>
+      <h3>web &#47; batched_transaction</h3>
+      <p>Balanced CRUD wrapped in adapter-native write transactions when supported.</p>
+    </div>
+    <div class="chart-meta">0 completed, 0 failed, 20 skipped</div>
+  </div>
+  <div class="facts">
+  <span>samples 0</span>
+  <span>records 25</span>
+  <span>payload 256 bytes</span>
+  <span>median timing</span>
+  <span>2026-05-11T13:35:16.083Z</span>
+</div>
+  
+  <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
+  <p class="note">No completed persistent adapters for this scenario.</p>
+  <details class="status-details">
+  <summary>20 skipped / failed adapters</summary>
+  <ul class="status-list"><li><strong>memory_baseline</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>shared_preferences</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>get_storage</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>hive_ce</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>localstore</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>sembast_web</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>sqflite</strong> skipped: SQLite adapter is not available on this target.</li>
+<li><strong>sqlite3</strong> skipped: sqlite3 direct adapter is not available on this target.</li>
+<li><strong>sqlite_async</strong> skipped: sqlite_async Web support requires sqlite3.wasm and worker assets; native CI adapter is measured separately.</li>
+<li><strong>drift</strong> skipped: Drift Web support requires sqlite3 WASM&#47;worker assets; native CI adapter is measured separately.</li>
+<li><strong>sqflite_common_ffi</strong> skipped: sqflite_common_ffi is a native desktop&#47;test backend, not Web.</li>
+<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li>
+<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
+<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
+<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
+<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
+<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
+<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
+<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
+<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+</details>
+</article>
+<article class="chart-card">
+  <div class="chart-head">
+    <div>
+      <h3>web &#47; crud_balanced</h3>
+      <p>Balanced create&#47;read&#47;query&#47;update&#47;delete workload.</p>
+    </div>
+    <div class="chart-meta">6 completed, 0 failed, 14 skipped</div>
+  </div>
+  <div class="facts">
+  <span>samples 3</span>
+  <span>records 25</span>
+  <span>payload 256 bytes</span>
+  <span>median timing</span>
+  <span>2026-05-11T13:35:16.083Z</span>
+</div>
+  <p class="note">Synthetic memory ceiling: 264,664 ops/sec.</p>
+  <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
+  <div class="svg-wrap">
+<svg viewBox="0 0 950 226" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">shared_preferences</text>
+<rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="36" class="value">97,368</text>
+<text x="0" y="75" class="axis">get_storage</text>
+<rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="56" width="584.0" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">50,000</text>
+<text x="0" y="113" class="axis">localstore</text>
+<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="94" width="561.7" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">33,042</text>
+<text x="0" y="151" class="axis">hive_ce</text>
+<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="132" width="488.1" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="150" class="value">8,447</text>
+<text x="0" y="189" class="axis">sembast_web</text>
+<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="170" width="437.5" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="188" class="value">3,309</text>
+
+</svg>
+</div>
+  <details class="status-details">
+  <summary>14 skipped / failed adapters</summary>
+  <ul class="status-list"><li><strong>sqflite</strong> skipped: SQLite adapter is not available on this target.</li>
+<li><strong>sqlite3</strong> skipped: sqlite3 direct adapter is not available on this target.</li>
+<li><strong>sqlite_async</strong> skipped: sqlite_async Web support requires sqlite3.wasm and worker assets; native CI adapter is measured separately.</li>
+<li><strong>drift</strong> skipped: Drift Web support requires sqlite3 WASM&#47;worker assets; native CI adapter is measured separately.</li>
+<li><strong>sqflite_common_ffi</strong> skipped: sqflite_common_ffi is a native desktop&#47;test backend, not Web.</li>
+<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li>
+<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
+<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
+<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
+<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
+<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
+<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
+<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
+<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+</details>
+</article>
+<article class="chart-card">
+  <div class="chart-head">
+    <div>
+      <h3>web &#47; large_payload</h3>
+      <p>Fewer records with larger JSON-like payloads.</p>
+    </div>
+    <div class="chart-meta">6 completed, 0 failed, 14 skipped</div>
+  </div>
+  <div class="facts">
+  <span>samples 3</span>
+  <span>records 25</span>
+  <span>payload 4096 bytes</span>
+  <span>median timing</span>
+  <span>2026-05-11T13:35:16.083Z</span>
+</div>
+  <p class="note">Synthetic memory ceiling: 2,100,000 ops/sec.</p>
+  <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
+  <div class="svg-wrap">
+<svg viewBox="0 0 950 226" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">shared_preferences</text>
+<rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="36" class="value">67,764</text>
+<text x="0" y="75" class="axis">hive_ce</text>
+<rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="56" width="526.5" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">12,650</text>
+<text x="0" y="113" class="axis">get_storage</text>
+<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="94" width="521.9" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="112" class="value">11,667</text>
+<text x="0" y="151" class="axis">localstore</text>
+<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="132" width="514.2" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="150" class="value">10,145</text>
+<text x="0" y="189" class="axis">sembast_web</text>
+<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="170" width="456.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="188" class="value">3,577</text>
+
+</svg>
+</div>
+  <details class="status-details">
+  <summary>14 skipped / failed adapters</summary>
+  <ul class="status-list"><li><strong>sqflite</strong> skipped: SQLite adapter is not available on this target.</li>
+<li><strong>sqlite3</strong> skipped: sqlite3 direct adapter is not available on this target.</li>
+<li><strong>sqlite_async</strong> skipped: sqlite_async Web support requires sqlite3.wasm and worker assets; native CI adapter is measured separately.</li>
+<li><strong>drift</strong> skipped: Drift Web support requires sqlite3 WASM&#47;worker assets; native CI adapter is measured separately.</li>
+<li><strong>sqflite_common_ffi</strong> skipped: sqflite_common_ffi is a native desktop&#47;test backend, not Web.</li>
+<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li>
+<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
+<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
+<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
+<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
+<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
+<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
+<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
+<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+</details>
+</article>
+<article class="chart-card">
+  <div class="chart-head">
+    <div>
+      <h3>web &#47; read_heavy</h3>
+      <p>App startup&#47;feed style repeated point reads and filters.</p>
+    </div>
+    <div class="chart-meta">6 completed, 0 failed, 14 skipped</div>
+  </div>
+  <div class="facts">
+  <span>samples 3</span>
+  <span>records 25</span>
+  <span>payload 256 bytes</span>
+  <span>median timing</span>
+  <span>2026-05-11T13:35:16.083Z</span>
+</div>
+  <p class="note">Synthetic memory ceiling: 1,517,413 ops/sec.</p>
+  <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
+  <div class="svg-wrap">
+<svg viewBox="0 0 950 226" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">shared_preferences</text>
+<rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="36" class="value">122,000</text>
+<text x="0" y="75" class="axis">get_storage</text>
+<rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="56" width="596.5" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">78,205</text>
+<text x="0" y="113" class="axis">localstore</text>
+<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="94" width="576.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">53,499</text>
+<text x="0" y="151" class="axis">hive_ce</text>
+<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="132" width="519.8" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="150" class="value">18,373</text>
+<text x="0" y="189" class="axis">sembast_web</text>
+<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="170" width="456.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="188" class="value">5,505</text>
+
+</svg>
+</div>
+  <details class="status-details">
+  <summary>14 skipped / failed adapters</summary>
+  <ul class="status-list"><li><strong>sqflite</strong> skipped: SQLite adapter is not available on this target.</li>
+<li><strong>sqlite3</strong> skipped: sqlite3 direct adapter is not available on this target.</li>
+<li><strong>sqlite_async</strong> skipped: sqlite_async Web support requires sqlite3.wasm and worker assets; native CI adapter is measured separately.</li>
+<li><strong>drift</strong> skipped: Drift Web support requires sqlite3 WASM&#47;worker assets; native CI adapter is measured separately.</li>
+<li><strong>sqflite_common_ffi</strong> skipped: sqflite_common_ffi is a native desktop&#47;test backend, not Web.</li>
+<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li>
+<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
+<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
+<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
+<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
+<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
+<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
+<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
+<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+</details>
+</article>
+<article class="chart-card">
+  <div class="chart-head">
+    <div>
+      <h3>web &#47; write_churn_stress</h3>
+      <p>Larger insert&#47;update&#47;delete churn under deterministic IDs.</p>
+    </div>
+    <div class="chart-meta">6 completed, 0 failed, 14 skipped</div>
+  </div>
+  <div class="facts">
+  <span>samples 3</span>
+  <span>records 50</span>
+  <span>payload 256 bytes</span>
+  <span>median timing</span>
+  <span>2026-05-11T13:35:16.083Z</span>
+</div>
+  <p class="note">Synthetic memory ceiling: 1,866,667 ops/sec.</p>
+  <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
+  <div class="svg-wrap">
+<svg viewBox="0 0 950 226" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">shared_preferences</text>
+<rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="36" class="value">136,585</text>
+<text x="0" y="75" class="axis">get_storage</text>
+<rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="56" width="539.6" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">29,474</text>
+<text x="0" y="113" class="axis">localstore</text>
+<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="94" width="519.6" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">20,144</text>
+<text x="0" y="151" class="axis">hive_ce</text>
+<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="132" width="492.4" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="150" class="value">11,991</text>
+<text x="0" y="189" class="axis">sembast_web</text>
+<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="170" width="427.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="188" class="value">3,500</text>
+
+</svg>
+</div>
+  <details class="status-details">
+  <summary>14 skipped / failed adapters</summary>
+  <ul class="status-list"><li><strong>sqflite</strong> skipped: SQLite adapter is not available on this target.</li>
+<li><strong>sqlite3</strong> skipped: sqlite3 direct adapter is not available on this target.</li>
+<li><strong>sqlite_async</strong> skipped: sqlite_async Web support requires sqlite3.wasm and worker assets; native CI adapter is measured separately.</li>
+<li><strong>drift</strong> skipped: Drift Web support requires sqlite3 WASM&#47;worker assets; native CI adapter is measured separately.</li>
+<li><strong>sqflite_common_ffi</strong> skipped: sqflite_common_ffi is a native desktop&#47;test backend, not Web.</li>
+<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li>
+<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
+<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
+<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
+<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
+<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
+<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
+<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
+<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+</details>
+</article>
+<article class="chart-card">
+  <div class="chart-head">
+    <div>
+      <h3>windows &#47; batched_transaction</h3>
+      <p>Balanced CRUD wrapped in adapter-native write transactions when supported.</p>
+    </div>
+    <div class="chart-meta">4 completed, 0 failed, 16 skipped</div>
+  </div>
+  <div class="facts">
+  <span>samples 0</span>
+  <span>records 25</span>
+  <span>payload 256 bytes</span>
+  <span>median timing</span>
+  <span>2026-05-11T13:34:45.105870Z</span>
+</div>
+  
+  <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
+  <div class="svg-wrap">
+<svg viewBox="0 0 950 188" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">sqlite3</text>
+<rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="36" class="value">15,337</text>
+<text x="0" y="75" class="axis">drift</text>
+<rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="56" width="594.0" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="74" class="value">10,233</text>
+<text x="0" y="113" class="axis">sqflite_common_ffi</text>
+<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="94" width="555.0" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="112" class="value">5,579</text>
+<text x="0" y="151" class="axis">sqlite_async</text>
+<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="132" width="551.9" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="150" class="value">5,321</text>
+
+</svg>
+</div>
+  <details class="status-details">
+  <summary>16 skipped / failed adapters</summary>
+  <ul class="status-list"><li><strong>memory_baseline</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>shared_preferences</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>get_storage</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>hive_ce</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>localstore</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>sembast</strong> skipped: Scenario requires adapter-native write transactions.</li>
+<li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
+<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
+<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
+<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
+<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
+<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
+<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
+<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
+<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+</details>
+</article>
+<article class="chart-card">
+  <div class="chart-head">
+    <div>
+      <h3>windows &#47; crud_balanced</h3>
+      <p>Balanced create&#47;read&#47;query&#47;update&#47;delete workload.</p>
+    </div>
+    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+  </div>
+  <div class="facts">
+  <span>samples 3</span>
+  <span>records 25</span>
+  <span>payload 256 bytes</span>
+  <span>median timing</span>
+  <span>2026-05-11T13:34:45.105870Z</span>
+</div>
+  <p class="note">Synthetic memory ceiling: 82,040 ops/sec.</p>
+  <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
+  <div class="svg-wrap">
+<svg viewBox="0 0 950 378" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">get_storage</text>
+<rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="36" class="value">62,648</text>
+<text x="0" y="75" class="axis">hive_ce</text>
+<rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="56" width="482.7" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">5,426</text>
+<text x="0" y="113" class="axis">sqlite_async</text>
+<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="94" width="440.2" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="112" class="value">2,544</text>
+<text x="0" y="151" class="axis">sqlite3</text>
+<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="132" width="406.3" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="150" class="value">1,390</text>
+<text x="0" y="189" class="axis">drift</text>
+<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="170" width="400.7" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="188" class="value">1,258</text>
+<text x="0" y="227" class="axis">localstore</text>
+<rect x="190" y="208" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="208" width="392.8" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="226" class="value">1,093</text>
+<text x="0" y="265" class="axis">sqflite_common_ffi</text>
+<rect x="190" y="246" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="246" width="390.0" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="264" class="value">1,041</text>
+<text x="0" y="303" class="axis">shared_preferences</text>
+<rect x="190" y="284" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="284" width="363.1" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="302" class="value">643</text>
+<text x="0" y="341" class="axis">sembast</text>
+<rect x="190" y="322" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="322" width="340.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="340" class="value">426</text>
+
+</svg>
+</div>
+  <details class="status-details">
+  <summary>10 skipped / failed adapters</summary>
+  <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
+<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
+<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
+<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
+<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
+<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
+<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
+<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
+<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+</details>
+</article>
+<article class="chart-card">
+  <div class="chart-head">
+    <div>
+      <h3>windows &#47; large_payload</h3>
+      <p>Fewer records with larger JSON-like payloads.</p>
+    </div>
+    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+  </div>
+  <div class="facts">
+  <span>samples 3</span>
+  <span>records 25</span>
+  <span>payload 4096 bytes</span>
+  <span>median timing</span>
+  <span>2026-05-11T13:34:45.105870Z</span>
+</div>
+  <p class="note">Synthetic memory ceiling: 245,614 ops/sec.</p>
+  <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
+  <div class="svg-wrap">
+<svg viewBox="0 0 950 378" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">get_storage</text>
+<rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="36" class="value">103,397</text>
+<text x="0" y="75" class="axis">hive_ce</text>
+<rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="56" width="481.5" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">7,839</text>
+<text x="0" y="113" class="axis">sqlite_async</text>
+<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="94" width="428.5" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="112" class="value">2,921</text>
+<text x="0" y="151" class="axis">sqlite3</text>
+<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="132" width="392.6" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="150" class="value">1,498</text>
+<text x="0" y="189" class="axis">localstore</text>
+<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="170" width="390.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="188" class="value">1,427</text>
+<text x="0" y="227" class="axis">drift</text>
+<rect x="190" y="208" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="208" width="388.0" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="226" class="value">1,373</text>
+<text x="0" y="265" class="axis">sqflite_common_ffi</text>
+<rect x="190" y="246" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="246" width="373.3" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="264" class="value">1,045</text>
+<text x="0" y="303" class="axis">shared_preferences</text>
+<rect x="190" y="284" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="284" width="314.4" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="302" class="value">348</text>
+<text x="0" y="341" class="axis">sembast</text>
+<rect x="190" y="322" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="322" width="304.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="340" class="value">287</text>
+
+</svg>
+</div>
+  <details class="status-details">
+  <summary>10 skipped / failed adapters</summary>
+  <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
+<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
+<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
+<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
+<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
+<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
+<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
+<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
+<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+</details>
+</article>
+<article class="chart-card">
+  <div class="chart-head">
+    <div>
+      <h3>windows &#47; read_heavy</h3>
+      <p>App startup&#47;feed style repeated point reads and filters.</p>
+    </div>
+    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+  </div>
+  <div class="facts">
+  <span>samples 3</span>
+  <span>records 25</span>
+  <span>payload 256 bytes</span>
+  <span>median timing</span>
+  <span>2026-05-11T13:34:45.105870Z</span>
+</div>
+  <p class="note">Synthetic memory ceiling: 300,197 ops/sec.</p>
+  <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
+  <div class="svg-wrap">
+<svg viewBox="0 0 950 378" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">get_storage</text>
+<rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="36" class="value">134,717</text>
+<text x="0" y="75" class="axis">hive_ce</text>
+<rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="56" width="495.9" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">12,666</text>
+<text x="0" y="113" class="axis">sqlite_async</text>
+<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="94" width="421.4" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="112" class="value">3,065</text>
+<text x="0" y="151" class="axis">sqlite3</text>
+<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="132" width="404.4" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="150" class="value">2,217</text>
+<text x="0" y="189" class="axis">drift</text>
+<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="170" width="397.1" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="188" class="value">1,928</text>
+<text x="0" y="227" class="axis">sqflite_common_ffi</text>
+<rect x="190" y="208" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="208" width="386.6" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="226" class="value">1,578</text>
+<text x="0" y="265" class="axis">shared_preferences</text>
+<rect x="190" y="246" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="246" width="380.1" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="264" class="value">1,395</text>
+<text x="0" y="303" class="axis">localstore</text>
+<rect x="190" y="284" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="284" width="370.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="302" class="value">1,171</text>
+<text x="0" y="341" class="axis">sembast</text>
+<rect x="190" y="322" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="322" width="359.5" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="340" class="value">942</text>
+
+</svg>
+</div>
+  <details class="status-details">
+  <summary>10 skipped / failed adapters</summary>
+  <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
+<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
+<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
+<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
+<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
+<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
+<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
+<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
+<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+</details>
+</article>
+<article class="chart-card">
+  <div class="chart-head">
+    <div>
+      <h3>windows &#47; write_churn_stress</h3>
+      <p>Larger insert&#47;update&#47;delete churn under deterministic IDs.</p>
+    </div>
+    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+  </div>
+  <div class="facts">
+  <span>samples 3</span>
+  <span>records 50</span>
+  <span>payload 256 bytes</span>
+  <span>median timing</span>
+  <span>2026-05-11T13:34:45.105870Z</span>
+</div>
+  <p class="note">Synthetic memory ceiling: 294,272 ops/sec.</p>
+  <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
+  <div class="svg-wrap">
+<svg viewBox="0 0 950 378" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">get_storage</text>
+<rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="36" class="value">105,204</text>
+<text x="0" y="75" class="axis">hive_ce</text>
+<rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="56" width="483.3" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">8,223</text>
+<text x="0" y="113" class="axis">sqlite_async</text>
+<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="94" width="447.8" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="112" class="value">4,234</text>
+<text x="0" y="151" class="axis">localstore</text>
+<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="132" width="398.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="150" class="value">1,674</text>
+<text x="0" y="189" class="axis">sqlite3</text>
+<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="170" width="388.2" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="188" class="value">1,394</text>
+<text x="0" y="227" class="axis">drift</text>
+<rect x="190" y="208" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="208" width="385.7" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="226" class="value">1,329</text>
+<text x="0" y="265" class="axis">sqflite_common_ffi</text>
+<rect x="190" y="246" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="246" width="376.9" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="264" class="value">1,129</text>
+<text x="0" y="303" class="axis">shared_preferences</text>
+<rect x="190" y="284" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="284" width="327.4" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="302" class="value">448</text>
+<text x="0" y="341" class="axis">sembast</text>
+<rect x="190" y="322" width="620" height="24" rx="5" class="track"></rect>
+<rect x="190" y="322" width="322.6" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="340" class="value">409</text>
+
+</svg>
+</div>
+  <details class="status-details">
+  <summary>10 skipped / failed adapters</summary>
+  <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
+<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
+<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
+<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
+<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
+<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
+<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
+<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
+<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+</details>
+</article>
+</section>
+<section class="panel">
+<h2>Cross-target Comparison</h2>
+<p class="note">Cells show ops/sec for completed persistent adapters. Exhaustive package coverage is kept here after the charts so the visual comparison stays readable first.</p>
+<div class="table-wrap"><table>
+<thead><tr>
+<th>Scenario</th><th>Family</th><th>Adapter</th>
+<th>web</th>
+<th>windows</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>batched_transaction</td>
+<td>SQL</td>
+<td>drift</td>
+<td>-</td>
+<td>10,233</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>SQL</td>
+<td>floor</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>Key-value baseline</td>
+<td>get_storage</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>Key-value baseline</td>
+<td>hive</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>Key-value baseline</td>
+<td>hive_ce</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>NoSQL</td>
+<td>isar</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>NoSQL</td>
+<td>isar_community</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>NoSQL</td>
+<td>isar_db</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>NoSQL</td>
+<td>localstore</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>NoSQL</td>
+<td>objectbox</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>NoSQL</td>
+<td>realm</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>NoSQL</td>
+<td>sembast</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>SQL</td>
+<td>sembast_sqflite</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>NoSQL</td>
+<td>sembast_web</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>Key-value baseline</td>
+<td>shared_preferences</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>SQL</td>
+<td>sqflite</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>SQL</td>
+<td>sqflite_common_ffi</td>
+<td>-</td>
+<td>5,579</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>SQL</td>
+<td>sqlite3</td>
+<td>-</td>
+<td>15,337</td>
+</tr>
+<tr>
+<td>batched_transaction</td>
+<td>SQL</td>
+<td>sqlite_async</td>
+<td>-</td>
+<td>5,321</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>SQL</td>
+<td>drift</td>
+<td>-</td>
+<td>1,258</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>SQL</td>
+<td>floor</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>Key-value baseline</td>
+<td>get_storage</td>
+<td>50,000</td>
+<td>62,648</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>Key-value baseline</td>
+<td>hive</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>Key-value baseline</td>
+<td>hive_ce</td>
+<td>8,447</td>
+<td>5,426</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>NoSQL</td>
+<td>isar</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>NoSQL</td>
+<td>isar_community</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>NoSQL</td>
+<td>isar_db</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>NoSQL</td>
+<td>localstore</td>
+<td>33,042</td>
+<td>1,093</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>NoSQL</td>
+<td>objectbox</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>NoSQL</td>
+<td>realm</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>NoSQL</td>
+<td>sembast</td>
+<td>-</td>
+<td>426</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>SQL</td>
+<td>sembast_sqflite</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>NoSQL</td>
+<td>sembast_web</td>
+<td>3,309</td>
+<td>-</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>Key-value baseline</td>
+<td>shared_preferences</td>
+<td>97,368</td>
+<td>643</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>SQL</td>
+<td>sqflite</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>SQL</td>
+<td>sqflite_common_ffi</td>
+<td>-</td>
+<td>1,041</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>SQL</td>
+<td>sqlite3</td>
+<td>-</td>
+<td>1,390</td>
+</tr>
+<tr>
+<td>crud_balanced</td>
+<td>SQL</td>
+<td>sqlite_async</td>
+<td>-</td>
+<td>2,544</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>SQL</td>
+<td>drift</td>
+<td>-</td>
+<td>1,373</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>SQL</td>
+<td>floor</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>Key-value baseline</td>
+<td>get_storage</td>
+<td>11,667</td>
+<td>103,397</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>Key-value baseline</td>
+<td>hive</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>Key-value baseline</td>
+<td>hive_ce</td>
+<td>12,650</td>
+<td>7,839</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>NoSQL</td>
+<td>isar</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>NoSQL</td>
+<td>isar_community</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>NoSQL</td>
+<td>isar_db</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>NoSQL</td>
+<td>localstore</td>
+<td>10,145</td>
+<td>1,427</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>NoSQL</td>
+<td>objectbox</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>NoSQL</td>
+<td>realm</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>NoSQL</td>
+<td>sembast</td>
+<td>-</td>
+<td>287</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>SQL</td>
+<td>sembast_sqflite</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>NoSQL</td>
+<td>sembast_web</td>
+<td>3,577</td>
+<td>-</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>Key-value baseline</td>
+<td>shared_preferences</td>
+<td>67,764</td>
+<td>348</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>SQL</td>
+<td>sqflite</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>SQL</td>
+<td>sqflite_common_ffi</td>
+<td>-</td>
+<td>1,045</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>SQL</td>
+<td>sqlite3</td>
+<td>-</td>
+<td>1,498</td>
+</tr>
+<tr>
+<td>large_payload</td>
+<td>SQL</td>
+<td>sqlite_async</td>
+<td>-</td>
+<td>2,921</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>SQL</td>
+<td>drift</td>
+<td>-</td>
+<td>1,928</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>SQL</td>
+<td>floor</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>Key-value baseline</td>
+<td>get_storage</td>
+<td>78,205</td>
+<td>134,717</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>Key-value baseline</td>
+<td>hive</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>Key-value baseline</td>
+<td>hive_ce</td>
+<td>18,373</td>
+<td>12,666</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>NoSQL</td>
+<td>isar</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>NoSQL</td>
+<td>isar_community</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>NoSQL</td>
+<td>isar_db</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>NoSQL</td>
+<td>localstore</td>
+<td>53,499</td>
+<td>1,171</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>NoSQL</td>
+<td>objectbox</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>NoSQL</td>
+<td>realm</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>NoSQL</td>
+<td>sembast</td>
+<td>-</td>
+<td>942</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>SQL</td>
+<td>sembast_sqflite</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>NoSQL</td>
+<td>sembast_web</td>
+<td>5,505</td>
+<td>-</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>Key-value baseline</td>
+<td>shared_preferences</td>
+<td>122,000</td>
+<td>1,395</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>SQL</td>
+<td>sqflite</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>SQL</td>
+<td>sqflite_common_ffi</td>
+<td>-</td>
+<td>1,578</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>SQL</td>
+<td>sqlite3</td>
+<td>-</td>
+<td>2,217</td>
+</tr>
+<tr>
+<td>read_heavy</td>
+<td>SQL</td>
+<td>sqlite_async</td>
+<td>-</td>
+<td>3,065</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>SQL</td>
+<td>drift</td>
+<td>-</td>
+<td>1,329</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>SQL</td>
+<td>floor</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>Key-value baseline</td>
+<td>get_storage</td>
+<td>29,474</td>
+<td>105,204</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>Key-value baseline</td>
+<td>hive</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>Key-value baseline</td>
+<td>hive_ce</td>
+<td>11,991</td>
+<td>8,223</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>NoSQL</td>
+<td>isar</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>NoSQL</td>
+<td>isar_community</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>NoSQL</td>
+<td>isar_db</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>NoSQL</td>
+<td>localstore</td>
+<td>20,144</td>
+<td>1,674</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>NoSQL</td>
+<td>objectbox</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>NoSQL</td>
+<td>realm</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>NoSQL</td>
+<td>sembast</td>
+<td>-</td>
+<td>409</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>SQL</td>
+<td>sembast_sqflite</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>NoSQL</td>
+<td>sembast_web</td>
+<td>3,500</td>
+<td>-</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>Key-value baseline</td>
+<td>shared_preferences</td>
+<td>136,585</td>
+<td>448</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>SQL</td>
+<td>sqflite</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>SQL</td>
+<td>sqflite_common_ffi</td>
+<td>-</td>
+<td>1,129</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>SQL</td>
+<td>sqlite3</td>
+<td>-</td>
+<td>1,394</td>
+</tr>
+<tr>
+<td>write_churn_stress</td>
+<td>SQL</td>
+<td>sqlite_async</td>
+<td>-</td>
+<td>4,234</td>
+</tr>
+</tbody>
+</table></div>
+
+</section>
+<section class="panel">
+<h2>Package Coverage</h2>
+<div class="table-wrap"><table>
+<thead><tr>
+<th>Package</th><th>Family</th><th>Platforms</th><th>Status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><a href="https://pub.dev/packages/isar_community">isar_community</a></td>
+<td>NoSQL</td>
+<td>Android, iOS, macOS, Windows, Linux</td>
+<td>Tracked; adapter pending generated model wiring</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/isar_db">isar_db</a></td>
+<td>NoSQL</td>
+<td>Flutter targets declared by package</td>
+<td>Tracked; compatibility adapter pending</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/isar">isar</a></td>
+<td>NoSQL</td>
+<td>Android, iOS, macOS, Windows, Linux, Web</td>
+<td>Tracked for historical comparison</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/objectbox">objectbox</a></td>
+<td>NoSQL</td>
+<td>Android, iOS, macOS, Windows, Linux</td>
+<td>Tracked; adapter pending generated model wiring</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/realm">realm</a></td>
+<td>NoSQL</td>
+<td>Android, iOS, macOS, Windows, Linux</td>
+<td>Tracked; adapter pending generated model wiring</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/drift">drift</a></td>
+<td>SQL</td>
+<td>Android, iOS, macOS, Windows, Linux, Web</td>
+<td>Runnable on native CI in this repo; Web adapter pending sqlite3 WASM assets</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/floor">floor</a></td>
+<td>SQL</td>
+<td>Android, iOS, macOS</td>
+<td>Tracked; adapter pending</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/sqflite">sqflite</a></td>
+<td>SQL</td>
+<td>Android, iOS, macOS</td>
+<td>Runnable on Android in this repo</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/sqflite_common_ffi">sqflite_common_ffi</a></td>
+<td>SQL</td>
+<td>Windows, Linux, macOS, tests</td>
+<td>Runnable on Windows and Linux in this repo</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/sqlite3">sqlite3</a></td>
+<td>SQL</td>
+<td>Dart VM and Flutter native targets</td>
+<td>Runnable on native Flutter targets in this repo</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/sqlite_async">sqlite_async</a></td>
+<td>SQL</td>
+<td>Flutter native targets</td>
+<td>Runnable on native CI in this repo; Web adapter pending sqlite3 WASM assets</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/hive_ce">hive_ce</a></td>
+<td>Key-value baseline</td>
+<td>Android, iOS, macOS, Windows, Linux, Web</td>
+<td>Runnable in this repo</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/hive">hive</a></td>
+<td>Key-value baseline</td>
+<td>Android, iOS, macOS, Windows, Linux, Web</td>
+<td>Tracked for historical comparison</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/sembast">sembast</a></td>
+<td>NoSQL</td>
+<td>Dart VM and Flutter native targets</td>
+<td>Runnable in this repo</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/sembast_web">sembast_web</a></td>
+<td>NoSQL</td>
+<td>Web</td>
+<td>Runnable on Web in this repo</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/sembast_sqflite">sembast_sqflite</a></td>
+<td>SQL</td>
+<td>sqflite-supported Flutter targets</td>
+<td>Tracked; adapter pending</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/get_storage">get_storage</a></td>
+<td>Key-value baseline</td>
+<td>Android, iOS, macOS, Windows, Linux, Web</td>
+<td>Runnable in this repo</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/localstore">localstore</a></td>
+<td>NoSQL</td>
+<td>Flutter targets declared by package</td>
+<td>Runnable in this repo</td>
+</tr>
+<tr>
+<td><a href="https://pub.dev/packages/shared_preferences">shared_preferences</a></td>
+<td>Key-value baseline</td>
+<td>Android, iOS, macOS, Windows, Linux, Web</td>
+<td>Runnable in this repo</td>
+</tr>
+</tbody>
+</table></div>
+
+</section>
+<section class="panel">
+<h2>Result Policy</h2>
+<dl class="policy">
+  <div><dt>README results</dt><dd>Committed benchmark JSON files under results&#47; are rendered into README.md and docs&#47;results.html; GitHub Actions regenerates Web, Linux, and Windows snapshots on CI runs.</dd></div>
+  <div><dt>Local results</dt><dd>Personal machine and physical-device runs should be saved under gitignored local_results&#47;.</dd></div>
+  <div><dt>Flutter</dt><dd>stable channel in GitHub Actions</dd></div>
+  <div><dt>Web CI</dt><dd>ubuntu-latest runner, Flutter Web release build, Chrome; push&#47;pull_request smoke runs use DBENCH_RECORDS=100, scheduled stress runs use DBENCH_RECORDS=2000, manual dispatch defaults to 10000</dd></div>
+  <div><dt>Linux CI</dt><dd>ubuntu-latest runner, Flutter Linux desktop integration test target; push&#47;pull_request smoke runs use DBENCH_RECORDS=100, scheduled stress runs use DBENCH_RECORDS=2000, manual dispatch defaults to 10000</dd></div>
+  <div><dt>Windows CI</dt><dd>windows-latest runner, Flutter Windows desktop test target; push&#47;pull_request smoke runs use DBENCH_RECORDS=100, scheduled stress runs use DBENCH_RECORDS=2000, manual dispatch defaults to 10000</dd></div>
+  <div><dt>Android</dt><dd>Not published in README because GitHub-hosted runners do not provide the physical device used for local measurements</dd></div>
+</dl>
+</section>
+</main>
+</body>
+</html>

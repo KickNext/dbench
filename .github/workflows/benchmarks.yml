@@ -2,6 +2,11 @@ name: Benchmarks
 
 on:
   workflow_dispatch:
+    inputs:
+      records:
+        description: "Base DBENCH_RECORDS value for manual benchmark runs"
+        required: false
+        default: "10000"
   schedule:
     - cron: "17 3 * * 1"
   push:
@@ -13,6 +18,7 @@ permissions:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  DBENCH_RECORDS: ${{ github.event_name == 'workflow_dispatch' && inputs.records || (github.event_name == 'schedule' && '2000' || '100') }}
 
 jobs:
   validate:
@@ -27,7 +33,8 @@ jobs:
       - run: flutter test
       - run: flutter analyze
       - run: dart run tool/update_readme.dart
-      - run: git diff --exit-code README.md
+      - run: dart run tool/validate_results.dart
+      - run: git diff --exit-code README.md docs/results.html
 
   web-benchmark:
     runs-on: ubuntu-latest
@@ -39,7 +46,7 @@ jobs:
           cache: true
       - run: flutter pub get
       - name: Build Web benchmark app
-        run: flutter build web --release --dart-define=DBENCH_AUTORUN=true --dart-define=DBENCH_RECORDS=1000
+        run: flutter build web --release --dart-define=DBENCH_AUTORUN=true --dart-define=DBENCH_RECORDS=${{ env.DBENCH_RECORDS }}
       - name: Run Chrome benchmark
         shell: bash
         run: |
@@ -53,10 +60,41 @@ jobs:
           trap 'kill $server_pid' EXIT
           node tool/run_web_benchmark.cjs http://127.0.0.1:18080 results/web.json
           dart run tool/update_readme.dart
+          dart run tool/validate_results.dart
       - uses: actions/upload-artifact@v5
         with:
           name: web-results
           path: results/web.json
+
+  linux-benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install Linux desktop dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev xvfb lld
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter config --enable-linux-desktop
+      - run: flutter pub get
+      - name: Run Linux benchmark
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          xvfb-run -a flutter test integration_test/benchmark_test.dart -d linux --dart-define=DBENCH_RECORDS=${{ env.DBENCH_RECORDS }} 2>&1 | tee benchmark.log
+          line="$(grep 'DBENCH_RESULT_JSON=' benchmark.log | tail -n 1)"
+          test -n "$line"
+          printf '%s' "${line#*DBENCH_RESULT_JSON=}" > results/linux.json
+          dart run tool/update_readme.dart
+          dart run tool/validate_results.dart
+      - uses: actions/upload-artifact@v5
+        with:
+          name: linux-results
+          path: results/linux.json
 
   windows-benchmark:
     runs-on: windows-latest
@@ -72,11 +110,12 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force results | Out-Null
-          flutter test integration_test/benchmark_test.dart -d windows --dart-define=DBENCH_RECORDS=1000 2>&1 | Tee-Object -FilePath benchmark.log
+          flutter test integration_test/benchmark_test.dart -d windows --dart-define=DBENCH_RECORDS=${{ env.DBENCH_RECORDS }} 2>&1 | Tee-Object -FilePath benchmark.log
           $line = Select-String -Path benchmark.log -Pattern 'DBENCH_RESULT_JSON=' | Select-Object -Last 1
           if (-not $line) { throw 'Benchmark JSON marker was not found.' }
           ($line.Line -replace '^.*DBENCH_RESULT_JSON=', '') | Set-Content -NoNewline results/windows.json
           dart run tool/update_readme.dart
+          dart run tool/validate_results.dart
       - uses: actions/upload-artifact@v5
         with:
           name: windows-results
@@ -84,7 +123,7 @@ jobs:
 
   update-readme:
     if: github.event_name != 'pull_request'
-    needs: [validate, web-benchmark, windows-benchmark]
+    needs: [validate, web-benchmark, linux-benchmark, windows-benchmark]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -99,12 +138,13 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: dart run tool/update_readme.dart
+      - run: dart run tool/validate_results.dart
       - name: Commit README and result updates
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md results/*.json
+          git add README.md docs/results.html results/*.json
           git commit -m "chore: update benchmark results" || exit 0
           git push

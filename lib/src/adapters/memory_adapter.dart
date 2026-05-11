@@ -26,6 +26,11 @@ final class MemoryAdapter implements DatabaseAdapter {
   Future<BenchmarkRecord?> read(int id) async => _records[id];
 
   @override
+  Future<List<BenchmarkRecord>> readByGroup(String group) async {
+    return _records.values.where((record) => record.group == group).toList();
+  }
+
+  @override
   Future<void> update(BenchmarkRecord record) async {
     _records[record.id] = record;
   }

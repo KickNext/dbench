@@ -42,6 +42,18 @@ final class HiveCeAdapter implements DatabaseAdapter {
   }
 
   @override
+  Future<List<BenchmarkRecord>> readByGroup(String group) async {
+    final records = <BenchmarkRecord>[];
+    for (final value in _requireOpen().values) {
+      final record = BenchmarkRecord.fromJson(value);
+      if (record.group == group) {
+        records.add(record);
+      }
+    }
+    return records;
+  }
+
+  @override
   Future<void> update(BenchmarkRecord record) => write(record);
 
   @override

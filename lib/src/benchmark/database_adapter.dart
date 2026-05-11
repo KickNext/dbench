@@ -1,10 +1,125 @@
 enum BenchmarkStatus { completed, skipped, failed }
 
 final class BenchmarkWorkload {
-  const BenchmarkWorkload({this.records = 1000, this.payloadBytes = 256});
+  const BenchmarkWorkload({
+    this.records = 1000,
+    this.payloadBytes = 256,
+    this.scenarios = const [],
+  });
 
   final int records;
   final int payloadBytes;
+  final List<BenchmarkScenario> scenarios;
+
+  List<BenchmarkScenario> get effectiveScenarios {
+    if (scenarios.isNotEmpty) {
+      return scenarios;
+    }
+    return defaultBenchmarkScenarios(
+      baseRecords: records,
+      basePayloadBytes: payloadBytes,
+    );
+  }
+}
+
+List<BenchmarkScenario> defaultBenchmarkScenarios({
+  required int baseRecords,
+  required int basePayloadBytes,
+}) {
+  final smallRecords = (baseRecords / 4).round().clamp(25, baseRecords);
+  final stressRecords = (baseRecords * 2).clamp(baseRecords, 10000);
+  return [
+    BenchmarkScenario(
+      name: 'crud_balanced',
+      description: 'Balanced create/read/query/update/delete workload.',
+      records: baseRecords,
+      payloadBytes: basePayloadBytes,
+      pointReadRounds: 1,
+      groupQueryRounds: 1,
+      updateRounds: 1,
+      sampleRuns: 3,
+    ),
+    BenchmarkScenario(
+      name: 'read_heavy',
+      description: 'App startup/feed style repeated point reads and filters.',
+      records: baseRecords,
+      payloadBytes: basePayloadBytes,
+      pointReadRounds: 5,
+      groupQueryRounds: 3,
+      updateRounds: 1,
+      sampleRuns: 3,
+    ),
+    BenchmarkScenario(
+      name: 'large_payload',
+      description: 'Fewer records with larger JSON-like payloads.',
+      records: smallRecords,
+      payloadBytes: basePayloadBytes * 16,
+      pointReadRounds: 2,
+      groupQueryRounds: 1,
+      updateRounds: 1,
+      sampleRuns: 3,
+    ),
+    BenchmarkScenario(
+      name: 'write_churn_stress',
+      description: 'Larger insert/update/delete churn under deterministic IDs.',
+      records: stressRecords,
+      payloadBytes: basePayloadBytes,
+      pointReadRounds: 1,
+      groupQueryRounds: 1,
+      updateRounds: 3,
+      sampleRuns: 3,
+    ),
+    BenchmarkScenario(
+      name: 'batched_transaction',
+      description:
+          'Balanced CRUD wrapped in adapter-native write transactions when supported.',
+      records: baseRecords,
+      payloadBytes: basePayloadBytes,
+      pointReadRounds: 1,
+      groupQueryRounds: 1,
+      updateRounds: 1,
+      sampleRuns: 3,
+      requiresWriteTransaction: true,
+    ),
+  ];
+}
+
+final class BenchmarkScenario {
+  const BenchmarkScenario({
+    required this.name,
+    required this.description,
+    required this.records,
+    required this.payloadBytes,
+    this.pointReadRounds = 1,
+    this.groupQueryRounds = 0,
+    this.updateRounds = 1,
+    this.sampleRuns = 1,
+    this.requiresWriteTransaction = false,
+  });
+
+  final String name;
+  final String description;
+  final int records;
+  final int payloadBytes;
+  final int pointReadRounds;
+  final int groupQueryRounds;
+  final int updateRounds;
+  final int sampleRuns;
+  final bool requiresWriteTransaction;
+
+  Map<String, Object?> toJson() {
+    return {
+      'name': name,
+      'description': description,
+      'records': records,
+      'payloadBytes': payloadBytes,
+      'pointReadRounds': pointReadRounds,
+      'groupQueryRounds': groupQueryRounds,
+      'updateRounds': updateRounds,
+      'sampleRuns': sampleRuns,
+      'requiresWriteTransaction': requiresWriteTransaction,
+    };
+  }
 }
 
 final class BenchmarkRecord {
@@ -71,11 +186,18 @@ abstract interface class DatabaseAdapter {
 
   Future<BenchmarkRecord?> read(int id);
 
+  Future<List<BenchmarkRecord>> readByGroup(String group);
+
   Future<void> update(BenchmarkRecord record);
 
   Future<void> delete(int id);
 
   Future<void> close();
+}
+
+abstract interface class TransactionalDatabaseAdapter
+    implements DatabaseAdapter {
+  Future<T> runWriteTransaction<T>(Future<T> Function() action);
 }
 
 final class UnsupportedDatabaseAdapter implements DatabaseAdapter {
@@ -100,6 +222,9 @@ final class UnsupportedDatabaseAdapter implements DatabaseAdapter {
 
   @override
   Future<BenchmarkRecord?> read(int id) async => null;
+
+  @override
+  Future<List<BenchmarkRecord>> readByGroup(String group) async => const [];
 
   @override
   Future<void> update(BenchmarkRecord record) async {}

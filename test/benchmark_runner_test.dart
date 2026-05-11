@@ -8,7 +8,17 @@ void main() {
     () async {
       final adapter = _FakeAdapter('fake');
       final runner = BenchmarkRunner(
-        workload: const BenchmarkWorkload(records: 4),
+        workload: const BenchmarkWorkload(
+          scenarios: [
+            BenchmarkScenario(
+              name: 'test_crud',
+              description: 'test',
+              records: 4,
+              payloadBytes: 16,
+              groupQueryRounds: 1,
+            ),
+          ],
+        ),
       );
 
       final report = await runner.runAll([adapter], environment: 'test');
@@ -17,19 +27,32 @@ void main() {
       expect(report.results, hasLength(1));
       final result = report.results.single;
       expect(result.database, 'fake');
+      expect(result.scenario, 'test_crud');
       expect(result.status, BenchmarkStatus.completed);
       expect(result.writeOps, 4);
       expect(result.readOps, 4);
+      expect(result.queryOps, 10);
+      expect(result.queryRows, 4);
       expect(result.updateOps, 4);
       expect(result.deleteOps, 4);
-      expect(result.totalOps, 16);
+      expect(result.verificationOps, 12);
+      expect(result.totalOps, 38);
       expect(result.opsPerSecond, greaterThan(0));
     },
   );
 
   test('runner reports unsupported adapters as skipped results', () async {
     final runner = BenchmarkRunner(
-      workload: const BenchmarkWorkload(records: 2),
+      workload: const BenchmarkWorkload(
+        scenarios: [
+          BenchmarkScenario(
+            name: 'test_crud',
+            description: 'test',
+            records: 2,
+            payloadBytes: 16,
+          ),
+        ],
+      ),
     );
 
     final report = await runner.runAll([
@@ -46,7 +69,16 @@ void main() {
 
   test('runner fails adapters that do not persist updates', () async {
     final runner = BenchmarkRunner(
-      workload: const BenchmarkWorkload(records: 2),
+      workload: const BenchmarkWorkload(
+        scenarios: [
+          BenchmarkScenario(
+            name: 'test_crud',
+            description: 'test',
+            records: 2,
+            payloadBytes: 16,
+          ),
+        ],
+      ),
     );
 
     final report = await runner.runAll([
@@ -59,7 +91,16 @@ void main() {
 
   test('runner fails adapters that do not delete records', () async {
     final runner = BenchmarkRunner(
-      workload: const BenchmarkWorkload(records: 2),
+      workload: const BenchmarkWorkload(
+        scenarios: [
+          BenchmarkScenario(
+            name: 'test_crud',
+            description: 'test',
+            records: 2,
+            payloadBytes: 16,
+          ),
+        ],
+      ),
     );
 
     final report = await runner.runAll([
@@ -69,6 +110,31 @@ void main() {
     expect(report.results.single.status, BenchmarkStatus.failed);
     expect(report.results.single.notes, contains('Delete verification failed'));
   });
+
+  test(
+    'runner includes successful adapter close and flush in elapsed time',
+    () async {
+      final adapter = _CloseRecordingAdapter();
+      final runner = BenchmarkRunner(
+        workload: const BenchmarkWorkload(
+          scenarios: [
+            BenchmarkScenario(
+              name: 'test_crud',
+              description: 'test',
+              records: 1,
+              payloadBytes: 16,
+            ),
+          ],
+        ),
+      );
+
+      final report = await runner.runAll([adapter], environment: 'test');
+
+      expect(adapter.closeCount, 1);
+      expect(report.results.single.status, BenchmarkStatus.completed);
+      expect(report.results.single.elapsedMicros, greaterThanOrEqualTo(4000));
+    },
+  );
 }
 
 final class _FakeAdapter implements DatabaseAdapter {
@@ -99,6 +165,11 @@ final class _FakeAdapter implements DatabaseAdapter {
   Future<BenchmarkRecord?> read(int id) async => _records[id];
 
   @override
+  Future<List<BenchmarkRecord>> readByGroup(String group) async {
+    return _records.values.where((record) => record.group == group).toList();
+  }
+
+  @override
   Future<void> update(BenchmarkRecord record) async {
     _records[record.id] = record;
   }
@@ -124,4 +195,16 @@ final class _BadDeleteAdapter extends _FakeAdapter {
 
   @override
   Future<void> delete(int id) async {}
+}
+
+final class _CloseRecordingAdapter extends _FakeAdapter {
+  _CloseRecordingAdapter() : super('close_recording');
+
+  var closeCount = 0;
+
+  @override
+  Future<void> close() async {
+    closeCount += 1;
+    await Future<void>.delayed(const Duration(milliseconds: 5));
+  }
 }

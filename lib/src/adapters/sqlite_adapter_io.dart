@@ -9,8 +9,9 @@ import '../platform/storage_directory.dart';
 
 DatabaseAdapter createSqliteAdapter() => SqliteAdapter();
 
-final class SqliteAdapter implements DatabaseAdapter {
+final class SqliteAdapter implements TransactionalDatabaseAdapter {
   sqflite.Database? _database;
+  sqflite.Transaction? _transaction;
 
   @override
   String get name =>
@@ -44,24 +45,30 @@ CREATE TABLE records(
   updated_at_micros INTEGER NOT NULL
 )
 ''');
+          await database.execute(
+            'CREATE INDEX idx_records_group ON records(record_group)',
+          );
         },
       ),
+    );
+    await _database!.execute(
+      'CREATE INDEX IF NOT EXISTS idx_records_group ON records(record_group)',
     );
   }
 
   @override
   Future<void> clear() async {
-    await _requireOpen().delete('records');
+    await _executor.delete('records');
   }
 
   @override
   Future<void> write(BenchmarkRecord record) async {
-    await _requireOpen().insert('records', _row(record));
+    await _executor.insert('records', _row(record));
   }
 
   @override
   Future<BenchmarkRecord?> read(int id) async {
-    final rows = await _requireOpen().query(
+    final rows = await _executor.query(
       'records',
       where: 'id = ?',
       whereArgs: [id],
@@ -74,8 +81,18 @@ CREATE TABLE records(
   }
 
   @override
+  Future<List<BenchmarkRecord>> readByGroup(String group) async {
+    final rows = await _executor.query(
+      'records',
+      where: 'record_group = ?',
+      whereArgs: [group],
+    );
+    return [for (final row in rows) _record(row)];
+  }
+
+  @override
   Future<void> update(BenchmarkRecord record) async {
-    await _requireOpen().update(
+    await _executor.update(
       'records',
       _row(record),
       where: 'id = ?',
@@ -85,13 +102,25 @@ CREATE TABLE records(
 
   @override
   Future<void> delete(int id) async {
-    await _requireOpen().delete('records', where: 'id = ?', whereArgs: [id]);
+    await _executor.delete('records', where: 'id = ?', whereArgs: [id]);
   }
 
   @override
   Future<void> close() async {
     await _database?.close();
     _database = null;
+  }
+
+  @override
+  Future<T> runWriteTransaction<T>(Future<T> Function() action) async {
+    return _requireOpen().transaction((transaction) async {
+      _transaction = transaction;
+      try {
+        return await action();
+      } finally {
+        _transaction = null;
+      }
+    });
   }
 
   sqflite.DatabaseFactory _databaseFactory() {
@@ -117,6 +146,8 @@ CREATE TABLE records(
     }
     return database;
   }
+
+  sqflite.DatabaseExecutor get _executor => _transaction ?? _requireOpen();
 
   Map<String, Object?> _row(BenchmarkRecord record) {
     return {

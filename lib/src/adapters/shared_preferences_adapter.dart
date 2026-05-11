@@ -46,6 +46,27 @@ final class SharedPreferencesAdapter implements DatabaseAdapter {
   }
 
   @override
+  Future<List<BenchmarkRecord>> readByGroup(String group) async {
+    final preferences = _requireOpen();
+    final records = <BenchmarkRecord>[];
+    for (final key in preferences.getKeys().where(
+      (key) => key.startsWith(_keyPrefix),
+    )) {
+      final value = preferences.getString(key);
+      if (value == null) {
+        continue;
+      }
+      final record = BenchmarkRecord.fromJson(
+        jsonDecode(value) as Map<String, Object?>,
+      );
+      if (record.group == group) {
+        records.add(record);
+      }
+    }
+    return records;
+  }
+
+  @override
   Future<void> update(BenchmarkRecord record) => write(record);
 
   @override

@@ -3,6 +3,7 @@ import 'package:sembast/sembast.dart';
 
 import '../benchmark/database_adapter.dart';
 import '../platform/storage_directory.dart';
+import 'sembast_adapter_label.dart';
 import 'sembast_factory.dart';
 
 final class SembastAdapter implements DatabaseAdapter {
@@ -10,7 +11,7 @@ final class SembastAdapter implements DatabaseAdapter {
   final _store = intMapStoreFactory.store('records');
 
   @override
-  String get name => 'sembast';
+  String get name => sembastAdapterName();
 
   @override
   Future<bool> get isSupported async => true;
@@ -41,6 +42,18 @@ final class SembastAdapter implements DatabaseAdapter {
       return null;
     }
     return BenchmarkRecord.fromJson(value);
+  }
+
+  @override
+  Future<List<BenchmarkRecord>> readByGroup(String group) async {
+    final snapshots = await _store.find(
+      _requireOpen(),
+      finder: Finder(filter: Filter.equals('group', group)),
+    );
+    return [
+      for (final snapshot in snapshots)
+        BenchmarkRecord.fromJson(snapshot.value),
+    ];
   }
 
   @override

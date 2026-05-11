@@ -39,5 +39,17 @@ void main() {
       ),
       isNotEmpty,
     );
+    expect(
+      report.results.where((result) => result.status == BenchmarkStatus.failed),
+      isEmpty,
+    );
+    expect(
+      report.results.where(
+        (result) =>
+            result.database != 'memory_baseline' &&
+            result.status == BenchmarkStatus.completed,
+      ),
+      isNotEmpty,
+    );
   });
 }

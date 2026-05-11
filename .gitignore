@@ -34,6 +34,7 @@ migrate_working_dir/
 /coverage/
 /local_results/
 /results/android.json
+/dbench_records/
 
 # Symbolication related
 app.*.symbols

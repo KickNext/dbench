@@ -75,7 +75,7 @@
     "migrations": "Explicit schema migrator",
     "transactions": "SQLite transactions",
     "ergonomics": "Best-in-class relational API; setup is heavier than raw sqflite",
-    "benchmarkStatus": "Tracked; adapter pending"
+    "benchmarkStatus": "Runnable on native CI in this repo; Web adapter pending sqlite3 WASM assets"
   },
   {
     "package": "floor",
@@ -114,7 +114,7 @@
     "migrations": "OpenDatabase callbacks",
     "transactions": "SQLite transactions",
     "ergonomics": "Good desktop/test seam for sqflite-style code",
-    "benchmarkStatus": "Runnable on Windows in this repo"
+    "benchmarkStatus": "Runnable on Windows and Linux in this repo"
   },
   {
     "package": "sqlite3",
@@ -127,7 +127,7 @@
     "migrations": "Manual SQL",
     "transactions": "Manual SQLite transactions",
     "ergonomics": "Fast and direct; application code owns abstractions",
-    "benchmarkStatus": "Tracked; direct adapter pending"
+    "benchmarkStatus": "Runnable on native Flutter targets in this repo"
   },
   {
     "package": "sqlite_async",
@@ -140,7 +140,7 @@
     "migrations": "Manual SQL",
     "transactions": "SQLite transactions",
     "ergonomics": "Performance-focused SQLite API; needs dedicated adapter",
-    "benchmarkStatus": "Tracked; adapter pending"
+    "benchmarkStatus": "Runnable on native CI in this repo; Web adapter pending sqlite3 WASM assets"
   },
   {
     "package": "hive_ce",
@@ -231,7 +231,7 @@
     "migrations": "Manual application-level migrations",
     "transactions": "No general transaction model",
     "ergonomics": "Firebase-like local document API",
-    "benchmarkStatus": "Tracked; adapter pending"
+    "benchmarkStatus": "Runnable in this repo"
   },
   {
     "package": "shared_preferences",
