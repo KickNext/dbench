@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dbench Results</title>
+<title>Flutter Database Benchmarks Results</title>
 <style>
 :root {
   color-scheme: light;
@@ -211,6 +211,14 @@ th {
   font-size: 12px;
   text-transform: uppercase;
 }
+th[data-sort-key] {
+  cursor: pointer;
+  user-select: none;
+}
+th[data-sort-key]:focus-visible {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
 a { color: #1d4ed8; }
 @media (max-width: 760px) {
   main { width: min(100% - 20px, 1180px); padding-top: 18px; }
@@ -227,12 +235,12 @@ a { color: #1d4ed8; }
 <main>
 <header class="hero">
 <p class="eyebrow">Dart / Flutter database benchmark</p>
-<h1>Dbench CI Results</h1>
+<h1>Flutter Database Benchmarks CI Results</h1>
 <p class="lede">Self-contained visual report generated from committed JSON results. Persistent adapters are charted separately from the synthetic memory ceiling; chart bars use a log scale so slower adapters remain visually comparable.</p>
 <dl class="meta">
 <div><dt>Generated</dt><dd>2026-05-11T18:32:55.837577Z &#47; 2026-05-11T18:29:30.724Z &#47; 2026-05-11T18:39:09.501893Z</dd></div>
 <div><dt>Reports</dt><dd>3</dd></div>
-<div><dt>Tracked packages</dt><dd>19</dd></div>
+<div><dt>Tracked packages</dt><dd>11</dd></div>
 </dl>
 </header>
 <section class="panel guardrails">
@@ -433,7 +441,7 @@ a { color: #1d4ed8; }
       <h3>linux &#47; batched_transaction</h3>
       <p>Balanced CRUD wrapped in adapter-native write transactions when supported.</p>
     </div>
-    <div class="chart-meta">4 completed, 0 failed, 16 skipped</div>
+    <div class="chart-meta">4 completed, 0 failed, 8 skipped</div>
   </div>
   <div class="facts">
   <span>samples 0</span>
@@ -466,7 +474,7 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>16 skipped / failed adapters</summary>
+  <summary>8 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>memory_baseline</strong> skipped: Scenario requires adapter-native write transactions.</li>
 <li><strong>shared_preferences</strong> skipped: Scenario requires adapter-native write transactions.</li>
 <li><strong>get_storage</strong> skipped: Scenario requires adapter-native write transactions.</li>
@@ -474,15 +482,7 @@ a { color: #1d4ed8; }
 <li><strong>localstore</strong> skipped: Scenario requires adapter-native write transactions.</li>
 <li><strong>sembast</strong> skipped: Scenario requires adapter-native write transactions.</li>
 <li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
-<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -491,7 +491,7 @@ a { color: #1d4ed8; }
       <h3>linux &#47; crud_balanced</h3>
       <p>Balanced create&#47;read&#47;query&#47;update&#47;delete workload.</p>
     </div>
-    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+    <div class="chart-meta">10 completed, 0 failed, 2 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -544,17 +544,9 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>10 skipped / failed adapters</summary>
+  <summary>2 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
-<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -563,7 +555,7 @@ a { color: #1d4ed8; }
       <h3>linux &#47; large_payload</h3>
       <p>Fewer records with larger JSON-like payloads.</p>
     </div>
-    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+    <div class="chart-meta">10 completed, 0 failed, 2 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -616,17 +608,9 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>10 skipped / failed adapters</summary>
+  <summary>2 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
-<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -635,7 +619,7 @@ a { color: #1d4ed8; }
       <h3>linux &#47; read_heavy</h3>
       <p>App startup&#47;feed style repeated point reads and filters.</p>
     </div>
-    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+    <div class="chart-meta">10 completed, 0 failed, 2 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -688,17 +672,9 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>10 skipped / failed adapters</summary>
+  <summary>2 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
-<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -707,7 +683,7 @@ a { color: #1d4ed8; }
       <h3>linux &#47; write_churn_stress</h3>
       <p>Larger insert&#47;update&#47;delete churn under deterministic IDs.</p>
     </div>
-    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+    <div class="chart-meta">10 completed, 0 failed, 2 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -760,17 +736,9 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>10 skipped / failed adapters</summary>
+  <summary>2 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
-<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -779,7 +747,7 @@ a { color: #1d4ed8; }
       <h3>web &#47; batched_transaction</h3>
       <p>Balanced CRUD wrapped in adapter-native write transactions when supported.</p>
     </div>
-    <div class="chart-meta">0 completed, 0 failed, 20 skipped</div>
+    <div class="chart-meta">0 completed, 0 failed, 12 skipped</div>
   </div>
   <div class="facts">
   <span>samples 0</span>
@@ -792,7 +760,7 @@ a { color: #1d4ed8; }
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <p class="note">No completed persistent adapters for this scenario.</p>
   <details class="status-details">
-  <summary>20 skipped / failed adapters</summary>
+  <summary>12 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>memory_baseline</strong> skipped: Scenario requires adapter-native write transactions.</li>
 <li><strong>shared_preferences</strong> skipped: Scenario requires adapter-native write transactions.</li>
 <li><strong>get_storage</strong> skipped: Scenario requires adapter-native write transactions.</li>
@@ -804,15 +772,7 @@ a { color: #1d4ed8; }
 <li><strong>sqlite_async</strong> skipped: sqlite_async Web support requires sqlite3.wasm and worker assets; native CI adapter is measured separately.</li>
 <li><strong>drift</strong> skipped: Drift Web support requires sqlite3 WASM&#47;worker assets; native CI adapter is measured separately.</li>
 <li><strong>sqflite_common_ffi</strong> skipped: sqflite_common_ffi is a native desktop&#47;test backend, not Web.</li>
-<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -821,7 +781,7 @@ a { color: #1d4ed8; }
       <h3>web &#47; crud_balanced</h3>
       <p>Balanced create&#47;read&#47;query&#47;update&#47;delete workload.</p>
     </div>
-    <div class="chart-meta">6 completed, 0 failed, 14 skipped</div>
+    <div class="chart-meta">6 completed, 0 failed, 6 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -858,21 +818,13 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>14 skipped / failed adapters</summary>
+  <summary>6 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: SQLite adapter is not available on this target.</li>
 <li><strong>sqlite3</strong> skipped: sqlite3 direct adapter is not available on this target.</li>
 <li><strong>sqlite_async</strong> skipped: sqlite_async Web support requires sqlite3.wasm and worker assets; native CI adapter is measured separately.</li>
 <li><strong>drift</strong> skipped: Drift Web support requires sqlite3 WASM&#47;worker assets; native CI adapter is measured separately.</li>
 <li><strong>sqflite_common_ffi</strong> skipped: sqflite_common_ffi is a native desktop&#47;test backend, not Web.</li>
-<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -881,7 +833,7 @@ a { color: #1d4ed8; }
       <h3>web &#47; large_payload</h3>
       <p>Fewer records with larger JSON-like payloads.</p>
     </div>
-    <div class="chart-meta">6 completed, 0 failed, 14 skipped</div>
+    <div class="chart-meta">6 completed, 0 failed, 6 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -918,21 +870,13 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>14 skipped / failed adapters</summary>
+  <summary>6 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: SQLite adapter is not available on this target.</li>
 <li><strong>sqlite3</strong> skipped: sqlite3 direct adapter is not available on this target.</li>
 <li><strong>sqlite_async</strong> skipped: sqlite_async Web support requires sqlite3.wasm and worker assets; native CI adapter is measured separately.</li>
 <li><strong>drift</strong> skipped: Drift Web support requires sqlite3 WASM&#47;worker assets; native CI adapter is measured separately.</li>
 <li><strong>sqflite_common_ffi</strong> skipped: sqflite_common_ffi is a native desktop&#47;test backend, not Web.</li>
-<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -941,7 +885,7 @@ a { color: #1d4ed8; }
       <h3>web &#47; read_heavy</h3>
       <p>App startup&#47;feed style repeated point reads and filters.</p>
     </div>
-    <div class="chart-meta">6 completed, 0 failed, 14 skipped</div>
+    <div class="chart-meta">6 completed, 0 failed, 6 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -978,21 +922,13 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>14 skipped / failed adapters</summary>
+  <summary>6 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: SQLite adapter is not available on this target.</li>
 <li><strong>sqlite3</strong> skipped: sqlite3 direct adapter is not available on this target.</li>
 <li><strong>sqlite_async</strong> skipped: sqlite_async Web support requires sqlite3.wasm and worker assets; native CI adapter is measured separately.</li>
 <li><strong>drift</strong> skipped: Drift Web support requires sqlite3 WASM&#47;worker assets; native CI adapter is measured separately.</li>
 <li><strong>sqflite_common_ffi</strong> skipped: sqflite_common_ffi is a native desktop&#47;test backend, not Web.</li>
-<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -1001,7 +937,7 @@ a { color: #1d4ed8; }
       <h3>web &#47; write_churn_stress</h3>
       <p>Larger insert&#47;update&#47;delete churn under deterministic IDs.</p>
     </div>
-    <div class="chart-meta">6 completed, 0 failed, 14 skipped</div>
+    <div class="chart-meta">6 completed, 0 failed, 6 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -1038,21 +974,13 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>14 skipped / failed adapters</summary>
+  <summary>6 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: SQLite adapter is not available on this target.</li>
 <li><strong>sqlite3</strong> skipped: sqlite3 direct adapter is not available on this target.</li>
 <li><strong>sqlite_async</strong> skipped: sqlite_async Web support requires sqlite3.wasm and worker assets; native CI adapter is measured separately.</li>
 <li><strong>drift</strong> skipped: Drift Web support requires sqlite3 WASM&#47;worker assets; native CI adapter is measured separately.</li>
 <li><strong>sqflite_common_ffi</strong> skipped: sqflite_common_ffi is a native desktop&#47;test backend, not Web.</li>
-<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast</strong> skipped: File-backed Sembast is not used on Web; sembast_web is measured.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -1061,7 +989,7 @@ a { color: #1d4ed8; }
       <h3>windows &#47; batched_transaction</h3>
       <p>Balanced CRUD wrapped in adapter-native write transactions when supported.</p>
     </div>
-    <div class="chart-meta">4 completed, 0 failed, 16 skipped</div>
+    <div class="chart-meta">4 completed, 0 failed, 8 skipped</div>
   </div>
   <div class="facts">
   <span>samples 0</span>
@@ -1094,7 +1022,7 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>16 skipped / failed adapters</summary>
+  <summary>8 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>memory_baseline</strong> skipped: Scenario requires adapter-native write transactions.</li>
 <li><strong>shared_preferences</strong> skipped: Scenario requires adapter-native write transactions.</li>
 <li><strong>get_storage</strong> skipped: Scenario requires adapter-native write transactions.</li>
@@ -1102,15 +1030,7 @@ a { color: #1d4ed8; }
 <li><strong>localstore</strong> skipped: Scenario requires adapter-native write transactions.</li>
 <li><strong>sembast</strong> skipped: Scenario requires adapter-native write transactions.</li>
 <li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
-<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -1119,7 +1039,7 @@ a { color: #1d4ed8; }
       <h3>windows &#47; crud_balanced</h3>
       <p>Balanced create&#47;read&#47;query&#47;update&#47;delete workload.</p>
     </div>
-    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+    <div class="chart-meta">10 completed, 0 failed, 2 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -1172,17 +1092,9 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>10 skipped / failed adapters</summary>
+  <summary>2 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
-<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -1191,7 +1103,7 @@ a { color: #1d4ed8; }
       <h3>windows &#47; large_payload</h3>
       <p>Fewer records with larger JSON-like payloads.</p>
     </div>
-    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+    <div class="chart-meta">10 completed, 0 failed, 2 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -1244,17 +1156,9 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>10 skipped / failed adapters</summary>
+  <summary>2 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
-<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -1263,7 +1167,7 @@ a { color: #1d4ed8; }
       <h3>windows &#47; read_heavy</h3>
       <p>App startup&#47;feed style repeated point reads and filters.</p>
     </div>
-    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+    <div class="chart-meta">10 completed, 0 failed, 2 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -1316,17 +1220,9 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>10 skipped / failed adapters</summary>
+  <summary>2 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
-<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li></ul>
 </details>
 </article>
 <article class="chart-card">
@@ -1335,7 +1231,7 @@ a { color: #1d4ed8; }
       <h3>windows &#47; write_churn_stress</h3>
       <p>Larger insert&#47;update&#47;delete churn under deterministic IDs.</p>
     </div>
-    <div class="chart-meta">10 completed, 0 failed, 10 skipped</div>
+    <div class="chart-meta">10 completed, 0 failed, 2 skipped</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
@@ -1388,790 +1284,462 @@ a { color: #1d4ed8; }
 </svg>
 </div>
   <details class="status-details">
-  <summary>10 skipped / failed adapters</summary>
+  <summary>2 skipped / failed adapters</summary>
   <ul class="status-list"><li><strong>sqflite</strong> skipped: sqflite targets Android, iOS, and macOS; desktop CI measures sqflite_common_ffi.</li>
-<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li>
-<li><strong>isar_community</strong> skipped: Tracked package; generated model adapter is not implemented yet.</li>
-<li><strong>isar_db</strong> skipped: Tracked package; compatibility adapter is not implemented yet.</li>
-<li><strong>isar</strong> skipped: Tracked historical package; adapter is not implemented in this suite.</li>
-<li><strong>objectbox</strong> skipped: Tracked package; generated model and native binding adapter is not implemented yet.</li>
-<li><strong>realm</strong> skipped: Tracked package; generated object model adapter is not implemented yet.</li>
-<li><strong>floor</strong> skipped: Tracked package; generated DAO adapter is not implemented yet.</li>
-<li><strong>hive</strong> skipped: Tracked historical package; Hive CE is the runnable Hive-family adapter.</li>
-<li><strong>sembast_sqflite</strong> skipped: Tracked package; sqflite-backed Sembast adapter is not implemented yet.</li></ul>
+<li><strong>sembast_web</strong> skipped: sembast_web is Web-only; native CI measures file-backed sembast.</li></ul>
 </details>
 </article>
 </section>
 <section class="panel">
 <h2>Cross-target Comparison</h2>
 <p class="note">Cells show ops/sec for completed persistent adapters. Exhaustive package coverage is kept here after the charts so the visual comparison stays readable first.</p>
-<div class="table-wrap"><table>
+<div class="table-wrap"><table data-sort-table>
 <thead><tr>
-<th>Scenario</th><th>Family</th><th>Adapter</th>
-<th>linux</th>
-<th>web</th>
-<th>windows</th>
+<th data-sort-key="scenario" data-sort-type="text" tabindex="0">Scenario <span aria-hidden="true">sort</span></th><th data-sort-key="family" data-sort-type="text" tabindex="0">Family <span aria-hidden="true">sort</span></th><th data-sort-key="adapter" data-sort-type="text" tabindex="0">Adapter <span aria-hidden="true">sort</span></th>
+<th data-sort-key="linux" data-sort-type="number" tabindex="0">linux <span aria-hidden="true">sort</span></th>
+<th data-sort-key="web" data-sort-type="number" tabindex="0">web <span aria-hidden="true">sort</span></th>
+<th data-sort-key="windows" data-sort-type="number" tabindex="0">windows <span aria-hidden="true">sort</span></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>batched_transaction</td>
-<td>SQL</td>
-<td>drift</td>
-<td>15,043</td>
-<td>-</td>
-<td>3,513</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>SQL</td>
-<td>floor</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>Key-value baseline</td>
-<td>get_storage</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>Key-value baseline</td>
-<td>hive</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>Key-value baseline</td>
-<td>hive_ce</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>NoSQL</td>
-<td>isar</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>NoSQL</td>
-<td>isar_community</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>NoSQL</td>
-<td>isar_db</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>NoSQL</td>
-<td>localstore</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>NoSQL</td>
-<td>objectbox</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>NoSQL</td>
-<td>realm</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>NoSQL</td>
-<td>sembast</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>batched_transaction</td>
-<td>SQL</td>
-<td>sembast_sqflite</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="batched_transaction">batched_transaction</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="drift">drift</td>
+<td data-sort-value="15043.010297046485">15,043</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="3513.077554898022">3,513</td>
+</tr>
+<tr>
+<td data-sort-value="batched_transaction">batched_transaction</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="get_storage">get_storage</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+</tr>
+<tr>
+<td data-sort-value="batched_transaction">batched_transaction</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="hive_ce">hive_ce</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+</tr>
+<tr>
+<td data-sort-value="batched_transaction">batched_transaction</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="localstore">localstore</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+</tr>
+<tr>
+<td data-sort-value="batched_transaction">batched_transaction</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="sembast">sembast</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+</tr>
+<tr>
+<td data-sort-value="batched_transaction">batched_transaction</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="sembast_web">sembast_web</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+</tr>
+<tr>
+<td data-sort-value="batched_transaction">batched_transaction</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="shared_preferences">shared_preferences</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+</tr>
+<tr>
+<td data-sort-value="batched_transaction">batched_transaction</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqflite">sqflite</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+</tr>
+<tr>
+<td data-sort-value="batched_transaction">batched_transaction</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqflite_common_ffi">sqflite_common_ffi</td>
+<td data-sort-value="744.6727058574277">745</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="2368.8618119457365">2,369</td>
+</tr>
+<tr>
+<td data-sort-value="batched_transaction">batched_transaction</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqlite3">sqlite3</td>
+<td data-sort-value="34882.578362975335">34,883</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="4487.819678141158">4,488</td>
+</tr>
+<tr>
+<td data-sort-value="batched_transaction">batched_transaction</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqlite_async">sqlite_async</td>
+<td data-sort-value="555.9623041896849">556</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="3884.3874977432256">3,884</td>
+</tr>
+<tr>
+<td data-sort-value="crud_balanced">crud_balanced</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="drift">drift</td>
+<td data-sort-value="2015.7054685237654">2,016</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="90.10047090820767">90</td>
+</tr>
+<tr>
+<td data-sort-value="crud_balanced">crud_balanced</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="get_storage">get_storage</td>
+<td data-sort-value="44928.178194013795">44,928</td>
+<td data-sort-value="9943.977591036415">9,944</td>
+<td data-sort-value="49901.60247399494">49,902</td>
 </tr>
 <tr>
-<td>batched_transaction</td>
-<td>NoSQL</td>
-<td>sembast_web</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="crud_balanced">crud_balanced</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="hive_ce">hive_ce</td>
+<td data-sort-value="563.3977167315632">563</td>
+<td data-sort-value="6893.203883495145">6,893</td>
+<td data-sort-value="2179.8264735319945">2,180</td>
 </tr>
 <tr>
-<td>batched_transaction</td>
-<td>Key-value baseline</td>
-<td>shared_preferences</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="crud_balanced">crud_balanced</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="localstore">localstore</td>
+<td data-sort-value="136.98870653526814">137</td>
+<td data-sort-value="7057.583920636972">7,058</td>
+<td data-sort-value="450.50161133639716">451</td>
 </tr>
 <tr>
-<td>batched_transaction</td>
-<td>SQL</td>
-<td>sqflite</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="crud_balanced">crud_balanced</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="sembast">sembast</td>
+<td data-sort-value="295.36161621876397">295</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="1322.5591332953331">1,323</td>
 </tr>
 <tr>
-<td>batched_transaction</td>
-<td>SQL</td>
-<td>sqflite_common_ffi</td>
-<td>745</td>
-<td>-</td>
-<td>2,369</td>
+<td data-sort-value="crud_balanced">crud_balanced</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="sembast_web">sembast_web</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="1738.913203739398">1,739</td>
+<td data-sort-value="-1">-</td>
 </tr>
 <tr>
-<td>batched_transaction</td>
-<td>SQL</td>
-<td>sqlite3</td>
-<td>34,883</td>
-<td>-</td>
-<td>4,488</td>
+<td data-sort-value="crud_balanced">crud_balanced</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="shared_preferences">shared_preferences</td>
+<td data-sort-value="3324.203478708711">3,324</td>
+<td data-sort-value="36597.9381443299">36,598</td>
+<td data-sort-value="2281.7329601146653">2,282</td>
 </tr>
 <tr>
-<td>batched_transaction</td>
-<td>SQL</td>
-<td>sqlite_async</td>
-<td>556</td>
-<td>-</td>
-<td>3,884</td>
+<td data-sort-value="crud_balanced">crud_balanced</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqflite">sqflite</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>SQL</td>
-<td>drift</td>
-<td>2,016</td>
-<td>-</td>
-<td>90</td>
+<td data-sort-value="crud_balanced">crud_balanced</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqflite_common_ffi">sqflite_common_ffi</td>
+<td data-sort-value="497.90354556413524">498</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="88.09080549115897">88</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>SQL</td>
-<td>floor</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="crud_balanced">crud_balanced</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqlite3">sqlite3</td>
+<td data-sort-value="2180.174536789678">2,180</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="91.58794403383233">92</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>Key-value baseline</td>
-<td>get_storage</td>
-<td>44,928</td>
-<td>9,944</td>
-<td>49,902</td>
+<td data-sort-value="crud_balanced">crud_balanced</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqlite_async">sqlite_async</td>
+<td data-sort-value="378.4654239852196">378</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="1411.9237958875233">1,412</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>Key-value baseline</td>
-<td>hive</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="large_payload">large_payload</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="drift">drift</td>
+<td data-sort-value="2350.7550401307467">2,351</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="95.27992334049597">95</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>Key-value baseline</td>
-<td>hive_ce</td>
-<td>563</td>
-<td>6,893</td>
-<td>2,180</td>
+<td data-sort-value="large_payload">large_payload</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="get_storage">get_storage</td>
+<td data-sort-value="77433.62831858407">77,434</td>
+<td data-sort-value="5198.019801980198">5,198</td>
+<td data-sort-value="70257.6112412178">70,258</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>NoSQL</td>
-<td>isar</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="large_payload">large_payload</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="hive_ce">hive_ce</td>
+<td data-sort-value="723.2700070260515">723</td>
+<td data-sort-value="3505.8430717863107">3,506</td>
+<td data-sort-value="2672.367717797969">2,672</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>NoSQL</td>
-<td>isar_community</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="large_payload">large_payload</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="localstore">localstore</td>
+<td data-sort-value="206.9222386227256">207</td>
+<td data-sort-value="4964.421644878372">4,964</td>
+<td data-sort-value="512.5401489783367">513</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>NoSQL</td>
-<td>isar_db</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="large_payload">large_payload</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="sembast">sembast</td>
+<td data-sort-value="354.9263781284225">355</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="1194.756724773565">1,195</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>NoSQL</td>
-<td>localstore</td>
-<td>137</td>
-<td>7,058</td>
-<td>451</td>
+<td data-sort-value="large_payload">large_payload</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="sembast_web">sembast_web</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="1273.4913675478015">1,273</td>
+<td data-sort-value="-1">-</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>NoSQL</td>
-<td>objectbox</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="large_payload">large_payload</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="shared_preferences">shared_preferences</td>
+<td data-sort-value="4146.673775250281">4,147</td>
+<td data-sort-value="38181.818181818184">38,182</td>
+<td data-sort-value="2798.8058428403883">2,799</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>NoSQL</td>
-<td>realm</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="large_payload">large_payload</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqflite">sqflite</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>NoSQL</td>
-<td>sembast</td>
-<td>295</td>
-<td>-</td>
-<td>1,323</td>
+<td data-sort-value="large_payload">large_payload</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqflite_common_ffi">sqflite_common_ffi</td>
+<td data-sort-value="561.6640232796365">562</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="93.69871668452892">94</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>SQL</td>
-<td>sembast_sqflite</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="large_payload">large_payload</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqlite3">sqlite3</td>
+<td data-sort-value="2596.3749659998516">2,596</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="72.42255873038427">72</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>NoSQL</td>
-<td>sembast_web</td>
-<td>-</td>
-<td>1,739</td>
-<td>-</td>
+<td data-sort-value="large_payload">large_payload</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqlite_async">sqlite_async</td>
+<td data-sort-value="383.3844816915654">383</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="1180.1134032784673">1,180</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>Key-value baseline</td>
-<td>shared_preferences</td>
-<td>3,324</td>
-<td>36,598</td>
-<td>2,282</td>
+<td data-sort-value="read_heavy">read_heavy</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="drift">drift</td>
+<td data-sort-value="2863.702945305808">2,864</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="147.06236420319854">147</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>SQL</td>
-<td>sqflite</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="read_heavy">read_heavy</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="get_storage">get_storage</td>
+<td data-sort-value="87474.84130670382">87,475</td>
+<td data-sort-value="13865.030674846626">13,865</td>
+<td data-sort-value="85077.54856196356">85,078</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>SQL</td>
-<td>sqflite_common_ffi</td>
-<td>498</td>
-<td>-</td>
-<td>88</td>
+<td data-sort-value="read_heavy">read_heavy</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="hive_ce">hive_ce</td>
+<td data-sort-value="996.8093280181931">997</td>
+<td data-sort-value="8230.212893029082">8,230</td>
+<td data-sort-value="4462.540330701882">4,463</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>SQL</td>
-<td>sqlite3</td>
-<td>2,180</td>
-<td>-</td>
-<td>92</td>
+<td data-sort-value="read_heavy">read_heavy</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="localstore">localstore</td>
+<td data-sort-value="149.129834017175">149</td>
+<td data-sort-value="10875.94683298203">10,876</td>
+<td data-sort-value="669.9619307472802">670</td>
 </tr>
 <tr>
-<td>crud_balanced</td>
-<td>SQL</td>
-<td>sqlite_async</td>
-<td>378</td>
-<td>-</td>
-<td>1,412</td>
+<td data-sort-value="read_heavy">read_heavy</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="sembast">sembast</td>
+<td data-sort-value="476.4589235485817">476</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="2193.76582229332">2,194</td>
 </tr>
 <tr>
-<td>large_payload</td>
-<td>SQL</td>
-<td>drift</td>
-<td>2,351</td>
-<td>-</td>
-<td>95</td>
+<td data-sort-value="read_heavy">read_heavy</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="sembast_web">sembast_web</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="2186.951447742505">2,187</td>
+<td data-sort-value="-1">-</td>
 </tr>
 <tr>
-<td>large_payload</td>
-<td>SQL</td>
-<td>floor</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="read_heavy">read_heavy</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="shared_preferences">shared_preferences</td>
+<td data-sort-value="6013.389103526081">6,013</td>
+<td data-sort-value="60424.576225870274">60,425</td>
+<td data-sort-value="4086.7401556577843">4,087</td>
 </tr>
 <tr>
-<td>large_payload</td>
-<td>Key-value baseline</td>
-<td>get_storage</td>
-<td>77,434</td>
-<td>5,198</td>
-<td>70,258</td>
+<td data-sort-value="read_heavy">read_heavy</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqflite">sqflite</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
 </tr>
 <tr>
-<td>large_payload</td>
-<td>Key-value baseline</td>
-<td>hive</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
+<td data-sort-value="read_heavy">read_heavy</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqflite_common_ffi">sqflite_common_ffi</td>
+<td data-sort-value="584.2568124085806">584</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="129.4703950474022">129</td>
 </tr>
 <tr>
-<td>large_payload</td>
-<td>Key-value baseline</td>
-<td>hive_ce</td>
-<td>723</td>
-<td>3,506</td>
-<td>2,672</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>NoSQL</td>
-<td>isar</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>NoSQL</td>
-<td>isar_community</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>NoSQL</td>
-<td>isar_db</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>NoSQL</td>
-<td>localstore</td>
-<td>207</td>
-<td>4,964</td>
-<td>513</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>NoSQL</td>
-<td>objectbox</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>NoSQL</td>
-<td>realm</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>NoSQL</td>
-<td>sembast</td>
-<td>355</td>
-<td>-</td>
-<td>1,195</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>SQL</td>
-<td>sembast_sqflite</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>NoSQL</td>
-<td>sembast_web</td>
-<td>-</td>
-<td>1,273</td>
-<td>-</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>Key-value baseline</td>
-<td>shared_preferences</td>
-<td>4,147</td>
-<td>38,182</td>
-<td>2,799</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>SQL</td>
-<td>sqflite</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>SQL</td>
-<td>sqflite_common_ffi</td>
-<td>562</td>
-<td>-</td>
-<td>94</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>SQL</td>
-<td>sqlite3</td>
-<td>2,596</td>
-<td>-</td>
-<td>72</td>
-</tr>
-<tr>
-<td>large_payload</td>
-<td>SQL</td>
-<td>sqlite_async</td>
-<td>383</td>
-<td>-</td>
-<td>1,180</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>SQL</td>
-<td>drift</td>
-<td>2,864</td>
-<td>-</td>
-<td>147</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>SQL</td>
-<td>floor</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>Key-value baseline</td>
-<td>get_storage</td>
-<td>87,475</td>
-<td>13,865</td>
-<td>85,078</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>Key-value baseline</td>
-<td>hive</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>Key-value baseline</td>
-<td>hive_ce</td>
-<td>997</td>
-<td>8,230</td>
-<td>4,463</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>NoSQL</td>
-<td>isar</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>NoSQL</td>
-<td>isar_community</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>NoSQL</td>
-<td>isar_db</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>NoSQL</td>
-<td>localstore</td>
-<td>149</td>
-<td>10,876</td>
-<td>670</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>NoSQL</td>
-<td>objectbox</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>NoSQL</td>
-<td>realm</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>NoSQL</td>
-<td>sembast</td>
-<td>476</td>
-<td>-</td>
-<td>2,194</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>SQL</td>
-<td>sembast_sqflite</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>NoSQL</td>
-<td>sembast_web</td>
-<td>-</td>
-<td>2,187</td>
-<td>-</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>Key-value baseline</td>
-<td>shared_preferences</td>
-<td>6,013</td>
-<td>60,425</td>
-<td>4,087</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>SQL</td>
-<td>sqflite</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>SQL</td>
-<td>sqflite_common_ffi</td>
-<td>584</td>
-<td>-</td>
-<td>129</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>SQL</td>
-<td>sqlite3</td>
-<td>3,256</td>
-<td>-</td>
-<td>143</td>
-</tr>
-<tr>
-<td>read_heavy</td>
-<td>SQL</td>
-<td>sqlite_async</td>
-<td>392</td>
-<td>-</td>
-<td>2,061</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>SQL</td>
-<td>drift</td>
-<td>2,028</td>
-<td>-</td>
-<td>81</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>SQL</td>
-<td>floor</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>Key-value baseline</td>
-<td>get_storage</td>
-<td>72,298</td>
-<td>3,915</td>
-<td>66,255</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>Key-value baseline</td>
-<td>hive</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>Key-value baseline</td>
-<td>hive_ce</td>
-<td>580</td>
-<td>4,497</td>
-<td>2,241</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>NoSQL</td>
-<td>isar</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>NoSQL</td>
-<td>isar_community</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>NoSQL</td>
-<td>isar_db</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>NoSQL</td>
-<td>localstore</td>
-<td>178</td>
-<td>3,128</td>
-<td>703</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>NoSQL</td>
-<td>objectbox</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>NoSQL</td>
-<td>realm</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>NoSQL</td>
-<td>sembast</td>
-<td>265</td>
-<td>-</td>
-<td>150</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>SQL</td>
-<td>sembast_sqflite</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>NoSQL</td>
-<td>sembast_web</td>
-<td>-</td>
-<td>1,509</td>
-<td>-</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>Key-value baseline</td>
-<td>shared_preferences</td>
-<td>2,044</td>
-<td>63,691</td>
-<td>1,689</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>SQL</td>
-<td>sqflite</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>SQL</td>
-<td>sqflite_common_ffi</td>
-<td>563</td>
-<td>-</td>
-<td>81</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>SQL</td>
-<td>sqlite3</td>
-<td>2,290</td>
-<td>-</td>
-<td>81</td>
-</tr>
-<tr>
-<td>write_churn_stress</td>
-<td>SQL</td>
-<td>sqlite_async</td>
-<td>399</td>
-<td>-</td>
-<td>2,005</td>
+<td data-sort-value="read_heavy">read_heavy</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqlite3">sqlite3</td>
+<td data-sort-value="3256.3903057548773">3,256</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="142.8773732816783">143</td>
+</tr>
+<tr>
+<td data-sort-value="read_heavy">read_heavy</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqlite_async">sqlite_async</td>
+<td data-sort-value="392.49930357424455">392</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="2060.690057626377">2,061</td>
+</tr>
+<tr>
+<td data-sort-value="write_churn_stress">write_churn_stress</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="drift">drift</td>
+<td data-sort-value="2028.2151339723282">2,028</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="81.07421798047132">81</td>
+</tr>
+<tr>
+<td data-sort-value="write_churn_stress">write_churn_stress</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="get_storage">get_storage</td>
+<td data-sort-value="72297.82779377127">72,298</td>
+<td data-sort-value="3914.9689991142604">3,915</td>
+<td data-sort-value="66254.94663628732">66,255</td>
+</tr>
+<tr>
+<td data-sort-value="write_churn_stress">write_churn_stress</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="hive_ce">hive_ce</td>
+<td data-sort-value="580.158932045538">580</td>
+<td data-sort-value="4497.354497354498">4,497</td>
+<td data-sort-value="2241.1020137467776">2,241</td>
+</tr>
+<tr>
+<td data-sort-value="write_churn_stress">write_churn_stress</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="localstore">localstore</td>
+<td data-sort-value="178.08034066366272">178</td>
+<td data-sort-value="3127.653552221908">3,128</td>
+<td data-sort-value="703.4578294538112">703</td>
+</tr>
+<tr>
+<td data-sort-value="write_churn_stress">write_churn_stress</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="sembast">sembast</td>
+<td data-sort-value="264.79354191316327">265</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="149.96414431952107">150</td>
+</tr>
+<tr>
+<td data-sort-value="write_churn_stress">write_churn_stress</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="sembast_web">sembast_web</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="1508.9433914083086">1,509</td>
+<td data-sort-value="-1">-</td>
+</tr>
+<tr>
+<td data-sort-value="write_churn_stress">write_churn_stress</td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="shared_preferences">shared_preferences</td>
+<td data-sort-value="2043.6244465569089">2,044</td>
+<td data-sort-value="63690.5962707859">63,691</td>
+<td data-sort-value="1688.5929054647756">1,689</td>
+</tr>
+<tr>
+<td data-sort-value="write_churn_stress">write_churn_stress</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqflite">sqflite</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="-1">-</td>
+</tr>
+<tr>
+<td data-sort-value="write_churn_stress">write_churn_stress</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqflite_common_ffi">sqflite_common_ffi</td>
+<td data-sort-value="562.7900533351805">563</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="80.90515368025463">81</td>
+</tr>
+<tr>
+<td data-sort-value="write_churn_stress">write_churn_stress</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqlite3">sqlite3</td>
+<td data-sort-value="2290.0249208594328">2,290</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="81.20199230741561">81</td>
+</tr>
+<tr>
+<td data-sort-value="write_churn_stress">write_churn_stress</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="sqlite_async">sqlite_async</td>
+<td data-sort-value="399.18349815156364">399</td>
+<td data-sort-value="-1">-</td>
+<td data-sort-value="2004.9079420663252">2,005</td>
 </tr>
 </tbody>
 </table></div>
@@ -2179,124 +1747,76 @@ a { color: #1d4ed8; }
 </section>
 <section class="panel">
 <h2>Package Coverage</h2>
-<div class="table-wrap"><table>
+<div class="table-wrap"><table data-sort-table>
 <thead><tr>
-<th>Package</th><th>Family</th><th>Platforms</th><th>Status</th>
+<th data-sort-key="package" data-sort-type="text" tabindex="0">Package <span aria-hidden="true">sort</span></th><th data-sort-key="family" data-sort-type="text" tabindex="0">Family <span aria-hidden="true">sort</span></th><th data-sort-key="platforms" data-sort-type="text" tabindex="0">Platforms <span aria-hidden="true">sort</span></th><th data-sort-key="status" data-sort-type="text" tabindex="0">Status <span aria-hidden="true">sort</span></th>
 </tr></thead>
 <tbody>
 <tr>
-<td><a href="https://pub.dev/packages/isar_community">isar_community</a></td>
-<td>NoSQL</td>
-<td>Android, iOS, macOS, Windows, Linux</td>
-<td>Tracked; adapter pending generated model wiring</td>
+<td data-sort-value="drift"><a href="https://pub.dev/packages/drift">drift</a></td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
+<td data-sort-value="Runnable on native CI; Web is skipped until sqlite3 WASM assets are configured">Runnable on native CI; Web is skipped until sqlite3 WASM assets are configured</td>
 </tr>
 <tr>
-<td><a href="https://pub.dev/packages/isar_db">isar_db</a></td>
-<td>NoSQL</td>
-<td>Flutter targets declared by package</td>
-<td>Tracked; compatibility adapter pending</td>
+<td data-sort-value="sqflite"><a href="https://pub.dev/packages/sqflite">sqflite</a></td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="Android, iOS, macOS">Android, iOS, macOS</td>
+<td data-sort-value="Runnable on Android and Apple targets; desktop CI uses sqflite_common_ffi">Runnable on Android and Apple targets; desktop CI uses sqflite_common_ffi</td>
 </tr>
 <tr>
-<td><a href="https://pub.dev/packages/isar">isar</a></td>
-<td>NoSQL</td>
-<td>Android, iOS, macOS, Windows, Linux, Web</td>
-<td>Tracked for historical comparison</td>
+<td data-sort-value="sqflite_common_ffi"><a href="https://pub.dev/packages/sqflite_common_ffi">sqflite_common_ffi</a></td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="Windows, Linux, macOS, tests">Windows, Linux, macOS, tests</td>
+<td data-sort-value="Runnable on Windows and Linux CI">Runnable on Windows and Linux CI</td>
 </tr>
 <tr>
-<td><a href="https://pub.dev/packages/objectbox">objectbox</a></td>
-<td>NoSQL</td>
-<td>Android, iOS, macOS, Windows, Linux</td>
-<td>Tracked; adapter pending generated model wiring</td>
+<td data-sort-value="sqlite3"><a href="https://pub.dev/packages/sqlite3">sqlite3</a></td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="Dart VM and Flutter native targets">Dart VM and Flutter native targets</td>
+<td data-sort-value="Runnable on native Flutter targets">Runnable on native Flutter targets</td>
 </tr>
 <tr>
-<td><a href="https://pub.dev/packages/realm">realm</a></td>
-<td>NoSQL</td>
-<td>Android, iOS, macOS, Windows, Linux</td>
-<td>Tracked; adapter pending generated model wiring</td>
+<td data-sort-value="sqlite_async"><a href="https://pub.dev/packages/sqlite_async">sqlite_async</a></td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="Flutter native targets">Flutter native targets</td>
+<td data-sort-value="Runnable on native CI; Web is skipped until sqlite3 WASM assets are configured">Runnable on native CI; Web is skipped until sqlite3 WASM assets are configured</td>
 </tr>
 <tr>
-<td><a href="https://pub.dev/packages/drift">drift</a></td>
-<td>SQL</td>
-<td>Android, iOS, macOS, Windows, Linux, Web</td>
-<td>Runnable on native CI in this repo; Web adapter pending sqlite3 WASM assets</td>
+<td data-sort-value="hive_ce"><a href="https://pub.dev/packages/hive_ce">hive_ce</a></td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
+<td data-sort-value="Runnable in this repo">Runnable in this repo</td>
 </tr>
 <tr>
-<td><a href="https://pub.dev/packages/floor">floor</a></td>
-<td>SQL</td>
-<td>Android, iOS, macOS</td>
-<td>Tracked; adapter pending</td>
+<td data-sort-value="sembast"><a href="https://pub.dev/packages/sembast">sembast</a></td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="Dart VM and Flutter native targets">Dart VM and Flutter native targets</td>
+<td data-sort-value="Runnable on native targets">Runnable on native targets</td>
 </tr>
 <tr>
-<td><a href="https://pub.dev/packages/sqflite">sqflite</a></td>
-<td>SQL</td>
-<td>Android, iOS, macOS</td>
-<td>Runnable on Android in this repo</td>
+<td data-sort-value="sembast_web"><a href="https://pub.dev/packages/sembast_web">sembast_web</a></td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="Web">Web</td>
+<td data-sort-value="Runnable on Web CI">Runnable on Web CI</td>
 </tr>
 <tr>
-<td><a href="https://pub.dev/packages/sqflite_common_ffi">sqflite_common_ffi</a></td>
-<td>SQL</td>
-<td>Windows, Linux, macOS, tests</td>
-<td>Runnable on Windows and Linux in this repo</td>
+<td data-sort-value="get_storage"><a href="https://pub.dev/packages/get_storage">get_storage</a></td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
+<td data-sort-value="Runnable in this repo">Runnable in this repo</td>
 </tr>
 <tr>
-<td><a href="https://pub.dev/packages/sqlite3">sqlite3</a></td>
-<td>SQL</td>
-<td>Dart VM and Flutter native targets</td>
-<td>Runnable on native Flutter targets in this repo</td>
+<td data-sort-value="localstore"><a href="https://pub.dev/packages/localstore">localstore</a></td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="Flutter targets declared by package">Flutter targets declared by package</td>
+<td data-sort-value="Runnable in this repo">Runnable in this repo</td>
 </tr>
 <tr>
-<td><a href="https://pub.dev/packages/sqlite_async">sqlite_async</a></td>
-<td>SQL</td>
-<td>Flutter native targets</td>
-<td>Runnable on native CI in this repo; Web adapter pending sqlite3 WASM assets</td>
-</tr>
-<tr>
-<td><a href="https://pub.dev/packages/hive_ce">hive_ce</a></td>
-<td>Key-value baseline</td>
-<td>Android, iOS, macOS, Windows, Linux, Web</td>
-<td>Runnable in this repo</td>
-</tr>
-<tr>
-<td><a href="https://pub.dev/packages/hive">hive</a></td>
-<td>Key-value baseline</td>
-<td>Android, iOS, macOS, Windows, Linux, Web</td>
-<td>Tracked for historical comparison</td>
-</tr>
-<tr>
-<td><a href="https://pub.dev/packages/sembast">sembast</a></td>
-<td>NoSQL</td>
-<td>Dart VM and Flutter native targets</td>
-<td>Runnable in this repo</td>
-</tr>
-<tr>
-<td><a href="https://pub.dev/packages/sembast_web">sembast_web</a></td>
-<td>NoSQL</td>
-<td>Web</td>
-<td>Runnable on Web in this repo</td>
-</tr>
-<tr>
-<td><a href="https://pub.dev/packages/sembast_sqflite">sembast_sqflite</a></td>
-<td>SQL</td>
-<td>sqflite-supported Flutter targets</td>
-<td>Tracked; adapter pending</td>
-</tr>
-<tr>
-<td><a href="https://pub.dev/packages/get_storage">get_storage</a></td>
-<td>Key-value baseline</td>
-<td>Android, iOS, macOS, Windows, Linux, Web</td>
-<td>Runnable in this repo</td>
-</tr>
-<tr>
-<td><a href="https://pub.dev/packages/localstore">localstore</a></td>
-<td>NoSQL</td>
-<td>Flutter targets declared by package</td>
-<td>Runnable in this repo</td>
-</tr>
-<tr>
-<td><a href="https://pub.dev/packages/shared_preferences">shared_preferences</a></td>
-<td>Key-value baseline</td>
-<td>Android, iOS, macOS, Windows, Linux, Web</td>
-<td>Runnable in this repo</td>
+<td data-sort-value="shared_preferences"><a href="https://pub.dev/packages/shared_preferences">shared_preferences</a></td>
+<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
+<td data-sort-value="Runnable in this repo">Runnable in this repo</td>
 </tr>
 </tbody>
 </table></div>
@@ -2315,5 +1835,40 @@ a { color: #1d4ed8; }
 </dl>
 </section>
 </main>
+<script>
+function sortTable(table, columnIndex, type, direction) {
+  const body = table.tBodies[0];
+  const rows = Array.from(body.rows);
+  rows.sort((left, right) => {
+    const leftValue = left.cells[columnIndex].dataset.sortValue || left.cells[columnIndex].textContent.trim();
+    const rightValue = right.cells[columnIndex].dataset.sortValue || right.cells[columnIndex].textContent.trim();
+    if (type === 'number') {
+      return (Number(leftValue) - Number(rightValue)) * direction;
+    }
+    return leftValue.localeCompare(rightValue, undefined, { numeric: true, sensitivity: 'base' }) * direction;
+  });
+  body.replaceChildren(...rows);
+}
+
+document.querySelectorAll('[data-sort-table]').forEach((table) => {
+  table.querySelectorAll('th[data-sort-key]').forEach((header, columnIndex) => {
+    header.addEventListener('click', () => {
+      const current = header.dataset.sortDirection === 'asc' ? 'desc' : 'asc';
+      table.querySelectorAll('th[data-sort-key]').forEach((cell) => {
+        delete cell.dataset.sortDirection;
+      });
+      header.dataset.sortDirection = current;
+      sortTable(table, columnIndex, header.dataset.sortType || 'text', current === 'asc' ? 1 : -1);
+    });
+    header.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        header.click();
+      }
+    });
+  });
+});
+
+</script>
 </body>
 </html>

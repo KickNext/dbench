@@ -1,6 +1,6 @@
 {
-    "name": "Dbench",
-    "short_name": "Dbench",
+    "name": "Flutter Database Benchmarks",
+    "short_name": "DB Benchmarks",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

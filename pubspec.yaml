@@ -1,4 +1,4 @@
-name: dbench
+name: flutter_database_benchmarks
 description: "Dart and Flutter local database benchmark suite."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -41,8 +41,6 @@ dependencies:
   sembast: ^3.8.7
   sembast_web: ^2.4.4+1
   sqflite_common_ffi: ^2.4.0+3
-  isar_community: ^3.3.2
-  isar_community_flutter_libs: ^3.3.2
   get_storage: ^2.1.1
   localstore: ^1.4.0
   sqflite: ^2.4.2+1
@@ -64,7 +62,6 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   build_runner: ^2.15.0
-  isar_community_generator: ^3.3.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

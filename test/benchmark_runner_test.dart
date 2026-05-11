@@ -1,5 +1,5 @@
-import 'package:dbench/src/benchmark/benchmark_runner.dart';
-import 'package:dbench/src/benchmark/database_adapter.dart';
+import 'package:flutter_database_benchmarks/src/benchmark/benchmark_runner.dart';
+import 'package:flutter_database_benchmarks/src/benchmark/database_adapter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

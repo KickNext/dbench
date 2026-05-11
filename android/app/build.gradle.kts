@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.kicknext.dbench"
+    namespace = "dev.kicknext.flutter_database_benchmarks"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "dev.kicknext.dbench"
+        applicationId = "dev.kicknext.flutter_database_benchmarks"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

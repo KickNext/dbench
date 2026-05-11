@@ -7,16 +7,16 @@ import 'src/platform/environment_label.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const DbenchApp());
+  runApp(const DatabaseBenchmarksApp());
 }
 
-final class DbenchApp extends StatelessWidget {
-  const DbenchApp({super.key});
+final class DatabaseBenchmarksApp extends StatelessWidget {
+  const DatabaseBenchmarksApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Dbench',
+      title: 'Flutter Database Benchmarks',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xff2f6fed),
@@ -90,7 +90,7 @@ final class _BenchmarkHomePageState extends State<BenchmarkHomePage> {
   Widget build(BuildContext context) {
     final report = _report;
     return Scaffold(
-      appBar: AppBar(title: const Text('Dbench')),
+      appBar: AppBar(title: const Text('Flutter Database Benchmarks')),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [

@@ -10,7 +10,7 @@ import '../platform/storage_directory.dart';
 DatabaseAdapter createDriftAdapter() => DriftAdapter();
 
 final class DriftAdapter implements TransactionalDatabaseAdapter {
-  _DbenchDriftDatabase? _database;
+  _BenchmarkDriftDatabase? _database;
 
   @override
   String get name => 'drift';
@@ -28,7 +28,9 @@ final class DriftAdapter implements TransactionalDatabaseAdapter {
   Future<void> open() async {
     final basePath = await benchmarkStoragePath();
     final databasePath = p.join(basePath!, 'dbench_drift.db');
-    final database = _DbenchDriftDatabase(NativeDatabase(File(databasePath)));
+    final database = _BenchmarkDriftDatabase(
+      NativeDatabase(File(databasePath)),
+    );
     _database = database;
     await database.customStatement('''
 CREATE TABLE IF NOT EXISTS records(
@@ -118,7 +120,7 @@ WHERE id = ?
     return _requireOpen().transaction(action);
   }
 
-  _DbenchDriftDatabase _requireOpen() {
+  _BenchmarkDriftDatabase _requireOpen() {
     final database = _database;
     if (database == null) {
       throw StateError('DriftAdapter is not open.');
@@ -149,8 +151,8 @@ WHERE id = ?
   }
 }
 
-final class _DbenchDriftDatabase extends GeneratedDatabase {
-  _DbenchDriftDatabase(super.executor);
+final class _BenchmarkDriftDatabase extends GeneratedDatabase {
+  _BenchmarkDriftDatabase(super.executor);
 
   @override
   Iterable<TableInfo<Table, Object?>> get allTables => const [];

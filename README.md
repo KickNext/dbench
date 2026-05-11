@@ -1,8 +1,8 @@
-# Dbench
+# Flutter Database Benchmarks
 
-Dbench is a Dart and Flutter local database benchmark suite. It tracks popular Flutter database packages, runs the same realistic scenarios on supported targets, and renders committed JSON snapshots into charts.
+Flutter Database Benchmarks is a Dart and Flutter local database benchmark suite. It measures popular local persistence packages through real adapters, runs the same realistic scenarios on supported targets, and renders committed JSON snapshots into charts.
 
-Open [docs/results.html](docs/results.html) to see the benchmark results visually. The README stays as a compact index: what is measured now, what is tracked but not yet measured, and where the raw data lives.
+Open [docs/results.html](docs/results.html) to see the benchmark results visually. The README stays as a compact index: what is measured now, which targets are skipped for platform reasons, and where the raw data lives.
 
 ## Current Scope
 
@@ -10,7 +10,7 @@ Open [docs/results.html](docs/results.html) to see the benchmark results visuall
 - Runtime targets: Flutter Web in Chrome, Flutter Linux desktop, and Flutter Windows in CI; Android physical-device runs are supported as local/private measurements.
 - CI workload: deterministic balanced CRUD, read-heavy, large-payload, write-churn stress, and batched-transaction scenarios with point reads, group queries, updates, deletes, and verification reads. Pull-request and push runs are smoke-sized to keep every change reproducible; scheduled runs use a larger record count without changing scenario semantics, and manual workflow dispatch defaults to a heavier run.
 - Public source of truth: committed JSON files under `results/`, regenerated into this README and `docs/results.html` by `dart run tool/update_readme.dart`.
-- Packages without numbers are not counted as tested. They remain visible as explicit tracked gaps until a fair adapter, generated model, native binding, or Web asset setup exists.
+- The package matrix only lists packages with real adapter coverage. Target-specific unsupported rows remain visible as skipped results, but unimplemented package ideas do not appear as benchmark coverage.
 - `memory_baseline`, `shared_preferences`, `get_storage`, and `hive_ce` are baselines. The HTML report has a separate SQL/document summary so key-value settings stores do not dominate database-engine comparisons.
 - Local machine and physical-device measurements belong under gitignored `local_results/`.
 
@@ -20,26 +20,18 @@ Ops/sec is every counted operation divided by the median successful sample windo
 
 <!-- DBENCH:PACKAGE_MATRIX:start -->
 <details>
-<summary>Tracked package matrix (19 packages)</summary>
+<summary>Adapter-covered package matrix (11 packages)</summary>
 
 | Package | Latest | Family | Type | Platforms | Transactions | Benchmark status |
 | --- | ---: | --- | --- | --- | --- | --- |
-| [isar_community](https://pub.dev/packages/isar_community) | 3.3.2 | NoSQL | NoSQL object database | Android, iOS, macOS, Windows, Linux | Read/write transactions | Tracked; adapter pending generated model wiring |
-| [isar_db](https://pub.dev/packages/isar_db) | 1.0.1+1 | NoSQL | NoSQL object database | Flutter targets declared by package | Read/write transactions | Tracked; compatibility adapter pending |
-| [isar](https://pub.dev/packages/isar) | 3.1.0+1 | NoSQL | NoSQL object database | Android, iOS, macOS, Windows, Linux, Web | Read/write transactions | Tracked for historical comparison |
-| [objectbox](https://pub.dev/packages/objectbox) | 5.3.1 | NoSQL | NoSQL object database | Android, iOS, macOS, Windows, Linux | ACID transactions | Tracked; adapter pending generated model wiring |
-| [realm](https://pub.dev/packages/realm) | 20.2.0 | NoSQL | Object database | Android, iOS, macOS, Windows, Linux | Write transactions | Tracked; adapter pending generated model wiring |
-| [drift](https://pub.dev/packages/drift) | 2.33.0 | SQL | SQLite ORM/query builder | Android, iOS, macOS, Windows, Linux, Web | SQLite transactions | Runnable on native CI in this repo; Web adapter pending sqlite3 WASM assets |
-| [floor](https://pub.dev/packages/floor) | 1.5.0 | SQL | SQLite persistence abstraction | Android, iOS, macOS | SQLite transactions | Tracked; adapter pending |
-| [sqflite](https://pub.dev/packages/sqflite) | 2.4.2+1 | SQL | SQLite plugin | Android, iOS, macOS | SQLite transactions | Runnable on Android in this repo |
-| [sqflite_common_ffi](https://pub.dev/packages/sqflite_common_ffi) | 2.4.0+3 | SQL | SQLite FFI implementation | Windows, Linux, macOS, tests | SQLite transactions | Runnable on Windows and Linux in this repo |
-| [sqlite3](https://pub.dev/packages/sqlite3) | 3.3.1 | SQL | SQLite FFI bindings | Dart VM and Flutter native targets | Manual SQLite transactions | Runnable on native Flutter targets in this repo |
-| [sqlite_async](https://pub.dev/packages/sqlite_async) | 0.14.1 | SQL | Async SQLite wrapper | Flutter native targets | SQLite transactions | Runnable on native CI in this repo; Web adapter pending sqlite3 WASM assets |
+| [drift](https://pub.dev/packages/drift) | 2.33.0 | SQL | SQLite ORM/query builder | Android, iOS, macOS, Windows, Linux, Web | SQLite transactions | Runnable on native CI; Web is skipped until sqlite3 WASM assets are configured |
+| [sqflite](https://pub.dev/packages/sqflite) | 2.4.2+1 | SQL | SQLite plugin | Android, iOS, macOS | SQLite transactions | Runnable on Android and Apple targets; desktop CI uses sqflite_common_ffi |
+| [sqflite_common_ffi](https://pub.dev/packages/sqflite_common_ffi) | 2.4.0+3 | SQL | SQLite FFI implementation | Windows, Linux, macOS, tests | SQLite transactions | Runnable on Windows and Linux CI |
+| [sqlite3](https://pub.dev/packages/sqlite3) | 3.3.1 | SQL | SQLite FFI bindings | Dart VM and Flutter native targets | Manual SQLite transactions | Runnable on native Flutter targets |
+| [sqlite_async](https://pub.dev/packages/sqlite_async) | 0.14.1 | SQL | Async SQLite wrapper | Flutter native targets | SQLite transactions | Runnable on native CI; Web is skipped until sqlite3 WASM assets are configured |
 | [hive_ce](https://pub.dev/packages/hive_ce) | 2.19.3 | Key-value baseline | Key-value / typed boxes | Android, iOS, macOS, Windows, Linux, Web | No general transaction model | Runnable in this repo |
-| [hive](https://pub.dev/packages/hive) | 2.2.3 | Key-value baseline | Key-value / typed boxes | Android, iOS, macOS, Windows, Linux, Web | No general transaction model | Tracked for historical comparison |
-| [sembast](https://pub.dev/packages/sembast) | 3.8.7 | NoSQL | Document database | Dart VM and Flutter native targets | Single database transaction API | Runnable in this repo |
-| [sembast_web](https://pub.dev/packages/sembast_web) | 2.4.4+1 | NoSQL | Document database | Web | Sembast transaction API | Runnable on Web in this repo |
-| [sembast_sqflite](https://pub.dev/packages/sembast_sqflite) | 2.2.1+1 | SQL | Document database over SQLite | sqflite-supported Flutter targets | Sembast transaction API | Tracked; adapter pending |
+| [sembast](https://pub.dev/packages/sembast) | 3.8.7 | NoSQL | Document database | Dart VM and Flutter native targets | Single database transaction API | Runnable on native targets |
+| [sembast_web](https://pub.dev/packages/sembast_web) | 2.4.4+1 | NoSQL | Document database | Web | Sembast transaction API | Runnable on Web CI |
 | [get_storage](https://pub.dev/packages/get_storage) | 2.1.1 | Key-value baseline | Lightweight key-value storage | Android, iOS, macOS, Windows, Linux, Web | No transaction model | Runnable in this repo |
 | [localstore](https://pub.dev/packages/localstore) | 1.4.0 | NoSQL | JSON document storage | Flutter targets declared by package | No general transaction model | Runnable in this repo |
 | [shared_preferences](https://pub.dev/packages/shared_preferences) | 2.5.5 | Key-value baseline | Platform key-value preferences | Android, iOS, macOS, Windows, Linux, Web | No transaction model | Runnable in this repo |
@@ -68,41 +60,41 @@ Open [docs/results.html](docs/results.html) for the visual dashboard with SVG ch
 
 Committed result snapshots currently present: `linux`, `web`, `windows`.
 
-Measured packages in committed snapshots: 10 of 19. The remaining packages are explicit adapter/platform gaps, not hidden benchmark numbers.
+Measured packages in committed snapshots: 10 of 11. Skipped rows are target-specific platform or scenario limits, not hidden benchmark numbers.
 
 ### Coverage Snapshot
 
 | Environment | Completed adapters | Skipped rows | Failed rows |
 | --- | --- | ---: | ---: |
-| linux | `drift`, `get_storage`, `hive_ce`, `localstore`, `sembast`, `shared_preferences`, `sqflite_common_ffi`, `sqlite3`, `sqlite_async` | 56 | 0 |
-| web | `get_storage`, `hive_ce`, `localstore`, `sembast_web`, `shared_preferences` | 76 | 0 |
-| windows | `drift`, `get_storage`, `hive_ce`, `localstore`, `sembast`, `shared_preferences`, `sqflite_common_ffi`, `sqlite3`, `sqlite_async` | 56 | 0 |
+| linux | `drift`, `get_storage`, `hive_ce`, `localstore`, `sembast`, `shared_preferences`, `sqflite_common_ffi`, `sqlite3`, `sqlite_async` | 16 | 0 |
+| web | `get_storage`, `hive_ce`, `localstore`, `sembast_web`, `shared_preferences` | 36 | 0 |
+| windows | `drift`, `get_storage`, `hive_ce`, `localstore`, `sembast`, `shared_preferences`, `sqflite_common_ffi`, `sqlite3`, `sqlite_async` | 16 | 0 |
 
-### Tracked But Not Yet Measured
+### Adapter-Covered But Not Present In CI Numbers
 
-`floor`, `hive`, `isar`, `isar_community`, `isar_db`, `objectbox`, `realm`, `sembast_sqflite`, `sqflite`
+`sqflite`
 
-Reasons are kept in the package matrix and raw JSON: generated object-model adapters (`isar*`, `objectbox`, `realm`, `floor`), Web SQLite WASM/worker assets (`drift`, `sqlite_async` on Web), platform-only adapters (`sqflite` on Android/iOS/macOS), or compatibility adapters still pending (`sembast_sqflite`, legacy `hive`).
+Reasons are kept in raw JSON skipped rows, typically platform-only adapters such as `sqflite` on Android/iOS/macOS or Web SQLite WASM/worker setup that is intentionally not counted as a completed CI number.
 
 ### Fastest Rows
 
 | Environment | Scenario | Fastest SQL/document adapter | Fastest persistent adapter | Completed | Skipped | Failed |
 | --- | --- | --- | --- | ---: | ---: | ---: |
-| linux | batched_transaction | `sqlite3` 34,883 ops/sec | `sqlite3` 34,883 ops/sec | 4 | 16 | 0 |
-| linux | crud_balanced | `sqlite3` 2,180 ops/sec | `get_storage` 44,928 ops/sec | 10 | 10 | 0 |
-| linux | large_payload | `sqlite3` 2,596 ops/sec | `get_storage` 77,434 ops/sec | 10 | 10 | 0 |
-| linux | read_heavy | `sqlite3` 3,256 ops/sec | `get_storage` 87,475 ops/sec | 10 | 10 | 0 |
-| linux | write_churn_stress | `sqlite3` 2,290 ops/sec | `get_storage` 72,298 ops/sec | 10 | 10 | 0 |
-| web | batched_transaction | - | - | 0 | 20 | 0 |
-| web | crud_balanced | `localstore` 7,058 ops/sec | `shared_preferences` 36,598 ops/sec | 6 | 14 | 0 |
-| web | large_payload | `localstore` 4,964 ops/sec | `shared_preferences` 38,182 ops/sec | 6 | 14 | 0 |
-| web | read_heavy | `localstore` 10,876 ops/sec | `shared_preferences` 60,425 ops/sec | 6 | 14 | 0 |
-| web | write_churn_stress | `localstore` 3,128 ops/sec | `shared_preferences` 63,691 ops/sec | 6 | 14 | 0 |
-| windows | batched_transaction | `sqlite3` 4,488 ops/sec | `sqlite3` 4,488 ops/sec | 4 | 16 | 0 |
-| windows | crud_balanced | `sqlite_async` 1,412 ops/sec | `get_storage` 49,902 ops/sec | 10 | 10 | 0 |
-| windows | large_payload | `sembast` 1,195 ops/sec | `get_storage` 70,258 ops/sec | 10 | 10 | 0 |
-| windows | read_heavy | `sembast` 2,194 ops/sec | `get_storage` 85,078 ops/sec | 10 | 10 | 0 |
-| windows | write_churn_stress | `sqlite_async` 2,005 ops/sec | `get_storage` 66,255 ops/sec | 10 | 10 | 0 |
+| linux | batched_transaction | `sqlite3` 34,883 ops/sec | `sqlite3` 34,883 ops/sec | 4 | 8 | 0 |
+| linux | crud_balanced | `sqlite3` 2,180 ops/sec | `get_storage` 44,928 ops/sec | 10 | 2 | 0 |
+| linux | large_payload | `sqlite3` 2,596 ops/sec | `get_storage` 77,434 ops/sec | 10 | 2 | 0 |
+| linux | read_heavy | `sqlite3` 3,256 ops/sec | `get_storage` 87,475 ops/sec | 10 | 2 | 0 |
+| linux | write_churn_stress | `sqlite3` 2,290 ops/sec | `get_storage` 72,298 ops/sec | 10 | 2 | 0 |
+| web | batched_transaction | - | - | 0 | 12 | 0 |
+| web | crud_balanced | `localstore` 7,058 ops/sec | `shared_preferences` 36,598 ops/sec | 6 | 6 | 0 |
+| web | large_payload | `localstore` 4,964 ops/sec | `shared_preferences` 38,182 ops/sec | 6 | 6 | 0 |
+| web | read_heavy | `localstore` 10,876 ops/sec | `shared_preferences` 60,425 ops/sec | 6 | 6 | 0 |
+| web | write_churn_stress | `localstore` 3,128 ops/sec | `shared_preferences` 63,691 ops/sec | 6 | 6 | 0 |
+| windows | batched_transaction | `sqlite3` 4,488 ops/sec | `sqlite3` 4,488 ops/sec | 4 | 8 | 0 |
+| windows | crud_balanced | `sqlite_async` 1,412 ops/sec | `get_storage` 49,902 ops/sec | 10 | 2 | 0 |
+| windows | large_payload | `sembast` 1,195 ops/sec | `get_storage` 70,258 ops/sec | 10 | 2 | 0 |
+| windows | read_heavy | `sembast` 2,194 ops/sec | `get_storage` 85,078 ops/sec | 10 | 2 | 0 |
+| windows | write_churn_stress | `sqlite_async` 2,005 ops/sec | `get_storage` 66,255 ops/sec | 10 | 2 | 0 |
 <!-- DBENCH:CI_VISUALIZATION:end -->
 
 ## Results
@@ -110,13 +102,13 @@ Reasons are kept in the package matrix and raw JSON: generated object-model adap
 <!-- DBENCH:BENCHMARK_RESULTS:start -->
 The readable dashboard is [docs/results.html](docs/results.html). Raw machine-readable snapshots stay in `results/*.json` instead of being duplicated into README tables.
 
-Measured packages across committed snapshots: 10 of 19.
+Measured packages across committed snapshots: 10 of 11.
 
 | Environment | JSON source | Generated | Scenario rows | Measured packages |
 | --- | --- | --- | ---: | ---: |
-| linux | [`results/linux.json`](results/linux.json) | `2026-05-11T18:32:55.837577Z` | 100 | 9 |
-| web | [`results/web.json`](results/web.json) | `2026-05-11T18:29:30.724Z` | 100 | 5 |
-| windows | [`results/windows.json`](results/windows.json) | `2026-05-11T18:39:09.501893Z` | 100 | 9 |
+| linux | [`results/linux.json`](results/linux.json) | `2026-05-11T18:32:55.837577Z` | 60 | 9 |
+| web | [`results/web.json`](results/web.json) | `2026-05-11T18:29:30.724Z` | 60 | 5 |
+| windows | [`results/windows.json`](results/windows.json) | `2026-05-11T18:39:09.501893Z` | 60 | 9 |
 <!-- DBENCH:BENCHMARK_RESULTS:end -->
 
 ## Isolate Behavior

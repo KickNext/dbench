@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math' as math;
 
 const _ciResultEnvironments = {'web', 'linux', 'windows'};
+const _productName = 'Flutter Database Benchmarks';
 
 void main() {
   final root = Directory.current;
@@ -89,7 +90,7 @@ String _packageMatrix(List<Map<String, Object?>> packages) {
   }
   return '''
 <details>
-<summary>Tracked package matrix (${packages.length} packages)</summary>
+<summary>Adapter-covered package matrix (${packages.length} packages)</summary>
 
 ${table.toString().trimRight()}
 
@@ -162,7 +163,7 @@ String _ciVisualization(
     ..writeln()
     ..writeln(
       'Measured packages in committed snapshots: ${completedPackages.length} of ${packages.length}. '
-      'The remaining packages are explicit adapter/platform gaps, not hidden benchmark numbers.',
+      'Skipped rows are target-specific platform or scenario limits, not hidden benchmark numbers.',
     )
     ..writeln()
     ..writeln('### Coverage Snapshot')
@@ -195,12 +196,12 @@ String _ciVisualization(
   if (unmeasuredPackages.isNotEmpty) {
     buffer
       ..writeln()
-      ..writeln('### Tracked But Not Yet Measured')
+      ..writeln('### Adapter-Covered But Not Present In CI Numbers')
       ..writeln()
       ..writeln(unmeasuredPackages.map((name) => '`$name`').join(', '))
       ..writeln()
       ..writeln(
-        'Reasons are kept in the package matrix and raw JSON: generated object-model adapters (`isar*`, `objectbox`, `realm`, `floor`), Web SQLite WASM/worker assets (`drift`, `sqlite_async` on Web), platform-only adapters (`sqflite` on Android/iOS/macOS), or compatibility adapters still pending (`sembast_sqflite`, legacy `hive`).',
+        'Reasons are kept in raw JSON skipped rows, typically platform-only adapters such as `sqflite` on Android/iOS/macOS or Web SQLite WASM/worker setup that is intentionally not counted as a completed CI number.',
       );
   }
 
@@ -414,7 +415,7 @@ String _htmlReport(
     ..writeln(
       '<meta name="viewport" content="width=device-width, initial-scale=1">',
     )
-    ..writeln('<title>Dbench Results</title>')
+    ..writeln('<title>$_productName Results</title>')
     ..writeln('<style>')
     ..writeln(_htmlStyles)
     ..writeln('</style>')
@@ -423,7 +424,7 @@ String _htmlReport(
     ..writeln('<main>')
     ..writeln('<header class="hero">')
     ..writeln('<p class="eyebrow">Dart / Flutter database benchmark</p>')
-    ..writeln('<h1>Dbench CI Results</h1>')
+    ..writeln('<h1>$_productName CI Results</h1>')
     ..writeln(
       '<p class="lede">Self-contained visual report generated from committed JSON results. Persistent adapters are charted separately from the synthetic memory ceiling; chart bars use a log scale so slower adapters remain visually comparable.</p>',
     )
@@ -505,6 +506,9 @@ String _htmlReport(
     ..writeln(_resultPolicy(specs))
     ..writeln('</section>')
     ..writeln('</main>')
+    ..writeln('<script>')
+    ..writeln(_sortScript)
+    ..writeln('</script>')
     ..writeln('</body>')
     ..writeln('</html>');
   return buffer.toString();
@@ -598,11 +602,13 @@ String _comparisonTable(
     });
 
   final buffer = StringBuffer()
-    ..writeln('<div class="table-wrap"><table>')
+    ..writeln('<div class="table-wrap"><table data-sort-table>')
     ..writeln('<thead><tr>')
-    ..writeln('<th>Scenario</th><th>Family</th><th>Adapter</th>');
+    ..writeln(
+      '${_sortHeader('Scenario', 'text')}${_sortHeader('Family', 'text')}${_sortHeader('Adapter', 'text')}',
+    );
   for (final environment in environments) {
-    buffer.writeln('<th>${_h(environment)}</th>');
+    buffer.writeln(_sortHeader(environment, 'number'));
   }
   buffer
     ..writeln('</tr></thead>')
@@ -610,12 +616,17 @@ String _comparisonTable(
   for (final row in sortedRows) {
     buffer
       ..writeln('<tr>')
-      ..writeln('<td>${_h(row.scenario)}</td>')
-      ..writeln('<td>${_h(_resultFamily(row.database, packages))}</td>')
-      ..writeln('<td>${_h(row.database)}</td>');
+      ..writeln(_sortCell(row.scenario))
+      ..writeln(_sortCell(_resultFamily(row.database, packages)))
+      ..writeln(_sortCell(row.database));
     for (final environment in environments) {
       final rate = rates['$environment|${row.scenario}|${row.database}'];
-      buffer.writeln('<td>${rate == null ? '-' : _formatRate(rate)}</td>');
+      buffer.writeln(
+        _sortCell(
+          rate == null ? '-' : _formatRate(rate),
+          sortValue: rate ?? -1,
+        ),
+      );
     }
     buffer.writeln('</tr>');
   }
@@ -766,10 +777,10 @@ String _chartLegend() {
 
 String _packageCoverageTable(List<Map<String, Object?>> packages) {
   final buffer = StringBuffer()
-    ..writeln('<div class="table-wrap"><table>')
+    ..writeln('<div class="table-wrap"><table data-sort-table>')
     ..writeln('<thead><tr>')
     ..writeln(
-      '<th>Package</th><th>Family</th><th>Platforms</th><th>Status</th>',
+      '${_sortHeader('Package', 'text')}${_sortHeader('Family', 'text')}${_sortHeader('Platforms', 'text')}${_sortHeader('Status', 'text')}',
     )
     ..writeln('</tr></thead>')
     ..writeln('<tbody>');
@@ -777,11 +788,15 @@ String _packageCoverageTable(List<Map<String, Object?>> packages) {
     buffer
       ..writeln('<tr>')
       ..writeln(
-        '<td><a href="https://pub.dev/packages/${_u('${package['package']}')}">${_h('${package['package']}')}</a></td>',
+        _sortCell(
+          '<a href="https://pub.dev/packages/${_u('${package['package']}')}">${_h('${package['package']}')}</a>',
+          sortValue: '${package['package']}',
+          escape: false,
+        ),
       )
-      ..writeln('<td>${_h(_family(package))}</td>')
-      ..writeln('<td>${_h('${package['platforms']}')}</td>')
-      ..writeln('<td>${_h('${package['benchmarkStatus']}')}</td>')
+      ..writeln(_sortCell(_family(package)))
+      ..writeln(_sortCell('${package['platforms']}'))
+      ..writeln(_sortCell('${package['benchmarkStatus']}'))
       ..writeln('</tr>');
   }
   buffer
@@ -817,6 +832,16 @@ String _formatRate(num value) {
     }
   }
   return buffer.toString();
+}
+
+String _sortHeader(String label, String type) {
+  return '<th data-sort-key="${_h(label.toLowerCase())}" data-sort-type="$type" tabindex="0">${_h(label)} <span aria-hidden="true">sort</span></th>';
+}
+
+String _sortCell(Object display, {Object? sortValue, bool escape = true}) {
+  final value = sortValue ?? display;
+  final rendered = escape ? _h('$display') : '$display';
+  return '<td data-sort-value="${_h('$value')}">$rendered</td>';
 }
 
 String _familyColor(String family) {
@@ -1038,6 +1063,14 @@ th {
   font-size: 12px;
   text-transform: uppercase;
 }
+th[data-sort-key] {
+  cursor: pointer;
+  user-select: none;
+}
+th[data-sort-key]:focus-visible {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
 a { color: #1d4ed8; }
 @media (max-width: 760px) {
   main { width: min(100% - 20px, 1180px); padding-top: 18px; }
@@ -1047,4 +1080,39 @@ a { color: #1d4ed8; }
   .chart-head { display: block; }
   .chart-meta { white-space: normal; }
 }
+''';
+
+const _sortScript = '''
+function sortTable(table, columnIndex, type, direction) {
+  const body = table.tBodies[0];
+  const rows = Array.from(body.rows);
+  rows.sort((left, right) => {
+    const leftValue = left.cells[columnIndex].dataset.sortValue || left.cells[columnIndex].textContent.trim();
+    const rightValue = right.cells[columnIndex].dataset.sortValue || right.cells[columnIndex].textContent.trim();
+    if (type === 'number') {
+      return (Number(leftValue) - Number(rightValue)) * direction;
+    }
+    return leftValue.localeCompare(rightValue, undefined, { numeric: true, sensitivity: 'base' }) * direction;
+  });
+  body.replaceChildren(...rows);
+}
+
+document.querySelectorAll('[data-sort-table]').forEach((table) => {
+  table.querySelectorAll('th[data-sort-key]').forEach((header, columnIndex) => {
+    header.addEventListener('click', () => {
+      const current = header.dataset.sortDirection === 'asc' ? 'desc' : 'asc';
+      table.querySelectorAll('th[data-sort-key]').forEach((cell) => {
+        delete cell.dataset.sortDirection;
+      });
+      header.dataset.sortDirection = current;
+      sortTable(table, columnIndex, header.dataset.sortType || 'text', current === 'asc' ? 1 : -1);
+    });
+    header.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        header.click();
+      }
+    });
+  });
+});
 ''';

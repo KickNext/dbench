@@ -1,7 +1,7 @@
-import 'package:dbench/src/adapters/adapter_registry.dart';
-import 'package:dbench/src/benchmark/benchmark_runner.dart';
-import 'package:dbench/src/benchmark/database_adapter.dart';
-import 'package:dbench/src/platform/environment_label.dart';
+import 'package:flutter_database_benchmarks/src/adapters/adapter_registry.dart';
+import 'package:flutter_database_benchmarks/src/benchmark/benchmark_runner.dart';
+import 'package:flutter_database_benchmarks/src/benchmark/database_adapter.dart';
+import 'package:flutter_database_benchmarks/src/platform/environment_label.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
