@@ -65,6 +65,7 @@ final class _BenchmarkHomePageState extends State<BenchmarkHomePage> {
         records: records,
         payloadBytes: payloadBytes,
       ),
+      includeIsolateProbes: true,
     );
     final report = await runner.runAll(
       availableAdapters(),

@@ -5,7 +5,7 @@
     "published": "2026-03-23",
     "type": "NoSQL object database",
     "storage": "Native engine plus generated schemas",
-    "platforms": "Android, iOS, macOS, Windows, Linux, Web",
+    "platforms": "Android, iOS, macOS, Windows, Linux",
     "queryModel": "Typed object queries, indexes, links",
     "migrations": "Schema-versioned migrations",
     "transactions": "Read/write transactions",

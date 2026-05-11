@@ -25,6 +25,7 @@ void main() {
 
     final report = await BenchmarkRunner(
       workload: BenchmarkWorkload(records: records, payloadBytes: payloadBytes),
+      includeIsolateProbes: true,
     ).runAll(availableAdapters(), environment: environmentLabel());
 
     // CI and local scripts scrape this single-line marker.

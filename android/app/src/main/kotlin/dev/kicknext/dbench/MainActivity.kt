@@ -1,4 +1,4 @@
-package com.example.dbench
+package dev.kicknext.dbench
 
 import io.flutter.embedding.android.FlutterActivity
 

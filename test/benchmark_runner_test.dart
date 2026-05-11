@@ -43,6 +43,32 @@ void main() {
     expect(report.results.single.notes, contains('not available here'));
     expect(report.results.single.totalOps, 0);
   });
+
+  test('runner fails adapters that do not persist updates', () async {
+    final runner = BenchmarkRunner(
+      workload: const BenchmarkWorkload(records: 2),
+    );
+
+    final report = await runner.runAll([
+      _BadUpdateAdapter(),
+    ], environment: 'test');
+
+    expect(report.results.single.status, BenchmarkStatus.failed);
+    expect(report.results.single.notes, contains('Update verification failed'));
+  });
+
+  test('runner fails adapters that do not delete records', () async {
+    final runner = BenchmarkRunner(
+      workload: const BenchmarkWorkload(records: 2),
+    );
+
+    final report = await runner.runAll([
+      _BadDeleteAdapter(),
+    ], environment: 'test');
+
+    expect(report.results.single.status, BenchmarkStatus.failed);
+    expect(report.results.single.notes, contains('Delete verification failed'));
+  });
 }
 
 final class _FakeAdapter implements DatabaseAdapter {
@@ -84,4 +110,18 @@ final class _FakeAdapter implements DatabaseAdapter {
 
   @override
   Future<void> close() async {}
+}
+
+final class _BadUpdateAdapter extends _FakeAdapter {
+  _BadUpdateAdapter() : super('bad_update');
+
+  @override
+  Future<void> update(BenchmarkRecord record) async {}
+}
+
+final class _BadDeleteAdapter extends _FakeAdapter {
+  _BadDeleteAdapter() : super('bad_delete');
+
+  @override
+  Future<void> delete(int id) async {}
 }

@@ -19,8 +19,9 @@ void main() {
   readme = _replaceSection(
     readme,
     'BENCHMARK_RESULTS',
-    _benchmarkResults(results),
+    _benchmarkResults(results, packages),
   );
+  readme = _replaceSection(readme, 'ISOLATE_RESULTS', _isolateResults(results));
   readmeFile.writeAsStringSync(readme);
 }
 
@@ -56,13 +57,14 @@ String _replaceSection(String readme, String marker, String content) {
 String _packageMatrix(List<Map<String, Object?>> packages) {
   final buffer = StringBuffer()
     ..writeln(
-      '| Package | Latest | Type | Platforms | Transactions | Benchmark status |',
+      '| Package | Latest | Family | Type | Platforms | Transactions | Benchmark status |',
     )
-    ..writeln('| --- | ---: | --- | --- | --- | --- |');
+    ..writeln('| --- | ---: | --- | --- | --- | --- | --- |');
   for (final package in packages) {
     buffer.writeln(
       '| [${package['package']}](https://pub.dev/packages/${package['package']}) '
       '| ${package['latest']} '
+      '| ${_family(package)} '
       '| ${package['type']} '
       '| ${package['platforms']} '
       '| ${package['transactions']} '
@@ -70,6 +72,21 @@ String _packageMatrix(List<Map<String, Object?>> packages) {
     );
   }
   return buffer.toString().trimRight();
+}
+
+String _family(Map<String, Object?> package) {
+  final name = '${package['package']}';
+  final type = '${package['type']}'.toLowerCase();
+  if (type.contains('sqlite')) {
+    return 'SQL';
+  }
+  if (name == 'shared_preferences' ||
+      name == 'get_storage' ||
+      name == 'hive' ||
+      name == 'hive_ce') {
+    return 'Key-value baseline';
+  }
+  return 'NoSQL';
 }
 
 String _deviceSpecs(Map<String, Object?> specs) {
@@ -91,16 +108,19 @@ String _deviceSpecs(Map<String, Object?> specs) {
 | Edge | ${toolchain['edge']} |''';
 }
 
-String _benchmarkResults(List<Map<String, Object?>> reports) {
+String _benchmarkResults(
+  List<Map<String, Object?>> reports,
+  List<Map<String, Object?>> packages,
+) {
   if (reports.isEmpty) {
     return 'No benchmark result JSON files have been committed yet.';
   }
 
   final buffer = StringBuffer()
     ..writeln(
-      '| Environment | Database | Status | Records | Payload | Total ops | Ops/sec | Notes |',
+      '| Environment | Family | Database | Status | Records | Payload | Total ops | Ops/sec | Notes |',
     )
-    ..writeln('| --- | --- | --- | ---: | ---: | ---: | ---: | --- |');
+    ..writeln('| --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- |');
   for (final report in reports) {
     final workload = (report['workload'] as Map).cast<String, Object?>();
     final results = (report['results'] as List).cast<Map<String, Object?>>();
@@ -109,6 +129,7 @@ String _benchmarkResults(List<Map<String, Object?>> reports) {
       final notes = '${result['notes'] ?? ''}'.replaceAll('\n', '<br>');
       buffer.writeln(
         '| ${report['environment']} '
+        '| ${_resultFamily('${result['database']}', packages)} '
         '| ${result['database']} '
         '| ${result['status']} '
         '| ${workload['records']} '
@@ -120,4 +141,55 @@ String _benchmarkResults(List<Map<String, Object?>> reports) {
     }
   }
   return buffer.toString().trimRight();
+}
+
+String _isolateResults(List<Map<String, Object?>> reports) {
+  final rows = <String>[];
+  for (final report in reports) {
+    final probes =
+        (report['isolateProbes'] as List?)?.cast<Map<String, Object?>>() ?? [];
+    for (final probe in probes) {
+      rows.add(
+        '| ${report['environment']} '
+        '| ${probe['database']} '
+        '| ${probe['status']} '
+        '| ${_sharedReadLabel(probe['sharedRead'])} '
+        '| ${'${probe['notes'] ?? ''}'.replaceAll('\n', '<br>')} |',
+      );
+    }
+  }
+  if (rows.isEmpty) {
+    return 'No isolate probe results have been committed yet.';
+  }
+  return [
+    '| Environment | Database | Status | Shared read across isolates | Notes |',
+    '| --- | --- | --- | --- | --- |',
+    ...rows,
+  ].join('\n');
+}
+
+String _resultFamily(String database, List<Map<String, Object?>> packages) {
+  final matrixMatch = packages
+      .where((package) => package['package'] == database)
+      .firstOrNull;
+  if (matrixMatch != null) {
+    return _family(matrixMatch);
+  }
+  if (database.contains('sqflite') || database.contains('sqlite')) {
+    return 'SQL';
+  }
+  if (database == 'memory_baseline' ||
+      database == 'shared_preferences' ||
+      database == 'get_storage' ||
+      database == 'hive_ce') {
+    return 'Key-value baseline';
+  }
+  return 'NoSQL';
+}
+
+String _sharedReadLabel(Object? value) {
+  if (value == null) {
+    return 'not tested';
+  }
+  return value == true ? 'yes' : 'no';
 }

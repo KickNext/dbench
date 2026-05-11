@@ -1,11 +1,16 @@
 import 'dart:convert';
 
 import 'database_adapter.dart';
+import 'isolate_probe.dart';
 
 final class BenchmarkRunner {
-  const BenchmarkRunner({required this.workload});
+  const BenchmarkRunner({
+    required this.workload,
+    this.includeIsolateProbes = false,
+  });
 
   final BenchmarkWorkload workload;
+  final bool includeIsolateProbes;
 
   Future<BenchmarkReport> runAll(
     List<DatabaseAdapter> adapters, {
@@ -20,6 +25,7 @@ final class BenchmarkRunner {
       generatedAt: DateTime.timestamp().toUtc(),
       workload: workload,
       results: results,
+      isolateProbes: includeIsolateProbes ? await runIsolateProbes() : const [],
     );
   }
 
@@ -60,8 +66,22 @@ final class BenchmarkRunner {
       }
 
       for (var i = 0; i < workload.records; i++) {
+        final record = await adapter.read(i);
+        if (record == null || record.value != i * 7 + 1) {
+          throw StateError('Update verification failed for record $i.');
+        }
+      }
+
+      for (var i = 0; i < workload.records; i++) {
         await adapter.delete(i);
         deleteOps++;
+      }
+
+      for (var i = 0; i < workload.records; i++) {
+        final record = await adapter.read(i);
+        if (record != null) {
+          throw StateError('Delete verification failed for record $i.');
+        }
       }
 
       stopwatch.stop();
@@ -111,12 +131,14 @@ final class BenchmarkReport {
     required this.generatedAt,
     required this.workload,
     required this.results,
+    this.isolateProbes = const [],
   });
 
   final String environment;
   final DateTime generatedAt;
   final BenchmarkWorkload workload;
   final List<BenchmarkResult> results;
+  final List<IsolateProbeResult> isolateProbes;
 
   Map<String, Object?> toJson() {
     return {
@@ -127,6 +149,7 @@ final class BenchmarkReport {
         'payloadBytes': workload.payloadBytes,
       },
       'results': [for (final result in results) result.toJson()],
+      'isolateProbes': [for (final probe in isolateProbes) probe.toJson()],
     };
   }
 
