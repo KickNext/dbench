@@ -80,21 +80,21 @@ Reasons are kept in raw JSON skipped rows, typically platform-only adapters such
 
 | Environment | Scenario | Fastest SQL/document adapter | Fastest persistent adapter | Completed | Skipped | Failed |
 | --- | --- | --- | --- | ---: | ---: | ---: |
-| linux | batched_transaction | `sqlite3` 34,883 ops/sec | `sqlite3` 34,883 ops/sec | 4 | 8 | 0 |
-| linux | crud_balanced | `sqlite3` 2,180 ops/sec | `get_storage` 44,928 ops/sec | 10 | 2 | 0 |
-| linux | large_payload | `sqlite3` 2,596 ops/sec | `get_storage` 77,434 ops/sec | 10 | 2 | 0 |
-| linux | read_heavy | `sqlite3` 3,256 ops/sec | `get_storage` 87,475 ops/sec | 10 | 2 | 0 |
-| linux | write_churn_stress | `sqlite3` 2,290 ops/sec | `get_storage` 72,298 ops/sec | 10 | 2 | 0 |
+| linux | batched_transaction | `sqlite3` 34,687 ops/sec | `sqlite3` 34,687 ops/sec | 4 | 8 | 0 |
+| linux | crud_balanced | `drift` 1,649 ops/sec | `get_storage` 42,645 ops/sec | 10 | 2 | 0 |
+| linux | large_payload | `sqlite3` 1,925 ops/sec | `get_storage` 77,548 ops/sec | 10 | 2 | 0 |
+| linux | read_heavy | `sqlite3` 2,697 ops/sec | `get_storage` 92,192 ops/sec | 10 | 2 | 0 |
+| linux | write_churn_stress | `drift` 1,777 ops/sec | `get_storage` 72,378 ops/sec | 10 | 2 | 0 |
 | web | batched_transaction | - | - | 0 | 12 | 0 |
-| web | crud_balanced | `localstore` 7,058 ops/sec | `shared_preferences` 36,598 ops/sec | 6 | 6 | 0 |
-| web | large_payload | `localstore` 4,964 ops/sec | `shared_preferences` 38,182 ops/sec | 6 | 6 | 0 |
-| web | read_heavy | `localstore` 10,876 ops/sec | `shared_preferences` 60,425 ops/sec | 6 | 6 | 0 |
-| web | write_churn_stress | `localstore` 3,128 ops/sec | `shared_preferences` 63,691 ops/sec | 6 | 6 | 0 |
-| windows | batched_transaction | `sqlite3` 4,488 ops/sec | `sqlite3` 4,488 ops/sec | 4 | 8 | 0 |
-| windows | crud_balanced | `sqlite_async` 1,412 ops/sec | `get_storage` 49,902 ops/sec | 10 | 2 | 0 |
-| windows | large_payload | `sembast` 1,195 ops/sec | `get_storage` 70,258 ops/sec | 10 | 2 | 0 |
-| windows | read_heavy | `sembast` 2,194 ops/sec | `get_storage` 85,078 ops/sec | 10 | 2 | 0 |
-| windows | write_churn_stress | `sqlite_async` 2,005 ops/sec | `get_storage` 66,255 ops/sec | 10 | 2 | 0 |
+| web | crud_balanced | `localstore` 6,526 ops/sec | `shared_preferences` 40,805 ops/sec | 6 | 6 | 0 |
+| web | large_payload | `localstore` 4,070 ops/sec | `shared_preferences` 28,000 ops/sec | 6 | 6 | 0 |
+| web | read_heavy | `localstore` 10,681 ops/sec | `shared_preferences` 59,788 ops/sec | 6 | 6 | 0 |
+| web | write_churn_stress | `localstore` 3,073 ops/sec | `shared_preferences` 54,839 ops/sec | 6 | 6 | 0 |
+| windows | batched_transaction | `sqlite3` 6,008 ops/sec | `sqlite3` 6,008 ops/sec | 4 | 8 | 0 |
+| windows | crud_balanced | `sqlite_async` 1,607 ops/sec | `get_storage` 41,349 ops/sec | 10 | 2 | 0 |
+| windows | large_payload | `sqlite_async` 1,437 ops/sec | `get_storage` 67,437 ops/sec | 10 | 2 | 0 |
+| windows | read_heavy | `sqlite_async` 2,188 ops/sec | `get_storage` 83,673 ops/sec | 10 | 2 | 0 |
+| windows | write_churn_stress | `sqlite_async` 2,325 ops/sec | `get_storage` 66,848 ops/sec | 10 | 2 | 0 |
 <!-- DBENCH:CI_VISUALIZATION:end -->
 
 ## Results
@@ -106,9 +106,9 @@ Measured packages across committed snapshots: 10 of 11.
 
 | Environment | JSON source | Generated | Scenario rows | Measured packages |
 | --- | --- | --- | ---: | ---: |
-| linux | [`results/linux.json`](results/linux.json) | `2026-05-11T18:32:55.837577Z` | 60 | 9 |
-| web | [`results/web.json`](results/web.json) | `2026-05-11T18:29:30.724Z` | 60 | 5 |
-| windows | [`results/windows.json`](results/windows.json) | `2026-05-11T18:39:09.501893Z` | 60 | 9 |
+| linux | [`results/linux.json`](results/linux.json) | `2026-05-11T21:20:42.451351Z` | 60 | 9 |
+| web | [`results/web.json`](results/web.json) | `2026-05-11T21:18:05.162Z` | 60 | 5 |
+| windows | [`results/windows.json`](results/windows.json) | `2026-05-11T21:26:42.833289Z` | 60 | 9 |
 <!-- DBENCH:BENCHMARK_RESULTS:end -->
 
 ## Isolate Behavior
