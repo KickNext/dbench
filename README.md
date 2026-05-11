@@ -74,18 +74,18 @@ The Android device name is recorded as hardware metadata only. It is not used as
 | android | Key-value baseline | hive_ce | completed | 1000 | 256 | 4000 | 288 |  |
 | android | NoSQL | sembast | completed | 1000 | 256 | 4000 | 84 |  |
 | android | SQL | sqflite | completed | 1000 | 256 | 4000 | 158 |  |
-| web | Key-value baseline | memory_baseline | completed | 1000 | 256 | 4000 | 563380 |  |
-| web | Key-value baseline | shared_preferences | completed | 1000 | 256 | 4000 | 97800 |  |
-| web | Key-value baseline | get_storage | completed | 1000 | 256 | 4000 | 1046 |  |
-| web | Key-value baseline | hive_ce | completed | 1000 | 256 | 4000 | 3180 |  |
-| web | NoSQL | sembast | completed | 1000 | 256 | 4000 | 2068 |  |
+| web | Key-value baseline | memory_baseline | completed | 1000 | 256 | 4000 | 259740 |  |
+| web | Key-value baseline | shared_preferences | completed | 1000 | 256 | 4000 | 33755 |  |
+| web | Key-value baseline | get_storage | completed | 1000 | 256 | 4000 | 613 |  |
+| web | Key-value baseline | hive_ce | completed | 1000 | 256 | 4000 | 1803 |  |
+| web | NoSQL | sembast | completed | 1000 | 256 | 4000 | 814 |  |
 | web | SQL | sqflite_sqlite | skipped | 1000 | 256 | 0 | 0 | SQLite adapter is not available on this target. |
-| windows | Key-value baseline | memory_baseline | completed | 1000 | 256 | 4000 | 122971 |  |
-| windows | Key-value baseline | shared_preferences | completed | 1000 | 256 | 4000 | 143 |  |
-| windows | Key-value baseline | get_storage | completed | 1000 | 256 | 4000 | 54139 |  |
-| windows | Key-value baseline | hive_ce | completed | 1000 | 256 | 4000 | 4744 |  |
-| windows | NoSQL | sembast | completed | 1000 | 256 | 4000 | 156 |  |
-| windows | SQL | sqflite_common_ffi | completed | 1000 | 256 | 4000 | 631 |  |
+| windows | Key-value baseline | memory_baseline | completed | 1000 | 256 | 4000 | 67789 |  |
+| windows | Key-value baseline | shared_preferences | completed | 1000 | 256 | 4000 | 279 |  |
+| windows | Key-value baseline | get_storage | completed | 1000 | 256 | 4000 | 36518 |  |
+| windows | Key-value baseline | hive_ce | completed | 1000 | 256 | 4000 | 870 |  |
+| windows | NoSQL | sembast | completed | 1000 | 256 | 4000 | 191 |  |
+| windows | SQL | sqflite_common_ffi | completed | 1000 | 256 | 4000 | 23 |  |
 <!-- DBENCH:BENCHMARK_RESULTS:end -->
 
 ## Isolate Behavior
