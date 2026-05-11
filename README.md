@@ -2,17 +2,17 @@
 
 Dbench is a Dart and Flutter local database benchmark suite. It tracks popular Flutter database packages, documents their tradeoffs, and runs the same write/read/update/delete workload on Android, Web, and Windows targets where an adapter is available.
 
-The repository is intentionally benchmark-first: package claims are not treated as results until the benchmark harness can run them and commit JSON output.
+The public README is intentionally CI-first: package claims are not treated as published results until GitHub Actions can run the benchmark and commit JSON output.
 
 The current executable adapter set is a first measured slice, not a finished ranking of every major database package. Packages marked `Tracked; adapter pending` are included so gaps are visible instead of silently ignored.
 
 ## Current Scope
 
-- Flutter stable: 3.41.9 locally, `stable` channel in CI.
-- Runtime targets: Android physical device, Flutter Web in Chrome, and Flutter Windows.
+- Flutter stable channel.
+- Runtime targets: Flutter Web in Chrome and Flutter Windows in CI; Android physical-device runs are supported as local/private measurements.
 - Workload: deterministic record insert, point read, update, and delete loops, followed by update/delete verification reads.
-- Result source of truth: JSON files under `results/`, rendered into this README by `dart run tool/update_readme.dart`.
-- CI refreshes hosted Web and Windows results automatically. Android physical-device results are committed from local ADB runs because GitHub-hosted runners do not provide this device.
+- Public result source of truth: CI JSON files under `results/`, rendered into this README by `dart run tool/update_readme.dart`.
+- Local machine and physical-device measurements belong under `local_results/` and are ignored by git.
 - `memory_baseline`, `shared_preferences`, `get_storage`, and `hive_ce` are baselines, not durable relational or rich-query document/object databases; compare them against database engines with that limitation in mind.
 
 Ops/sec is `write + read + update + delete` operation count divided by the full timed window for that adapter, including `open()`, `clear()`, and verification reads. This intentionally reflects benchmark-harness cost, not a vendor microbenchmark of only raw CRUD calls.
@@ -43,37 +43,49 @@ Ops/sec is `write + read + update + delete` operation count divided by the full 
 | [shared_preferences](https://pub.dev/packages/shared_preferences) | 2.5.5 | Key-value baseline | Platform key-value preferences | Android, iOS, macOS, Windows, Linux, Web | No transaction model | Runnable in this repo |
 <!-- DBENCH:PACKAGE_MATRIX:end -->
 
-## Test Device And Toolchain
-
-The Android device name is recorded as hardware metadata only. It is not used as a result column.
+## CI Result Source
 
 <!-- DBENCH:DEVICE_SPECS:start -->
 | Area | Value |
 | --- | --- |
-| Android test device | K15 (rockchip, rk3568_r) |
-| Android hardware | Rockchip RK3568 EVB1 DDR4 V10 Board |
-| Android OS | Android 11 / API 30 |
-| Android CPU | 4 x ARM Cortex-A55 class cores (CPU part 0xd05) |
-| Android memory | 3984488 kB total, 1992240 kB swap |
-| Android display | 1366x768 at 160 dpi |
-| Flutter | 3.41.9 stable |
-| Dart | 3.11.5 |
-| Windows | Microsoft Windows 10.0.26200.8328 |
-| Chrome | 148.0.7778.96 |
-| Edge | 147.0.3912.98 |
+| README results | Only GitHub Actions CI benchmark JSON files under results/ are rendered into README.md. |
+| Local results | Personal machine and physical-device runs should be saved under gitignored local_results/. |
+| Flutter | stable channel in GitHub Actions |
+| Web CI | ubuntu-latest runner, Flutter Web release build, Chrome |
+| Windows CI | windows-latest runner, Flutter Windows desktop test target |
+| Android | Not published in README because GitHub-hosted runners do not provide the physical device used for local measurements |
 <!-- DBENCH:DEVICE_SPECS:end -->
+
+## CI Performance Overview
+
+<!-- DBENCH:CI_VISUALIZATION:start -->
+Completed adapters only. Bars are linear and normalized within each CI environment; skipped adapters remain in the detailed table.
+
+### web
+| Rank | Family | Database | Ops/sec | Relative to fastest |
+| ---: | --- | --- | ---: | --- |
+| 1 | Key-value baseline | memory_baseline | 259740 | `########################` 100.0% |
+| 2 | Key-value baseline | shared_preferences | 33755 | `###.....................` 13.0% |
+| 3 | Key-value baseline | hive_ce | 1803 | `#.......................` 0.7% |
+| 4 | NoSQL | sembast | 814 | `#.......................` 0.3% |
+| 5 | Key-value baseline | get_storage | 613 | `#.......................` 0.2% |
+
+### windows
+| Rank | Family | Database | Ops/sec | Relative to fastest |
+| ---: | --- | --- | ---: | --- |
+| 1 | Key-value baseline | memory_baseline | 67789 | `########################` 100.0% |
+| 2 | Key-value baseline | get_storage | 36518 | `#############...........` 53.9% |
+| 3 | Key-value baseline | hive_ce | 870 | `#.......................` 1.3% |
+| 4 | Key-value baseline | shared_preferences | 279 | `#.......................` 0.4% |
+| 5 | NoSQL | sembast | 191 | `#.......................` 0.3% |
+| 6 | SQL | sqflite_common_ffi | 23 | `#.......................` 0.0% |
+<!-- DBENCH:CI_VISUALIZATION:end -->
 
 ## Results
 
 <!-- DBENCH:BENCHMARK_RESULTS:start -->
 | Environment | Family | Database | Status | Records | Payload | Total ops | Ops/sec | Notes |
 | --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- |
-| android | Key-value baseline | memory_baseline | completed | 1000 | 256 | 4000 | 6162 |  |
-| android | Key-value baseline | shared_preferences | completed | 1000 | 256 | 4000 | 41 |  |
-| android | Key-value baseline | get_storage | completed | 1000 | 256 | 4000 | 2262 |  |
-| android | Key-value baseline | hive_ce | completed | 1000 | 256 | 4000 | 288 |  |
-| android | NoSQL | sembast | completed | 1000 | 256 | 4000 | 84 |  |
-| android | SQL | sqflite | completed | 1000 | 256 | 4000 | 158 |  |
 | web | Key-value baseline | memory_baseline | completed | 1000 | 256 | 4000 | 259740 |  |
 | web | Key-value baseline | shared_preferences | completed | 1000 | 256 | 4000 | 33755 |  |
 | web | Key-value baseline | get_storage | completed | 1000 | 256 | 4000 | 613 |  |
@@ -95,12 +107,6 @@ This section checks whether a database can be reopened from a separate Dart isol
 <!-- DBENCH:ISOLATE_RESULTS:start -->
 | Environment | Database | Status | Shared read across isolates | Notes |
 | --- | --- | --- | --- | --- |
-| android | memory_baseline | completed | no | Dart isolates have separate heaps; in-memory maps are not shared. |
-| android | hive_ce | completed | yes | Separate isolate reopened the same box path and read the main isolate record. |
-| android | sembast | completed | yes | Separate isolate reopened the same database file and read the main isolate record. |
-| android | shared_preferences | skipped | not tested | Plugin-backed storage is not probed from a background isolate. |
-| android | get_storage | skipped | not tested | Flutter/widget-bound package; isolate sharing needs a dedicated adapter. |
-| android | sqflite | skipped | not tested | Not yet probed; sqflite method-channel access needs a background-isolate-specific adapter. |
 | web | all | skipped | not tested | Flutter Web does not expose Dart VM isolates for this benchmark. |
 | windows | memory_baseline | completed | no | Dart isolates have separate heaps; in-memory maps are not shared. |
 | windows | hive_ce | completed | yes | Separate isolate reopened the same box path and read the main isolate record. |
@@ -116,14 +122,14 @@ This section checks whether a database can be reopened from a separate Dart isol
 flutter pub get
 flutter test
 flutter analyze
+mkdir -p local_results
 flutter test integration_test/benchmark_test.dart -d windows --dart-define=DBENCH_RECORDS=1000
 flutter build web --release --dart-define=DBENCH_AUTORUN=true --dart-define=DBENCH_RECORDS=1000
-node tool/run_web_benchmark.cjs http://127.0.0.1:18080 results/web.json
+node tool/run_web_benchmark.cjs http://127.0.0.1:18080 local_results/web.json
 flutter test integration_test/benchmark_test.dart -d <android-device-id> --dart-define=DBENCH_RECORDS=1000
-dart run tool/update_readme.dart
 ```
 
-Each benchmark run prints a `DBENCH_RESULT_JSON=` line. Save that JSON into `results/<environment>.json`, then run the README updater.
+Each benchmark run prints a `DBENCH_RESULT_JSON=` line. Save personal runs into `local_results/<environment>.json`; keep `results/` reserved for CI output that is meant to update the public README.
 
 ## Adding A Database Adapter
 

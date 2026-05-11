@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+const _ciResultEnvironments = {'web', 'windows'};
+
 void main() {
   final root = Directory.current;
   final matrixFile = File('${root.path}/data/package_matrix.json');
@@ -16,6 +18,11 @@ void main() {
   var readme = readmeFile.readAsStringSync();
   readme = _replaceSection(readme, 'PACKAGE_MATRIX', _packageMatrix(packages));
   readme = _replaceSection(readme, 'DEVICE_SPECS', _deviceSpecs(specs));
+  readme = _replaceSection(
+    readme,
+    'CI_VISUALIZATION',
+    _ciVisualization(results, packages),
+  );
   readme = _replaceSection(
     readme,
     'BENCHMARK_RESULTS',
@@ -35,6 +42,10 @@ List<Map<String, Object?>> _loadResults(Directory directory) {
       continue;
     }
     final decoded = jsonDecode(file.readAsStringSync()) as Map<String, Object?>;
+    final environment = '${decoded['environment']}';
+    if (!_ciResultEnvironments.contains(environment)) {
+      continue;
+    }
     reports.add(decoded);
   }
   reports.sort(
@@ -90,22 +101,79 @@ String _family(Map<String, Object?> package) {
 }
 
 String _deviceSpecs(Map<String, Object?> specs) {
-  final android = (specs['androidDevice'] as Map).cast<String, Object?>();
-  final toolchain = (specs['localToolchain'] as Map).cast<String, Object?>();
+  final policy = (specs['resultPolicy'] as Map).cast<String, Object?>();
+  final ci = (specs['ci'] as Map).cast<String, Object?>();
   return '''
 | Area | Value |
 | --- | --- |
-| Android test device | ${android['model']} (${android['manufacturer']}, ${android['device']}) |
-| Android hardware | ${android['hardware']} |
-| Android OS | Android ${android['android']} / API ${android['apiLevel']} |
-| Android CPU | ${android['cpu']} |
-| Android memory | ${android['memory']} |
-| Android display | ${android['display']} |
-| Flutter | ${toolchain['flutter']} |
-| Dart | ${toolchain['dart']} |
-| Windows | ${toolchain['windows']} |
-| Chrome | ${toolchain['chrome']} |
-| Edge | ${toolchain['edge']} |''';
+| README results | ${policy['readmeResults']} |
+| Local results | ${policy['localResults']} |
+| Flutter | ${ci['flutter']} |
+| Web CI | ${ci['web']} |
+| Windows CI | ${ci['windows']} |
+| Android | ${ci['android']} |''';
+}
+
+String _ciVisualization(
+  List<Map<String, Object?>> reports,
+  List<Map<String, Object?>> packages,
+) {
+  if (reports.isEmpty) {
+    return 'No CI benchmark result JSON files have been committed yet.';
+  }
+
+  final buffer = StringBuffer()
+    ..writeln(
+      'Completed adapters only. Bars are linear and normalized within each CI environment; skipped adapters remain in the detailed table.',
+    );
+  for (final report in reports) {
+    final results = (report['results'] as List).cast<Map<String, Object?>>();
+    final completed =
+        results
+            .where(
+              (result) =>
+                  result['status'] == 'completed' &&
+                  (result['opsPerSecond'] as num) > 0,
+            )
+            .toList()
+          ..sort(
+            (a, b) =>
+                (b['opsPerSecond'] as num).compareTo(a['opsPerSecond'] as num),
+          );
+    if (completed.isEmpty) {
+      continue;
+    }
+
+    final maxRate = completed.first['opsPerSecond'] as num;
+    buffer
+      ..writeln()
+      ..writeln('### ${report['environment']}')
+      ..writeln('| Rank | Family | Database | Ops/sec | Relative to fastest |')
+      ..writeln('| ---: | --- | --- | ---: | --- |');
+    for (var index = 0; index < completed.length; index += 1) {
+      final result = completed[index];
+      final rate = result['opsPerSecond'] as num;
+      final percent = rate / maxRate * 100;
+      buffer.writeln(
+        '| ${index + 1} '
+        '| ${_resultFamily('${result['database']}', packages)} '
+        '| ${result['database']} '
+        '| ${rate.toStringAsFixed(0)} '
+        '| `${_relativeBar(rate, maxRate)}` ${percent.toStringAsFixed(1)}% |',
+      );
+    }
+  }
+  return buffer.toString().trimRight();
+}
+
+String _relativeBar(num value, num maxValue) {
+  const width = 24;
+  if (maxValue <= 0 || value <= 0) {
+    return List.filled(width, '.').join();
+  }
+  final filled = ((value / maxValue) * width).round().clamp(1, width).toInt();
+  return '${List.filled(filled, '#').join()}'
+      '${List.filled(width - filled, '.').join()}';
 }
 
 String _benchmarkResults(

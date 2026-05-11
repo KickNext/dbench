@@ -1,24 +1,13 @@
 {
   "capturedAt": "2026-05-11",
-  "androidDevice": {
-    "label": "Android physical test device",
-    "model": "K15",
-    "manufacturer": "rockchip",
-    "device": "rk3568_r",
-    "hardware": "Rockchip RK3568 EVB1 DDR4 V10 Board",
-    "platform": "rk356x",
-    "android": "11",
-    "apiLevel": "30",
-    "cpu": "4 x ARM Cortex-A55 class cores (CPU part 0xd05)",
-    "memory": "3984488 kB total, 1992240 kB swap",
-    "display": "1366x768 at 160 dpi",
-    "flutterDeviceId": "SDAK155062300001"
+  "resultPolicy": {
+    "readmeResults": "Only GitHub Actions CI benchmark JSON files under results/ are rendered into README.md.",
+    "localResults": "Personal machine and physical-device runs should be saved under gitignored local_results/."
   },
-  "localToolchain": {
-    "flutter": "3.41.9 stable",
-    "dart": "3.11.5",
-    "windows": "Microsoft Windows 10.0.26200.8328",
-    "chrome": "148.0.7778.96",
-    "edge": "147.0.3912.98"
+  "ci": {
+    "flutter": "stable channel in GitHub Actions",
+    "web": "ubuntu-latest runner, Flutter Web release build, Chrome",
+    "windows": "windows-latest runner, Flutter Windows desktop test target",
+    "android": "Not published in README because GitHub-hosted runners do not provide the physical device used for local measurements"
   }
 }
