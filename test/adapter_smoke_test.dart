@@ -6,7 +6,6 @@ import 'package:flutter_database_benchmarks/src/benchmark/database_adapter.dart'
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +14,6 @@ void main() {
     PathProviderPlatform.instance = _FakePathProviderPlatform(
       Directory.systemTemp.createTempSync('dbench_adapter_smoke_').path,
     );
-    SharedPreferences.setMockInitialValues({});
     _installFlutterSecureStorageMock();
   });
 
@@ -125,8 +123,6 @@ void main() {
       for (final name in [
         'fdatabase',
         'flutterdb',
-        'local_shared',
-        'localstorage',
         'offline_db',
         'relax_orm',
         'sqlbrite',

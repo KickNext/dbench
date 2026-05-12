@@ -50,6 +50,7 @@ void _validateReport(
 ) {
   final report = jsonDecode(file.readAsStringSync()) as Map<String, Object?>;
   final environment = '${report['environment']}';
+  final measurementMode = '${report['measurementMode'] ?? ''}';
   final scenarios = ((report['workload'] as Map)['scenarios'] as List)
       .cast<Map<String, Object?>>();
   final results = (report['results'] as List).cast<Map<String, Object?>>();
@@ -61,6 +62,14 @@ void _validateReport(
       '${scenario['name']}': (scenario['sampleRuns'] as num?)?.toInt() ?? 1,
   };
   final scenarioNames = scenarioSampleRuns.keys.toSet();
+
+  if (measurementMode.isEmpty) {
+    failures.add('${file.path}: $environment is missing measurementMode.');
+  } else if (!_isAllowedMeasurementMode(environment, measurementMode)) {
+    failures.add(
+      '${file.path}: $environment uses measurementMode=$measurementMode, expected a release mode for public results.',
+    );
+  }
 
   for (final result in results) {
     final scenario = '${result['scenario']}';
@@ -114,4 +123,17 @@ void _validateReport(
   // Result snapshots can legitimately lag behind package-matrix expansion until
   // the next CI benchmark jobs refresh them. Unknown result rows are still
   // rejected above; absence is surfaced in README/HTML coverage summaries.
+}
+
+bool _isAllowedMeasurementMode(String environment, String measurementMode) {
+  if (environment == 'web-js') {
+    return measurementMode == 'release-web-js';
+  }
+  if (environment == 'web-wasm') {
+    return measurementMode == 'release-web-wasm';
+  }
+  if (environment.startsWith('native-')) {
+    return measurementMode == 'release-aot';
+  }
+  return measurementMode.startsWith('release-');
 }

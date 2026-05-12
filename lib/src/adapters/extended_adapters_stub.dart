@@ -150,14 +150,9 @@ List<DatabaseAdapter> extendedAdapters() {
           'relax_orm requires generated ORM code; underlying storage is Drift and is measured by the Drift adapter.',
     ),
     UnsupportedDatabaseAdapter(
-      name: 'local_shared',
-      reason:
-          'local_shared is secure local JSON/preferences storage, closer to settings storage than a database engine; it is covered as a baseline candidate.',
-    ),
-    UnsupportedDatabaseAdapter(
       name: 'rxdb',
       reason:
-          'rxdb pins shared_preferences 2.0.17, conflicting with the benchmark app dependency set.',
+          'rxdb pins an obsolete settings-storage dependency, conflicting with the benchmark app dependency set.',
     ),
     UnsupportedDatabaseAdapter(
       name: 'instantdb_flutter',
@@ -188,11 +183,6 @@ List<DatabaseAdapter> extendedAdapters() {
       name: 'serverpod',
       reason:
           'serverpod is an app server framework, not an embedded Flutter database adapter.',
-    ),
-    UnsupportedDatabaseAdapter(
-      name: 'localstorage',
-      reason:
-          'localstorage is an AsyncStorage-style key-value baseline, not a queryable database engine.',
     ),
   ];
 }

@@ -1,54 +1,224 @@
 [
-  {"package": "sqflite", "latest": "2.4.2+1", "source": "pub.dev search: flutter database", "scope": "database"},
-  {"package": "sqflite_common_ffi", "latest": "2.4.0+3", "source": "pub.dev search: sqlite flutter", "scope": "database"},
-  {"package": "sqflite_sqlcipher", "latest": "3.4.0", "source": "pub.dev search: flutter database", "scope": "database"},
-  {"package": "sqlite3", "latest": "3.3.1", "source": "pub.dev search: sqlite flutter", "scope": "database"},
-  {"package": "sqlite_async", "latest": "0.14.1", "source": "pub.dev search: sqlite flutter", "scope": "database"},
-  {"package": "drift", "latest": "2.33.0", "source": "pub.dev search: flutter database", "scope": "database"},
-  {"package": "floor", "latest": "1.5.0", "source": "pub.dev search: sqlite flutter", "scope": "database"},
-  {"package": "hive", "latest": "2.2.3", "source": "pub.dev search: local storage flutter database", "scope": "database"},
-  {"package": "hive_ce", "latest": "2.19.3", "source": "pub.dev search: local storage flutter database", "scope": "database"},
-  {"package": "isar", "latest": "3.1.0+1", "source": "pub.dev search: object database flutter", "scope": "database"},
-  {"package": "isar_community", "latest": "3.3.2", "source": "pub.dev search: object database flutter", "scope": "database"},
-  {"package": "isar_db", "latest": "1.0.1+1", "source": "pub.dev search: object database flutter", "scope": "database"},
-  {"package": "isar_plus", "latest": "1.2.6", "source": "pub.dev search: object database flutter", "scope": "database"},
-  {"package": "objectbox", "latest": "5.3.1", "source": "pub.dev search: flutter database", "scope": "database"},
-  {"package": "realm", "latest": "20.2.0", "source": "pub.dev search: flutter database", "scope": "database"},
-  {"package": "cbl_flutter", "latest": "3.3.5", "source": "pub.dev search: offline database flutter", "scope": "database"},
-  {"package": "couchbase_lite", "latest": "2.8.5", "source": "pub.dev search: offline database flutter", "scope": "database"},
-  {"package": "sembast", "latest": "3.8.7", "source": "pub.dev search: flutter database", "scope": "database"},
-  {"package": "sembast_web", "latest": "2.4.4+1", "source": "pub.dev search: flutter database", "scope": "database"},
-  {"package": "sembast_sqflite", "latest": "2.2.1+1", "source": "pub.dev search: flutter database", "scope": "database"},
-  {"package": "objectdb", "latest": "1.2.1+1", "source": "pub.dev search: nosql flutter", "scope": "database"},
-  {"package": "tiny_db", "latest": "0.9.2", "source": "pub.dev search: nosql flutter", "scope": "database"},
-  {"package": "store_box", "latest": "2.0.0", "source": "pub.dev search: local database flutter", "scope": "database"},
-  {"package": "work_db", "latest": "1.3.0", "source": "pub.dev search: local database flutter", "scope": "database"},
-  {"package": "flutter_local_db", "latest": "1.5.1", "source": "pub.dev search: local database flutter", "scope": "database"},
-  {"package": "ffastdb", "latest": "0.2.7", "source": "pub.dev search: nosql flutter", "scope": "database"},
-  {"package": "reaxdb_dart", "latest": "1.4.1", "source": "pub.dev search: nosql flutter", "scope": "database"},
-  {"package": "quanta_db", "latest": "0.0.9", "source": "pub.dev search: nosql flutter", "scope": "database"},
-  {"package": "torex_local_store", "latest": "0.1.6", "source": "pub.dev search: local database flutter", "scope": "database"},
-  {"package": "torexstore", "latest": "0.0.1", "source": "pub.dev search: local database flutter", "scope": "database"},
-  {"package": "entidb_flutter", "latest": "2.0.0-alpha.3", "source": "pub.dev search: object database flutter", "scope": "database"},
-  {"package": "rxdb", "latest": "15.0.0-beta.31", "source": "pub.dev search: offline database flutter", "scope": "database"},
-  {"package": "drift_flutter", "latest": "0.3.0", "source": "pub.dev API search: database flutter", "scope": "database"},
-  {"package": "drift_sqlite_async", "latest": "0.3.0", "source": "pub.dev API search: sqlite flutter", "scope": "database"},
-  {"package": "sqlite3_flutter_libs", "latest": "0.6.0+eol", "source": "pub.dev API search: sqlite flutter", "scope": "database"},
-  {"package": "objectbox_flutter_libs", "latest": "5.3.1", "source": "pub.dev API search: nosql flutter", "scope": "database"},
-  {"package": "sqlbrite", "latest": "2.8.0", "source": "pub.dev API search: sqlite flutter", "scope": "database"},
-  {"package": "flutterdb", "latest": "0.0.4", "source": "pub.dev API search: local database flutter", "scope": "database"},
-  {"package": "fdatabase", "latest": "0.0.7", "source": "pub.dev API search: local database flutter", "scope": "database"},
-  {"package": "relax_orm", "latest": "0.1.4", "source": "pub.dev API search: local database flutter", "scope": "database"},
-  {"package": "local_shared", "latest": "3.0.0", "source": "pub.dev API search: local database flutter", "scope": "database"},
-  {"package": "instantdb_flutter", "latest": "0.2.6", "source": "pub.dev API search: offline database flutter", "scope": "database"},
-  {"package": "appwrite_offline", "latest": "0.0.5", "source": "pub.dev API search: offline database flutter", "scope": "database"},
-  {"package": "offline_db", "latest": "0.0.1", "source": "pub.dev API search: offline database flutter", "scope": "database"},
-  {"package": "cloud_firestore", "latest": "6.4.0", "source": "pub.dev API search: database flutter", "scope": "database"},
-  {"package": "firebase_database", "latest": "12.4.0", "source": "pub.dev API search: database flutter", "scope": "database"},
-  {"package": "serverpod", "latest": "3.4.8", "source": "pub.dev API search: database flutter", "scope": "database"},
-  {"package": "powersync", "latest": "2.1.0", "source": "pub.dev search: offline database flutter", "scope": "database"},
-  {"package": "localstore", "latest": "1.4.0", "source": "pub.dev search: local storage flutter database", "scope": "database"},
-  {"package": "localstorage", "latest": "6.0.0", "source": "pub.dev search: local storage flutter database", "scope": "baseline"},
-  {"package": "get_storage", "latest": "2.1.1", "source": "pub.dev search: local storage flutter database", "scope": "baseline"},
-  {"package": "shared_preferences", "latest": "2.5.5", "source": "pub.dev search: local storage flutter database", "scope": "baseline"}
+  {
+    "package": "drift",
+    "scope": "primary",
+    "type": "SQLite ORM/query builder",
+    "storage": "SQLite"
+  },
+  {
+    "package": "sqflite",
+    "scope": "primary",
+    "type": "SQLite plugin",
+    "storage": "SQLite"
+  },
+  {
+    "package": "sqflite_sqlcipher",
+    "scope": "primary",
+    "type": "Encrypted SQLite plugin",
+    "storage": "SQLCipher / SQLite"
+  },
+  {
+    "package": "sqlite3",
+    "scope": "primary",
+    "type": "SQLite FFI bindings",
+    "storage": "SQLite"
+  },
+  {
+    "package": "sqlite_async",
+    "scope": "primary",
+    "type": "Async SQLite wrapper",
+    "storage": "SQLite"
+  },
+  {
+    "package": "floor",
+    "scope": "primary",
+    "type": "SQLite ORM",
+    "storage": "SQLite via sqflite"
+  },
+  {
+    "package": "sqlbrite",
+    "scope": "primary",
+    "type": "Reactive SQLite wrapper",
+    "storage": "SQLite through sqflite"
+  },
+  {
+    "package": "hive",
+    "scope": "primary",
+    "type": "Key-value / typed boxes",
+    "storage": "Pure Dart storage engine"
+  },
+  {
+    "package": "hive_ce",
+    "scope": "primary",
+    "type": "Key-value / typed boxes",
+    "storage": "Pure Dart storage engine"
+  },
+  {
+    "package": "isar",
+    "scope": "primary",
+    "type": "Object database",
+    "storage": "Isar native object store"
+  },
+  {
+    "package": "isar_community",
+    "scope": "primary",
+    "type": "Object database",
+    "storage": "Isar Community native object store"
+  },
+  {
+    "package": "isar_db",
+    "scope": "primary",
+    "type": "Object database fork",
+    "storage": "Isar-derived object store"
+  },
+  {
+    "package": "isar_plus",
+    "scope": "primary",
+    "type": "Object database fork",
+    "storage": "Isar-derived object store"
+  },
+  {
+    "package": "objectbox",
+    "scope": "primary",
+    "type": "Object database",
+    "storage": "ObjectBox native object store"
+  },
+  {
+    "package": "realm",
+    "scope": "primary",
+    "type": "Object database",
+    "storage": "Realm native object store"
+  },
+  {
+    "package": "cbl_flutter",
+    "scope": "primary",
+    "type": "Embedded document database",
+    "storage": "Couchbase Lite"
+  },
+  {
+    "package": "sembast",
+    "scope": "primary",
+    "type": "Document database",
+    "storage": "Append-only file database"
+  },
+  {
+    "package": "objectdb",
+    "scope": "primary",
+    "type": "Document database",
+    "storage": "Append-only file or browser storage"
+  },
+  {
+    "package": "tiny_db",
+    "scope": "primary",
+    "type": "JSON document database",
+    "storage": "JSON file or memory storage"
+  },
+  {
+    "package": "store_box",
+    "scope": "primary",
+    "type": "NoSQL key-value boxes",
+    "storage": "Binary file boxes"
+  },
+  {
+    "package": "work_db",
+    "scope": "primary",
+    "type": "JSON collection database",
+    "storage": "Platform-specific file/web storage"
+  },
+  {
+    "package": "flutterdb",
+    "scope": "primary",
+    "type": "Mongo-like document API over sqflite",
+    "storage": "SQLite through sqflite"
+  },
+  {
+    "package": "fdatabase",
+    "scope": "primary",
+    "type": "Synchronous local file database",
+    "storage": "Package-defined local files"
+  },
+  {
+    "package": "flutter_local_db",
+    "scope": "primary",
+    "type": "Rust/LMDB local database",
+    "storage": "LMDB through Rust FFI"
+  },
+  {
+    "package": "ffastdb",
+    "scope": "primary",
+    "type": "Pure Dart NoSQL database",
+    "storage": "File storage with WAL strategy"
+  },
+  {
+    "package": "reaxdb_dart",
+    "scope": "primary",
+    "type": "NoSQL key-value/document database",
+    "storage": "Hybrid storage engine"
+  },
+  {
+    "package": "relax_orm",
+    "scope": "primary",
+    "type": "Local-first ORM",
+    "storage": "SQLite through Drift"
+  },
+  {
+    "package": "quanta_db",
+    "scope": "primary",
+    "type": "NoSQL database",
+    "storage": "Package-defined local storage"
+  },
+  {
+    "package": "torex_local_store",
+    "scope": "primary",
+    "type": "Rust embedded key-value database",
+    "storage": "Rust LSM-tree with WAL"
+  },
+  {
+    "package": "entidb_flutter",
+    "scope": "primary",
+    "type": "Embedded entity database",
+    "storage": "EntiDB FFI with CBOR-oriented storage"
+  },
+  {
+    "package": "rxdb",
+    "scope": "primary",
+    "type": "Reactive database wrapper",
+    "storage": "Package-defined reactive storage with incompatible dependency pins"
+  },
+  {
+    "package": "offline_db",
+    "scope": "primary",
+    "type": "Offline data management wrapper",
+    "storage": "Hive CE local backend"
+  },
+  {
+    "package": "powersync",
+    "scope": "primary",
+    "type": "Offline-first SQLite sync database",
+    "storage": "SQLite with PowerSync local schema"
+  },
+  {
+    "package": "localstore",
+    "scope": "primary",
+    "type": "JSON document storage",
+    "storage": "File-backed JSON documents"
+  },
+  {
+    "package": "sqflite_common_ffi",
+    "scope": "companion",
+    "type": "SQLite FFI implementation",
+    "storage": "SQLite"
+  },
+  {
+    "package": "objectbox_flutter_libs",
+    "scope": "companion",
+    "type": "ObjectBox Flutter runtime libraries",
+    "storage": "ObjectBox native object store"
+  },
+  {
+    "package": "sembast_web",
+    "scope": "companion",
+    "type": "Document database",
+    "storage": "IndexedDB backend for Sembast"
+  }
 ]

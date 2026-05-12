@@ -339,21 +339,21 @@ a { color: var(--accent); }
 <h1>Flutter Database Benchmarks Results</h1>
 <p class="lede">Self-contained visual report generated from one local benchmark pass. Persistent adapters are charted separately from the synthetic memory ceiling; chart bars use a log scale so slower adapters remain visually comparable.</p>
 <dl class="meta">
-<div><dt>Generated</dt><dd>2026-05-12T04:38:35.108364Z &#47; 2026-05-12T00:24:29.910Z &#47; 2026-05-12T00:26:31.350Z</dd></div>
+<div><dt>Generated</dt><dd>2026-05-12T14:53:43.683350Z &#47; 2026-05-12T14:50:52.273Z &#47; 2026-05-12T14:52:43.116Z</dd></div>
 <div><dt>Reports</dt><dd>3</dd></div>
-<div><dt>Tracked packages</dt><dd>52</dd></div>
-<div><dt>Result rows</dt><dd>200</dd></div>
+<div><dt>Primary packages</dt><dd>34</dd></div>
+<div><dt>Result rows</dt><dd>165</dd></div>
 </dl>
 </header>
 <section class="scoreboard">
 <article class="stat-card primary-stat">
   <span>Overall leader</span>
-  <strong>get_storage</strong>
-  <small>88.7 normalized score</small>
+  <strong>hive</strong>
+  <small>96.8 normalized score</small>
 </article>
 <article class="stat-card">
-  <span>Measured packages</span>
-  <strong>30</strong>
+  <span>Measured curated packages</span>
+  <strong>26</strong>
   <small>present in completed snapshots</small>
 </article>
 <article class="stat-card">
@@ -363,7 +363,7 @@ a { color: var(--accent); }
 </article>
 <article class="stat-card">
   <span>Result rows</span>
-  <strong>200</strong>
+  <strong>165</strong>
   <small>completed measurements</small>
 </article>
 </section>
@@ -377,29 +377,29 @@ a { color: var(--accent); }
 <div class="leader-grid"><article class="leader-card rank-1">
   <div class="leader-rank">#1</div>
   <div>
-    <h3>get_storage</h3>
-    <p>Key-value baseline</p>
+    <h3>hive</h3>
+    <p>Key-value</p>
   </div>
-  <strong>88.7</strong>
-  <small>89,519 avg ops/sec across 10 rows</small>
+  <strong>96.8</strong>
+  <small>17,953 avg ops/sec across 5 rows</small>
 </article>
 <article class="leader-card rank-2">
   <div class="leader-rank">#2</div>
   <div>
-    <h3>shared_preferences</h3>
-    <p>Key-value baseline</p>
+    <h3>localstore</h3>
+    <p>NoSQL</p>
   </div>
-  <strong>66.4</strong>
-  <small>67,358 avg ops/sec across 15 rows</small>
+  <strong>57.8</strong>
+  <small>30,152 avg ops/sec across 10 rows</small>
 </article>
 <article class="leader-card rank-3">
   <div class="leader-rank">#3</div>
   <div>
-    <h3>localstore</h3>
-    <p>NoSQL</p>
+    <h3>hive_ce</h3>
+    <p>Key-value</p>
   </div>
-  <strong>29.2</strong>
-  <small>31,362 avg ops/sec across 10 rows</small>
+  <strong>55.7</strong>
+  <small>12,449 avg ops/sec across 15 rows</small>
 </article></div>
 <div class="table-wrap compact-table"><table data-sort-table>
 <thead><tr>
@@ -408,242 +408,210 @@ a { color: var(--accent); }
 <tbody>
 <tr>
 <td data-sort-value="1">1</td>
-<td data-sort-value="get_storage">get_storage</td>
-<td data-sort-value="Key-value baseline">Key-value baseline</td>
-<td data-sort-value="88.69406980684514">88.7</td>
-<td data-sort-value="89518.85648143457">89,519</td>
-<td data-sort-value="10">10</td>
+<td data-sort-value="hive">hive</td>
+<td data-sort-value="Key-value">Key-value</td>
+<td data-sort-value="96.75405987086677">96.8</td>
+<td data-sort-value="17953.077989910427">17,953</td>
+<td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="2">2</td>
-<td data-sort-value="shared_preferences">shared_preferences</td>
-<td data-sort-value="Key-value baseline">Key-value baseline</td>
-<td data-sort-value="66.36511691920522">66.4</td>
-<td data-sort-value="67358.21436943913">67,358</td>
-<td data-sort-value="15">15</td>
-</tr>
-<tr>
-<td data-sort-value="3">3</td>
 <td data-sort-value="localstore">localstore</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="29.2081482158953">29.2</td>
-<td data-sort-value="31361.581542583677">31,362</td>
+<td data-sort-value="57.84753947246295">57.8</td>
+<td data-sort-value="30152.325017531308">30,152</td>
 <td data-sort-value="10">10</td>
 </tr>
 <tr>
-<td data-sort-value="4">4</td>
+<td data-sort-value="3">3</td>
 <td data-sort-value="hive_ce">hive_ce</td>
-<td data-sort-value="Key-value baseline">Key-value baseline</td>
-<td data-sort-value="11.487762692521645">11.5</td>
-<td data-sort-value="10865.863480686934">10,866</td>
+<td data-sort-value="Key-value">Key-value</td>
+<td data-sort-value="55.72258076751176">55.7</td>
+<td data-sort-value="12448.698665682443">12,449</td>
 <td data-sort-value="15">15</td>
 </tr>
 <tr>
+<td data-sort-value="4">4</td>
+<td data-sort-value="offline_db">offline_db</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="49.194464103742504">49.2</td>
+<td data-sort-value="7159.741107832217">7,160</td>
 <td data-sort-value="5">5</td>
-<td data-sort-value="hive">hive</td>
-<td data-sort-value="Key-value baseline">Key-value baseline</td>
-<td data-sort-value="11.35387990791177">11.4</td>
-<td data-sort-value="10311.735144286067">10,312</td>
+</tr>
+<tr>
+<td data-sort-value="5">5</td>
+<td data-sort-value="objectbox">objectbox</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="42.76176120657235">42.8</td>
+<td data-sort-value="5867.078957077763">5,867</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="6">6</td>
-<td data-sort-value="objectbox">objectbox</td>
+<td data-sort-value="flutterdb">flutterdb</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="9.171098867934825">9.2</td>
-<td data-sort-value="8214.993663780115">8,215</td>
+<td data-sort-value="32.1180669411533">32.1</td>
+<td data-sort-value="4391.4018556326655">4,391</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="7">7</td>
-<td data-sort-value="offline_db">offline_db</td>
+<td data-sort-value="isar_db">isar_db</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="5.172444085452793">5.2</td>
-<td data-sort-value="4529.001487528477">4,529</td>
+<td data-sort-value="27.40799155982978">27.4</td>
+<td data-sort-value="3906.849331011311">3,907</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="8">8</td>
 <td data-sort-value="isar_plus">isar_plus</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="4.504921559753589">4.5</td>
-<td data-sort-value="3977.172943818349">3,977</td>
+<td data-sort-value="27.066863295945495">27.1</td>
+<td data-sort-value="3994.142679580103">3,994</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="9">9</td>
-<td data-sort-value="isar_db">isar_db</td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="4.404274625616238">4.4</td>
-<td data-sort-value="3841.1270846210437">3,841</td>
+<td data-sort-value="sqlite_async">sqlite_async</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="25.436265066399905">25.4</td>
+<td data-sort-value="3433.4258008602674">3,433</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="10">10</td>
-<td data-sort-value="sembast_web">sembast_web</td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="4.393321042979587">4.4</td>
-<td data-sort-value="3957.76359130114">3,958</td>
-<td data-sort-value="10">10</td>
+<td data-sort-value="powersync">powersync</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="23.427589787585454">23.4</td>
+<td data-sort-value="3292.77114462705">3,293</td>
+<td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="11">11</td>
-<td data-sort-value="sqlite3">sqlite3</td>
-<td data-sort-value="SQL">SQL</td>
-<td data-sort-value="3.5190712681299203">3.5</td>
-<td data-sort-value="3196.3510573326203">3,196</td>
+<td data-sort-value="isar_community">isar_community</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="21.242585573398475">21.2</td>
+<td data-sort-value="3046.3632524452014">3,046</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="12">12</td>
-<td data-sort-value="sqlite_async">sqlite_async</td>
-<td data-sort-value="SQL">SQL</td>
-<td data-sort-value="3.1588052093365304">3.2</td>
-<td data-sort-value="2778.9622860930613">2,779</td>
+<td data-sort-value="isar">isar</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="20.55376103033857">20.6</td>
+<td data-sort-value="2893.541470670643">2,894</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="13">13</td>
-<td data-sort-value="isar_community">isar_community</td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="3.009765426034691">3.0</td>
-<td data-sort-value="2621.469852438873">2,621</td>
+<td data-sort-value="store_box">store_box</td>
+<td data-sort-value="Key-value">Key-value</td>
+<td data-sort-value="19.206490144630955">19.2</td>
+<td data-sort-value="3728.0076248863975">3,728</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="14">14</td>
 <td data-sort-value="drift">drift</td>
 <td data-sort-value="SQL">SQL</td>
-<td data-sort-value="2.9614782970651397">3.0</td>
-<td data-sort-value="2650.6141058848634">2,651</td>
+<td data-sort-value="16.12479475065181">16.1</td>
+<td data-sort-value="2504.890479244936">2,505</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="15">15</td>
-<td data-sort-value="powersync">powersync</td>
-<td data-sort-value="SQL">SQL</td>
-<td data-sort-value="2.8234746128614003">2.8</td>
-<td data-sort-value="2444.50788539492">2,445</td>
-<td data-sort-value="5">5</td>
+<td data-sort-value="sembast_web">sembast_web</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="15.877825329029486">15.9</td>
+<td data-sort-value="3925.1912953879714">3,925</td>
+<td data-sort-value="10">10</td>
 </tr>
 <tr>
 <td data-sort-value="16">16</td>
-<td data-sort-value="isar">isar</td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="2.7852016401129362">2.8</td>
-<td data-sort-value="2461.77328640184">2,462</td>
+<td data-sort-value="sqlite3">sqlite3</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="15.602330513783494">15.6</td>
+<td data-sort-value="2333.7103962508904">2,334</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="17">17</td>
-<td data-sort-value="flutterdb">flutterdb</td>
+<td data-sort-value="fdatabase">fdatabase</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="2.226741135161263">2.2</td>
-<td data-sort-value="1940.4293251049112">1,940</td>
+<td data-sort-value="15.35984433547559">15.4</td>
+<td data-sort-value="2761.24106218223">2,761</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="18">18</td>
-<td data-sort-value="localstorage">localstorage</td>
+<td data-sort-value="relax_orm">relax_orm</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="2.200466351244084">2.2</td>
-<td data-sort-value="2070.0826869330294">2,070</td>
+<td data-sort-value="14.629380716818039">14.6</td>
+<td data-sort-value="2095.5838177705855">2,096</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="19">19</td>
 <td data-sort-value="sqlbrite">sqlbrite</td>
 <td data-sort-value="SQL">SQL</td>
-<td data-sort-value="1.7671110644829384">1.8</td>
-<td data-sort-value="1584.8315818010965">1,585</td>
+<td data-sort-value="13.429669459330555">13.4</td>
+<td data-sort-value="1998.738633468482">1,999</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="20">20</td>
 <td data-sort-value="sqflite_common_ffi">sqflite_common_ffi</td>
 <td data-sort-value="SQL">SQL</td>
-<td data-sort-value="1.7330251094340021">1.7</td>
-<td data-sort-value="1545.2950159446295">1,545</td>
+<td data-sort-value="12.387539639075682">12.4</td>
+<td data-sort-value="1777.7766850474588">1,778</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="21">21</td>
-<td data-sort-value="relax_orm">relax_orm</td>
+<td data-sort-value="work_db">work_db</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="1.5484251550692139">1.5</td>
-<td data-sort-value="1362.4874045855026">1,362</td>
+<td data-sort-value="10.18534827990469">10.2</td>
+<td data-sort-value="1312.7095966899917">1,313</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="22">22</td>
-<td data-sort-value="store_box">store_box</td>
+<td data-sort-value="tiny_db">tiny_db</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="1.0538613707758508">1.1</td>
-<td data-sort-value="928.5815489909608">929</td>
+<td data-sort-value="7.360331026096487">7.4</td>
+<td data-sort-value="1406.1626445624759">1,406</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="23">23</td>
-<td data-sort-value="work_db">work_db</td>
+<td data-sort-value="objectdb">objectdb</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="1.0074401473957013">1.0</td>
-<td data-sort-value="843.0587719810765">843</td>
+<td data-sort-value="6.244023555672213">6.2</td>
+<td data-sort-value="1224.7618510141463">1,225</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="24">24</td>
-<td data-sort-value="tiny_db">tiny_db</td>
+<td data-sort-value="sembast">sembast</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="0.8600134317473362">0.9</td>
-<td data-sort-value="730.8546193906462">731</td>
+<td data-sort-value="5.8142457854825835">5.8</td>
+<td data-sort-value="1096.9219309121347">1,097</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="25">25</td>
-<td data-sort-value="fdatabase">fdatabase</td>
+<td data-sort-value="ffastdb">ffastdb</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="0.6802853888190732">0.7</td>
-<td data-sort-value="574.0515862129284">574</td>
+<td data-sort-value="3.522167225193633">3.5</td>
+<td data-sort-value="589.5383051951023">590</td>
 <td data-sort-value="5">5</td>
 </tr>
 <tr>
 <td data-sort-value="26">26</td>
-<td data-sort-value="sembast">sembast</td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="0.44813511246846005">0.4</td>
-<td data-sort-value="393.27250526929777">393</td>
-<td data-sort-value="5">5</td>
-</tr>
-<tr>
-<td data-sort-value="27">27</td>
-<td data-sort-value="ffastdb">ffastdb</td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="0.393067220130233">0.4</td>
-<td data-sort-value="355.23944729390536">355</td>
-<td data-sort-value="5">5</td>
-</tr>
-<tr>
-<td data-sort-value="28">28</td>
 <td data-sort-value="reaxdb_dart">reaxdb_dart</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="0.34306312949082696">0.3</td>
-<td data-sort-value="299.2139825448141">299</td>
-<td data-sort-value="5">5</td>
-</tr>
-<tr>
-<td data-sort-value="29">29</td>
-<td data-sort-value="local_shared">local_shared</td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="0.20424235902588134">0.2</td>
-<td data-sort-value="175.99403286335314">176</td>
-<td data-sort-value="5">5</td>
-</tr>
-<tr>
-<td data-sort-value="30">30</td>
-<td data-sort-value="objectdb">objectdb</td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="0.12275046180678562">0.1</td>
-<td data-sort-value="100.51232199975028">101</td>
+<td data-sort-value="1.0527888666759138">1.1</td>
+<td data-sort-value="151.42254080179913">151</td>
 <td data-sort-value="5">5</td>
 </tr>
 </tbody>
@@ -652,95 +620,95 @@ a { color: var(--accent); }
 </section>
 <section class="panel">
 <h2>Database-engine winners</h2>
-<p class="note">This view excludes key-value and settings-style baselines so database engines can be compared without `shared_preferences`, `get_storage`, or memory ceilings.</p>
+<p class="note">This view focuses on SQL and document/object stores; memory is excluded from all persistent rankings.</p>
 <div class="summary-grid"><article class="summary-card">
   <div class="summary-key">native-windows &#47; batched_transaction</div>
-  <div class="summary-db">sqlite3</div>
-  <div class="summary-rate">10,210 ops/sec</div>
-  <div class="summary-family">SQL</div>
+  <div class="summary-db">offline_db</div>
+  <div class="summary-rate">6,053 ops/sec</div>
+  <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">native-windows &#47; crud_balanced</div>
-  <div class="summary-db">objectbox</div>
-  <div class="summary-rate">5,659 ops/sec</div>
+  <div class="summary-db">offline_db</div>
+  <div class="summary-rate">5,984 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">native-windows &#47; large_payload</div>
-  <div class="summary-db">objectbox</div>
-  <div class="summary-rate">7,892 ops/sec</div>
+  <div class="summary-db">offline_db</div>
+  <div class="summary-rate">5,839 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">native-windows &#47; read_heavy</div>
-  <div class="summary-db">objectbox</div>
-  <div class="summary-rate">10,867 ops/sec</div>
+  <div class="summary-db">offline_db</div>
+  <div class="summary-rate">10,208 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">native-windows &#47; write_churn_stress</div>
-  <div class="summary-db">objectbox</div>
-  <div class="summary-rate">9,170 ops/sec</div>
+  <div class="summary-db">offline_db</div>
+  <div class="summary-rate">7,715 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-js &#47; batched_transaction</div>
   <div class="summary-db">localstore</div>
-  <div class="summary-rate">77,586 ops/sec</div>
+  <div class="summary-rate">82,721 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-js &#47; crud_balanced</div>
   <div class="summary-db">localstore</div>
-  <div class="summary-rate">49,724 ops/sec</div>
+  <div class="summary-rate">37,037 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-js &#47; large_payload</div>
   <div class="summary-db">localstore</div>
-  <div class="summary-rate">39,841 ops/sec</div>
+  <div class="summary-rate">39,651 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-js &#47; read_heavy</div>
   <div class="summary-db">localstore</div>
-  <div class="summary-rate">82,126 ops/sec</div>
+  <div class="summary-rate">80,645 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-js &#47; write_churn_stress</div>
   <div class="summary-db">localstore</div>
-  <div class="summary-rate">58,680 ops/sec</div>
+  <div class="summary-rate">51,392 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-wasm &#47; batched_transaction</div>
   <div class="summary-db">sembast_web</div>
-  <div class="summary-rate">3,496 ops/sec</div>
+  <div class="summary-rate">4,217 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-wasm &#47; crud_balanced</div>
   <div class="summary-db">sembast_web</div>
-  <div class="summary-rate">2,917 ops/sec</div>
+  <div class="summary-rate">3,190 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-wasm &#47; large_payload</div>
   <div class="summary-db">sembast_web</div>
-  <div class="summary-rate">2,986 ops/sec</div>
+  <div class="summary-rate">3,499 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-wasm &#47; read_heavy</div>
   <div class="summary-db">sembast_web</div>
-  <div class="summary-rate">5,257 ops/sec</div>
+  <div class="summary-rate">5,202 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-wasm &#47; write_churn_stress</div>
   <div class="summary-db">sembast_web</div>
-  <div class="summary-rate">3,088 ops/sec</div>
+  <div class="summary-rate">3,670 ops/sec</div>
   <div class="summary-family">NoSQL</div>
 </article></div>
 </section>
@@ -748,93 +716,93 @@ a { color: var(--accent); }
 <h2>Scenario winners</h2>
 <div class="summary-grid"><article class="summary-card">
   <div class="summary-key">native-windows &#47; batched_transaction</div>
-  <div class="summary-db">get_storage</div>
-  <div class="summary-rate">92,478 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">hive</div>
+  <div class="summary-rate">21,206 ops/sec</div>
+  <div class="summary-family">Key-value</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">native-windows &#47; crud_balanced</div>
-  <div class="summary-db">get_storage</div>
-  <div class="summary-rate">53,060 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">hive</div>
+  <div class="summary-rate">16,810 ops/sec</div>
+  <div class="summary-family">Key-value</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">native-windows &#47; large_payload</div>
-  <div class="summary-db">get_storage</div>
-  <div class="summary-rate">102,471 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">offline_db</div>
+  <div class="summary-rate">5,839 ops/sec</div>
+  <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">native-windows &#47; read_heavy</div>
-  <div class="summary-db">get_storage</div>
-  <div class="summary-rate">121,242 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">hive</div>
+  <div class="summary-rate">31,124 ops/sec</div>
+  <div class="summary-family">Key-value</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">native-windows &#47; write_churn_stress</div>
-  <div class="summary-db">get_storage</div>
-  <div class="summary-rate">87,925 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">hive</div>
+  <div class="summary-rate">15,734 ops/sec</div>
+  <div class="summary-family">Key-value</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-js &#47; batched_transaction</div>
-  <div class="summary-db">shared_preferences</div>
-  <div class="summary-rate">152,542 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">localstore</div>
+  <div class="summary-rate">82,721 ops/sec</div>
+  <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-js &#47; crud_balanced</div>
-  <div class="summary-db">get_storage</div>
-  <div class="summary-rate">57,692 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">localstore</div>
+  <div class="summary-rate">37,037 ops/sec</div>
+  <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-js &#47; large_payload</div>
-  <div class="summary-db">shared_preferences</div>
-  <div class="summary-rate">91,743 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">localstore</div>
+  <div class="summary-rate">39,651 ops/sec</div>
+  <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-js &#47; read_heavy</div>
-  <div class="summary-db">get_storage</div>
-  <div class="summary-rate">139,344 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">localstore</div>
+  <div class="summary-rate">80,645 ops/sec</div>
+  <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-js &#47; write_churn_stress</div>
-  <div class="summary-db">shared_preferences</div>
-  <div class="summary-rate">127,660 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">localstore</div>
+  <div class="summary-rate">51,392 ops/sec</div>
+  <div class="summary-family">NoSQL</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-wasm &#47; batched_transaction</div>
-  <div class="summary-db">shared_preferences</div>
-  <div class="summary-rate">132,353 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">hive_ce</div>
+  <div class="summary-rate">17,045 ops/sec</div>
+  <div class="summary-family">Key-value</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-wasm &#47; crud_balanced</div>
-  <div class="summary-db">shared_preferences</div>
-  <div class="summary-rate">46,201 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">hive_ce</div>
+  <div class="summary-rate">13,294 ops/sec</div>
+  <div class="summary-family">Key-value</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-wasm &#47; large_payload</div>
-  <div class="summary-db">shared_preferences</div>
-  <div class="summary-rate">42,955 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">hive_ce</div>
+  <div class="summary-rate">13,423 ops/sec</div>
+  <div class="summary-family">Key-value</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-wasm &#47; read_heavy</div>
-  <div class="summary-db">shared_preferences</div>
-  <div class="summary-rate">113,333 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">hive_ce</div>
+  <div class="summary-rate">27,508 ops/sec</div>
+  <div class="summary-family">Key-value</div>
 </article>
 <article class="summary-card">
   <div class="summary-key">web-wasm &#47; write_churn_stress</div>
-  <div class="summary-db">shared_preferences</div>
-  <div class="summary-rate">109,091 ops/sec</div>
-  <div class="summary-family">Key-value baseline</div>
+  <div class="summary-db">hive_ce</div>
+  <div class="summary-rate">11,707 ops/sec</div>
+  <div class="summary-family">Key-value</div>
 </article></div>
 </section>
 <section class="charts">
@@ -843,7 +811,7 @@ a { color: var(--accent); }
 <div class="legend" aria-label="Chart color legend">
   <span><i style="background:#2563eb"></i>SQL</span>
   <span><i style="background:#047857"></i>NoSQL / document / object</span>
-  <span><i style="background:#b45309"></i>Key-value baseline</span>
+  <span><i style="background:#b45309"></i>Key-value database</span>
 </div>
 </div>
 <article class="chart-card">
@@ -852,135 +820,120 @@ a { color: var(--accent); }
       <h3>native-windows &#47; batched_transaction</h3>
       <p>Balanced CRUD with grouped write phases; transactional adapters use their native write transaction.</p>
     </div>
-    <div class="chart-meta">30 completed, 0 failed</div>
+    <div class="chart-meta">26 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
-  <span>records 20</span>
+  <span>records 5</span>
   <span>payload 256 bytes</span>
+  <span>release-aot</span>
   <span>median timing</span>
-  <span>2026-05-12T04:38:35.108364Z</span>
+  <span>2026-05-12T14:53:43.683350Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 283,554 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 5,625,000 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 1138" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">get_storage</text>
+<svg viewBox="0 0 950 986" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">hive</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
 <rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">92,478</text>
-<text x="0" y="75" class="axis">hive</text>
+<text x="824" y="36" class="value">21,206</text>
+<text x="0" y="75" class="axis">hive_ce</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="501.3" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">10,364</text>
-<text x="0" y="113" class="axis">sqlite3</text>
+<rect x="190" y="56" width="543.5" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">6,202</text>
+<text x="0" y="113" class="axis">offline_db</text>
 <rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="500.5" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="112" class="value">10,210</text>
-<text x="0" y="151" class="axis">drift</text>
+<rect x="190" y="94" width="542.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">6,053</text>
+<text x="0" y="151" class="axis">sqlite3</text>
 <rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="132" width="486.0" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="150" class="value">7,806</text>
-<text x="0" y="189" class="axis">objectbox</text>
+<rect x="190" y="132" width="540.3" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="150" class="value">5,890</text>
+<text x="0" y="189" class="axis">drift</text>
 <rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="170" width="483.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="188" class="value">7,487</text>
-<text x="0" y="227" class="axis">hive_ce</text>
+<rect x="190" y="170" width="536.5" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="188" class="value">5,540</text>
+<text x="0" y="227" class="axis">objectbox</text>
 <rect x="190" y="208" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="208" width="483.4" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="226" class="value">7,441</text>
-<text x="0" y="265" class="axis">isar_community</text>
+<rect x="190" y="208" width="516.7" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="226" class="value">4,032</text>
+<text x="0" y="265" class="axis">sqflite_common_ffi</text>
 <rect x="190" y="246" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="246" width="462.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="264" class="value">5,076</text>
-<text x="0" y="303" class="axis">isar</text>
+<rect x="190" y="246" width="512.5" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="264" class="value">3,771</text>
+<text x="0" y="303" class="axis">store_box</text>
 <rect x="190" y="284" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="284" width="459.2" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="302" class="value">4,766</text>
-<text x="0" y="341" class="axis">offline_db</text>
+<rect x="190" y="284" width="512.3" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="302" class="value">3,757</text>
+<text x="0" y="341" class="axis">isar_community</text>
 <rect x="190" y="322" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="322" width="456.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="340" class="value">4,497</text>
-<text x="0" y="379" class="axis">isar_plus</text>
+<rect x="190" y="322" width="507.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="340" class="value">3,465</text>
+<text x="0" y="379" class="axis">sqlite_async</text>
 <rect x="190" y="360" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="360" width="450.3" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="378" class="value">4,045</text>
+<rect x="190" y="360" width="507.0" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="378" class="value">3,448</text>
 <text x="0" y="417" class="axis">sqlbrite</text>
 <rect x="190" y="398" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="398" width="444.1" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="416" class="value">3,609</text>
-<text x="0" y="455" class="axis">sqflite_common_ffi</text>
+<rect x="190" y="398" width="506.3" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="416" class="value">3,414</text>
+<text x="0" y="455" class="axis">isar_plus</text>
 <rect x="190" y="436" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="436" width="443.4" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="454" class="value">3,562</text>
-<text x="0" y="493" class="axis">sqlite_async</text>
+<rect x="190" y="436" width="499.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="454" class="value">3,079</text>
+<text x="0" y="493" class="axis">fdatabase</text>
 <rect x="190" y="474" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="474" width="442.6" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="492" class="value">3,509</text>
-<text x="0" y="531" class="axis">isar_db</text>
+<rect x="190" y="474" width="498.5" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="492" class="value">3,008</text>
+<text x="0" y="531" class="axis">isar</text>
 <rect x="190" y="512" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="512" width="440.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="530" class="value">3,379</text>
-<text x="0" y="569" class="axis">localstorage</text>
+<rect x="190" y="512" width="498.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="530" class="value">2,988</text>
+<text x="0" y="569" class="axis">flutterdb</text>
 <rect x="190" y="550" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="550" width="438.4" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="568" class="value">3,243</text>
-<text x="0" y="607" class="axis">powersync</text>
+<rect x="190" y="550" width="497.6" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="568" class="value">2,965</text>
+<text x="0" y="607" class="axis">isar_db</text>
 <rect x="190" y="588" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="588" width="436.0" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="606" class="value">3,103</text>
-<text x="0" y="645" class="axis">flutterdb</text>
+<rect x="190" y="588" width="496.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="606" class="value">2,911</text>
+<text x="0" y="645" class="axis">powersync</text>
 <rect x="190" y="626" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="626" width="413.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="644" class="value">2,049</text>
-<text x="0" y="683" class="axis">ffastdb</text>
+<rect x="190" y="626" width="490.7" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="644" class="value">2,655</text>
+<text x="0" y="683" class="axis">localstore</text>
 <rect x="190" y="664" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="664" width="390.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="682" class="value">1,330</text>
-<text x="0" y="721" class="axis">relax_orm</text>
+<rect x="190" y="664" width="475.6" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="682" class="value">2,083</text>
+<text x="0" y="721" class="axis">objectdb</text>
 <rect x="190" y="702" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="702" width="385.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="720" class="value">1,223</text>
-<text x="0" y="759" class="axis">localstore</text>
+<rect x="190" y="702" width="467.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="720" class="value">1,822</text>
+<text x="0" y="759" class="axis">relax_orm</text>
 <rect x="190" y="740" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="740" width="382.4" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="758" class="value">1,155</text>
-<text x="0" y="797" class="axis">store_box</text>
+<rect x="190" y="740" width="465.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="758" class="value">1,781</text>
+<text x="0" y="797" class="axis">ffastdb</text>
 <rect x="190" y="778" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="778" width="379.8" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="796" class="value">1,100</text>
-<text x="0" y="835" class="axis">shared_preferences</text>
+<rect x="190" y="778" width="456.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="796" class="value">1,529</text>
+<text x="0" y="835" class="axis">tiny_db</text>
 <rect x="190" y="816" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="816" width="378.5" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="834" class="value">1,075</text>
-<text x="0" y="873" class="axis">tiny_db</text>
+<rect x="190" y="816" width="455.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="834" class="value">1,503</text>
+<text x="0" y="873" class="axis">sembast</text>
 <rect x="190" y="854" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="854" width="370.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="872" class="value">921</text>
+<rect x="190" y="854" width="453.5" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="872" class="value">1,461</text>
 <text x="0" y="911" class="axis">work_db</text>
 <rect x="190" y="892" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="892" width="367.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="910" class="value">870</text>
-<text x="0" y="949" class="axis">fdatabase</text>
+<rect x="190" y="892" width="447.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="910" class="value">1,317</text>
+<text x="0" y="949" class="axis">reaxdb_dart</text>
 <rect x="190" y="930" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="930" width="353.8" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="948" class="value">681</text>
-<text x="0" y="987" class="axis">sembast</text>
-<rect x="190" y="968" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="968" width="346.4" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="986" class="value">594</text>
-<text x="0" y="1025" class="axis">local_shared</text>
-<rect x="190" y="1006" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1006" width="286.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1024" class="value">196</text>
-<text x="0" y="1063" class="axis">reaxdb_dart</text>
-<rect x="190" y="1044" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1044" width="282.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1062" class="value">182</text>
-<text x="0" y="1101" class="axis">objectdb</text>
-<rect x="190" y="1082" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1082" width="270.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1100" class="value">144</text>
+<rect x="190" y="930" width="283.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="948" class="value">93</text>
 
 </svg>
 </div>
@@ -992,135 +945,120 @@ a { color: var(--accent); }
       <h3>native-windows &#47; crud_balanced</h3>
       <p>Balanced create&#47;read&#47;query&#47;update&#47;delete workload.</p>
     </div>
-    <div class="chart-meta">30 completed, 0 failed</div>
+    <div class="chart-meta">26 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
-  <span>records 20</span>
+  <span>records 5</span>
   <span>payload 256 bytes</span>
+  <span>release-aot</span>
   <span>median timing</span>
-  <span>2026-05-12T04:38:35.108364Z</span>
+  <span>2026-05-12T14:53:43.683350Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 101,902 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 3,461,538 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 1138" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">get_storage</text>
+<svg viewBox="0 0 950 986" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">hive</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
 <rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">53,060</text>
-<text x="0" y="75" class="axis">hive</text>
+<text x="824" y="36" class="value">16,810</text>
+<text x="0" y="75" class="axis">offline_db</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="503.5" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">6,871</text>
+<rect x="190" y="56" width="554.2" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="74" class="value">5,984</text>
 <text x="0" y="113" class="axis">objectbox</text>
 <rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="492.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">5,659</text>
+<rect x="190" y="94" width="534.2" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">4,376</text>
 <text x="0" y="151" class="axis">hive_ce</text>
 <rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="132" width="482.2" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="150" class="value">4,727</text>
-<text x="0" y="189" class="axis">offline_db</text>
+<rect x="190" y="132" width="530.9" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="150" class="value">4,150</text>
+<text x="0" y="189" class="axis">flutterdb</text>
 <rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="170" width="467.8" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="188" class="value">3,674</text>
-<text x="0" y="227" class="axis">isar_db</text>
+<rect x="190" y="170" width="530.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="188" class="value">4,117</text>
+<text x="0" y="227" class="axis">store_box</text>
 <rect x="190" y="208" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="208" width="462.2" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="226" class="value">3,329</text>
+<rect x="190" y="208" width="522.4" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="226" class="value">3,633</text>
 <text x="0" y="265" class="axis">isar_plus</text>
 <rect x="190" y="246" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="246" width="460.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="264" class="value">3,236</text>
-<text x="0" y="303" class="axis">powersync</text>
+<rect x="190" y="246" width="514.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="264" class="value">3,192</text>
+<text x="0" y="303" class="axis">isar_db</text>
 <rect x="190" y="284" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="284" width="432.3" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="302" class="value">1,967</text>
-<text x="0" y="341" class="axis">sqlite_async</text>
+<rect x="190" y="284" width="511.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="302" class="value">3,038</text>
+<text x="0" y="341" class="axis">fdatabase</text>
 <rect x="190" y="322" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="322" width="429.7" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="340" class="value">1,880</text>
-<text x="0" y="379" class="axis">isar_community</text>
+<rect x="190" y="322" width="510.8" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="340" class="value">3,029</text>
+<text x="0" y="379" class="axis">powersync</text>
 <rect x="190" y="360" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="360" width="427.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="378" class="value">1,811</text>
-<text x="0" y="417" class="axis">flutterdb</text>
+<rect x="190" y="360" width="499.1" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="378" class="value">2,522</text>
+<text x="0" y="417" class="axis">sqlite_async</text>
 <rect x="190" y="398" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="398" width="421.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="416" class="value">1,615</text>
+<rect x="190" y="398" width="499.1" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="416" class="value">2,518</text>
 <text x="0" y="455" class="axis">isar</text>
 <rect x="190" y="436" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="436" width="420.8" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="454" class="value">1,609</text>
-<text x="0" y="493" class="axis">localstorage</text>
+<rect x="190" y="436" width="491.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="454" class="value">2,234</text>
+<text x="0" y="493" class="axis">isar_community</text>
 <rect x="190" y="474" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="474" width="410.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="492" class="value">1,332</text>
-<text x="0" y="531" class="axis">drift</text>
+<rect x="190" y="474" width="490.5" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="492" class="value">2,202</text>
+<text x="0" y="531" class="axis">localstore</text>
 <rect x="190" y="512" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="512" width="405.4" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="530" class="value">1,228</text>
-<text x="0" y="569" class="axis">sqlite3</text>
+<rect x="190" y="512" width="476.5" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="530" class="value">1,768</text>
+<text x="0" y="569" class="axis">relax_orm</text>
 <rect x="190" y="550" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="550" width="403.3" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="568" class="value">1,183</text>
-<text x="0" y="607" class="axis">relax_orm</text>
+<rect x="190" y="550" width="471.5" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="568" class="value">1,635</text>
+<text x="0" y="607" class="axis">objectdb</text>
 <rect x="190" y="588" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="588" width="403.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="606" class="value">1,176</text>
-<text x="0" y="645" class="axis">localstore</text>
+<rect x="190" y="588" width="469.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="606" class="value">1,581</text>
+<text x="0" y="645" class="axis">tiny_db</text>
 <rect x="190" y="626" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="626" width="400.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="644" class="value">1,131</text>
-<text x="0" y="683" class="axis">sqflite_common_ffi</text>
+<rect x="190" y="626" width="463.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="644" class="value">1,432</text>
+<text x="0" y="683" class="axis">sqlite3</text>
 <rect x="190" y="664" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="664" width="387.7" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="682" class="value">900</text>
-<text x="0" y="721" class="axis">tiny_db</text>
+<rect x="190" y="664" width="462.0" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="682" class="value">1,407</text>
+<text x="0" y="721" class="axis">sqlbrite</text>
 <rect x="190" y="702" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="702" width="387.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="720" class="value">899</text>
-<text x="0" y="759" class="axis">shared_preferences</text>
+<rect x="190" y="702" width="460.0" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="720" class="value">1,363</text>
+<text x="0" y="759" class="axis">drift</text>
 <rect x="190" y="740" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="740" width="386.3" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="758" class="value">878</text>
-<text x="0" y="797" class="axis">sqlbrite</text>
+<rect x="190" y="740" width="459.4" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="758" class="value">1,350</text>
+<text x="0" y="797" class="axis">work_db</text>
 <rect x="190" y="778" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="778" width="385.1" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="796" class="value">859</text>
-<text x="0" y="835" class="axis">store_box</text>
+<rect x="190" y="778" width="457.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="796" class="value">1,307</text>
+<text x="0" y="835" class="axis">sqflite_common_ffi</text>
 <rect x="190" y="816" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="816" width="384.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="834" class="value">844</text>
-<text x="0" y="873" class="axis">work_db</text>
+<rect x="190" y="816" width="457.1" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="834" class="value">1,303</text>
+<text x="0" y="873" class="axis">sembast</text>
 <rect x="190" y="854" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="854" width="383.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="872" class="value">829</text>
-<text x="0" y="911" class="axis">fdatabase</text>
+<rect x="190" y="854" width="400.7" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="872" class="value">537</text>
+<text x="0" y="911" class="axis">ffastdb</text>
 <rect x="190" y="892" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="892" width="366.8" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="910" class="value">623</text>
-<text x="0" y="949" class="axis">sembast</text>
+<rect x="190" y="892" width="364.6" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="910" class="value">304</text>
+<text x="0" y="949" class="axis">reaxdb_dart</text>
 <rect x="190" y="930" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="930" width="328.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="948" class="value">315</text>
-<text x="0" y="987" class="axis">reaxdb_dart</text>
-<rect x="190" y="968" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="968" width="305.9" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="986" class="value">214</text>
-<text x="0" y="1025" class="axis">local_shared</text>
-<rect x="190" y="1006" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1006" width="293.8" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1024" class="value">172</text>
-<text x="0" y="1063" class="axis">objectdb</text>
-<rect x="190" y="1044" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1044" width="281.4" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1062" class="value">139</text>
-<text x="0" y="1101" class="axis">ffastdb</text>
-<rect x="190" y="1082" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1082" width="268.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1100" class="value">109</text>
+<rect x="190" y="930" width="293.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="948" class="value">98</text>
 
 </svg>
 </div>
@@ -1132,135 +1070,120 @@ a { color: var(--accent); }
       <h3>native-windows &#47; large_payload</h3>
       <p>Fewer records with larger JSON-like payloads.</p>
     </div>
-    <div class="chart-meta">30 completed, 0 failed</div>
+    <div class="chart-meta">26 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
-  <span>records 20</span>
+  <span>records 5</span>
   <span>payload 4096 bytes</span>
+  <span>release-aot</span>
   <span>median timing</span>
-  <span>2026-05-12T04:38:35.108364Z</span>
+  <span>2026-05-12T14:53:43.683350Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 235,457 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 3,125,000 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 1138" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">get_storage</text>
+<svg viewBox="0 0 950 986" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">offline_db</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">102,471</text>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="36" class="value">5,839</text>
 <text x="0" y="75" class="axis">objectbox</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="482.2" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="74" class="value">7,892</text>
+<rect x="190" y="56" width="617.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="74" class="value">5,625</text>
 <text x="0" y="113" class="axis">hive</text>
 <rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="478.8" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="112" class="value">7,405</text>
-<text x="0" y="151" class="axis">hive_ce</text>
+<rect x="190" y="94" width="607.3" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="112" class="value">4,891</text>
+<text x="0" y="151" class="axis">flutterdb</text>
 <rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="132" width="463.3" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="150" class="value">5,550</text>
-<text x="0" y="189" class="axis">offline_db</text>
+<rect x="190" y="132" width="599.6" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="150" class="value">4,389</text>
+<text x="0" y="189" class="axis">hive_ce</text>
 <rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="170" width="451.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="188" class="value">4,457</text>
-<text x="0" y="227" class="axis">isar_plus</text>
+<rect x="190" y="170" width="592.6" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="188" class="value">3,982</text>
+<text x="0" y="227" class="axis">isar_db</text>
 <rect x="190" y="208" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="208" width="442.8" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="226" class="value">3,787</text>
-<text x="0" y="265" class="axis">isar_db</text>
+<rect x="190" y="208" width="582.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="226" class="value">3,474</text>
+<text x="0" y="265" class="axis">isar_plus</text>
 <rect x="190" y="246" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="246" width="439.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="264" class="value">3,568</text>
+<rect x="190" y="246" width="576.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="264" class="value">3,196</text>
 <text x="0" y="303" class="axis">sqlite_async</text>
 <rect x="190" y="284" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="284" width="423.9" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="302" class="value">2,665</text>
+<rect x="190" y="284" width="574.1" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="302" class="value">3,071</text>
 <text x="0" y="341" class="axis">powersync</text>
 <rect x="190" y="322" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="322" width="413.1" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="340" class="value">2,181</text>
-<text x="0" y="379" class="axis">flutterdb</text>
+<rect x="190" y="322" width="568.2" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="340" class="value">2,829</text>
+<text x="0" y="379" class="axis">isar_community</text>
 <rect x="190" y="360" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="360" width="409.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="378" class="value">2,021</text>
-<text x="0" y="417" class="axis">isar_community</text>
+<rect x="190" y="360" width="563.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="378" class="value">2,633</text>
+<text x="0" y="417" class="axis">isar</text>
 <rect x="190" y="398" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="398" width="408.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="416" class="value">1,986</text>
-<text x="0" y="455" class="axis">isar</text>
+<rect x="190" y="398" width="562.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="416" class="value">2,625</text>
+<text x="0" y="455" class="axis">localstore</text>
 <rect x="190" y="436" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="436" width="406.9" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="454" class="value">1,941</text>
-<text x="0" y="493" class="axis">sqlite3</text>
+<rect x="190" y="436" width="551.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="454" class="value">2,232</text>
+<text x="0" y="493" class="axis">relax_orm</text>
 <rect x="190" y="474" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="474" width="389.3" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="492" class="value">1,400</text>
-<text x="0" y="531" class="axis">localstore</text>
+<rect x="190" y="474" width="542.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="492" class="value">1,971</text>
+<text x="0" y="531" class="axis">drift</text>
 <rect x="190" y="512" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="512" width="388.8" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="530" class="value">1,387</text>
-<text x="0" y="569" class="axis">relax_orm</text>
+<rect x="190" y="512" width="533.1" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="530" class="value">1,732</text>
+<text x="0" y="569" class="axis">sqlite3</text>
 <rect x="190" y="550" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="550" width="387.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="568" class="value">1,342</text>
-<text x="0" y="607" class="axis">drift</text>
+<rect x="190" y="550" width="531.8" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="568" class="value">1,699</text>
+<text x="0" y="607" class="axis">sqlbrite</text>
 <rect x="190" y="588" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="588" width="386.6" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="606" class="value">1,330</text>
-<text x="0" y="645" class="axis">sqlbrite</text>
+<rect x="190" y="588" width="527.3" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="606" class="value">1,597</text>
+<text x="0" y="645" class="axis">sqflite_common_ffi</text>
 <rect x="190" y="626" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="626" width="378.3" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="644" class="value">1,139</text>
-<text x="0" y="683" class="axis">sqflite_common_ffi</text>
+<rect x="190" y="626" width="520.8" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="644" class="value">1,457</text>
+<text x="0" y="683" class="axis">work_db</text>
 <rect x="190" y="664" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="664" width="374.2" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="682" class="value">1,057</text>
-<text x="0" y="721" class="axis">work_db</text>
+<rect x="190" y="664" width="518.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="682" class="value">1,419</text>
+<text x="0" y="721" class="axis">fdatabase</text>
 <rect x="190" y="702" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="702" width="365.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="720" class="value">901</text>
+<rect x="190" y="702" width="476.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="720" class="value">789</text>
 <text x="0" y="759" class="axis">store_box</text>
 <rect x="190" y="740" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="740" width="333.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="758" class="value">494</text>
-<text x="0" y="797" class="axis">fdatabase</text>
+<rect x="190" y="740" width="474.8" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="758" class="value">765</text>
+<text x="0" y="797" class="axis">sembast</text>
 <rect x="190" y="778" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="778" width="324.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="796" class="value">420</text>
-<text x="0" y="835" class="axis">localstorage</text>
+<rect x="190" y="778" width="437.2" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="796" class="value">452</text>
+<text x="0" y="835" class="axis">tiny_db</text>
 <rect x="190" y="816" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="816" width="323.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="834" class="value">407</text>
-<text x="0" y="873" class="axis">shared_preferences</text>
+<rect x="190" y="816" width="425.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="834" class="value">381</text>
+<text x="0" y="873" class="axis">ffastdb</text>
 <rect x="190" y="854" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="854" width="311.1" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="872" class="value">326</text>
-<text x="0" y="911" class="axis">sembast</text>
+<rect x="190" y="854" width="406.7" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="872" class="value">294</text>
+<text x="0" y="911" class="axis">objectdb</text>
 <rect x="190" y="892" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="892" width="300.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="910" class="value">267</text>
+<rect x="190" y="892" width="381.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="910" class="value">206</text>
 <text x="0" y="949" class="axis">reaxdb_dart</text>
 <rect x="190" y="930" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="930" width="291.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="948" class="value">224</text>
-<text x="0" y="987" class="axis">tiny_db</text>
-<rect x="190" y="968" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="968" width="289.4" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="986" class="value">217</text>
-<text x="0" y="1025" class="axis">local_shared</text>
-<rect x="190" y="1006" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1006" width="251.2" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1024" class="value">106</text>
-<text x="0" y="1063" class="axis">ffastdb</text>
-<rect x="190" y="1044" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1044" width="249.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1062" class="value">103</text>
-<text x="0" y="1101" class="axis">objectdb</text>
-<rect x="190" y="1082" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1082" width="151.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1100" class="value">16</text>
+<rect x="190" y="930" width="339.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="948" class="value">114</text>
 
 </svg>
 </div>
@@ -1272,135 +1195,120 @@ a { color: var(--accent); }
       <h3>native-windows &#47; read_heavy</h3>
       <p>App startup&#47;feed style repeated point reads and filters.</p>
     </div>
-    <div class="chart-meta">30 completed, 0 failed</div>
+    <div class="chart-meta">26 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
-  <span>records 20</span>
+  <span>records 5</span>
   <span>payload 256 bytes</span>
+  <span>release-aot</span>
   <span>median timing</span>
-  <span>2026-05-12T04:38:35.108364Z</span>
+  <span>2026-05-12T14:53:43.683350Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 279,330 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 6,071,429 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 1138" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">get_storage</text>
+<svg viewBox="0 0 950 986" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">hive</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
 <rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">121,242</text>
-<text x="0" y="75" class="axis">hive</text>
+<text x="824" y="36" class="value">31,124</text>
+<text x="0" y="75" class="axis">hive_ce</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="515.1" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">16,730</text>
-<text x="0" y="113" class="axis">objectbox</text>
+<rect x="190" y="56" width="565.4" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">12,509</text>
+<text x="0" y="113" class="axis">offline_db</text>
 <rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="492.2" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">10,867</text>
-<text x="0" y="151" class="axis">hive_ce</text>
+<rect x="190" y="94" width="553.2" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">10,208</text>
+<text x="0" y="151" class="axis">objectbox</text>
 <rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="132" width="482.6" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="150" class="value">9,061</text>
-<text x="0" y="189" class="axis">isar_plus</text>
+<rect x="190" y="132" width="537.8" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="150" class="value">7,900</text>
+<text x="0" y="189" class="axis">store_box</text>
 <rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="170" width="454.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="188" class="value">5,352</text>
-<text x="0" y="227" class="axis">offline_db</text>
+<rect x="190" y="170" width="533.4" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="188" class="value">7,332</text>
+<text x="0" y="227" class="axis">flutterdb</text>
 <rect x="190" y="208" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="208" width="454.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="226" class="value">5,335</text>
-<text x="0" y="265" class="axis">isar_db</text>
+<rect x="190" y="208" width="523.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="226" class="value">6,266</text>
+<text x="0" y="265" class="axis">isar_plus</text>
 <rect x="190" y="246" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="246" width="450.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="264" class="value">4,943</text>
-<text x="0" y="303" class="axis">localstorage</text>
+<rect x="190" y="246" width="523.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="264" class="value">6,256</text>
+<text x="0" y="303" class="axis">isar_db</text>
 <rect x="190" y="284" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="284" width="449.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="302" class="value">4,855</text>
-<text x="0" y="341" class="axis">sqlite_async</text>
+<rect x="190" y="284" width="520.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="302" class="value">5,893</text>
+<text x="0" y="341" class="axis">fdatabase</text>
 <rect x="190" y="322" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="322" width="414.8" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="340" class="value">2,519</text>
+<rect x="190" y="322" width="500.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="340" class="value">4,225</text>
 <text x="0" y="379" class="axis">powersync</text>
 <rect x="190" y="360" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="360" width="410.7" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="378" class="value">2,330</text>
-<text x="0" y="417" class="axis">isar</text>
+<rect x="190" y="360" width="497.2" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="378" class="value">4,007</text>
+<text x="0" y="417" class="axis">isar_community</text>
 <rect x="190" y="398" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="398" width="408.3" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="416" class="value">2,227</text>
-<text x="0" y="455" class="axis">sqlite3</text>
+<rect x="190" y="398" width="496.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="416" class="value">3,939</text>
+<text x="0" y="455" class="axis">isar</text>
 <rect x="190" y="436" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="436" width="406.1" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="454" class="value">2,137</text>
-<text x="0" y="493" class="axis">flutterdb</text>
+<rect x="190" y="436" width="492.5" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="454" class="value">3,705</text>
+<text x="0" y="493" class="axis">relax_orm</text>
 <rect x="190" y="474" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="474" width="406.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="492" class="value">2,133</text>
-<text x="0" y="531" class="axis">isar_community</text>
+<rect x="190" y="474" width="489.5" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="492" class="value">3,529</text>
+<text x="0" y="531" class="axis">tiny_db</text>
 <rect x="190" y="512" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="512" width="401.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="530" class="value">1,943</text>
-<text x="0" y="569" class="axis">relax_orm</text>
+<rect x="190" y="512" width="476.7" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="530" class="value">2,846</text>
+<text x="0" y="569" class="axis">sqlite_async</text>
 <rect x="190" y="550" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="550" width="400.4" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="568" class="value">1,919</text>
-<text x="0" y="607" class="axis">drift</text>
+<rect x="190" y="550" width="472.4" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="568" class="value">2,650</text>
+<text x="0" y="607" class="axis">sembast</text>
 <rect x="190" y="588" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="588" width="394.1" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="606" class="value">1,701</text>
-<text x="0" y="645" class="axis">store_box</text>
+<rect x="190" y="588" width="470.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="606" class="value">2,558</text>
+<text x="0" y="645" class="axis">drift</text>
 <rect x="190" y="626" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="626" width="390.9" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="644" class="value">1,602</text>
-<text x="0" y="683" class="axis">shared_preferences</text>
+<rect x="190" y="626" width="469.9" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="644" class="value">2,544</text>
+<text x="0" y="683" class="axis">sqlbrite</text>
 <rect x="190" y="664" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="664" width="388.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="682" class="value">1,516</text>
-<text x="0" y="721" class="axis">tiny_db</text>
+<rect x="190" y="664" width="465.4" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="682" class="value">2,358</text>
+<text x="0" y="721" class="axis">objectdb</text>
 <rect x="190" y="702" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="702" width="384.2" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="720" class="value">1,412</text>
-<text x="0" y="759" class="axis">sqlbrite</text>
+<rect x="190" y="702" width="455.6" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="720" class="value">2,002</text>
+<text x="0" y="759" class="axis">localstore</text>
 <rect x="190" y="740" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="740" width="383.2" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="758" class="value">1,386</text>
-<text x="0" y="797" class="axis">sqflite_common_ffi</text>
+<rect x="190" y="740" width="447.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="758" class="value">1,744</text>
+<text x="0" y="797" class="axis">sqlite3</text>
 <rect x="190" y="778" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="778" width="382.2" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="796" class="value">1,360</text>
-<text x="0" y="835" class="axis">localstore</text>
+<rect x="190" y="778" width="431.7" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="796" class="value">1,343</text>
+<text x="0" y="835" class="axis">sqflite_common_ffi</text>
 <rect x="190" y="816" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="816" width="362.3" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="834" class="value">933</text>
-<text x="0" y="873" class="axis">fdatabase</text>
+<rect x="190" y="816" width="421.2" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="834" class="value">1,126</text>
+<text x="0" y="873" class="axis">work_db</text>
 <rect x="190" y="854" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="854" width="348.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="872" class="value">713</text>
-<text x="0" y="911" class="axis">work_db</text>
+<rect x="190" y="854" width="418.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="872" class="value">1,075</text>
+<text x="0" y="911" class="axis">ffastdb</text>
 <rect x="190" y="892" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="892" width="337.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="910" class="value">584</text>
-<text x="0" y="949" class="axis">sembast</text>
+<rect x="190" y="892" width="376.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="910" class="value">530</text>
+<text x="0" y="949" class="axis">reaxdb_dart</text>
 <rect x="190" y="930" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="930" width="328.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="948" class="value">495</text>
-<text x="0" y="987" class="axis">reaxdb_dart</text>
-<rect x="190" y="968" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="968" width="305.4" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="986" class="value">318</text>
-<text x="0" y="1025" class="axis">local_shared</text>
-<rect x="190" y="1006" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1006" width="294.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1024" class="value">257</text>
-<text x="0" y="1063" class="axis">objectdb</text>
-<rect x="190" y="1044" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1044" width="269.9" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1062" class="value">162</text>
-<text x="0" y="1101" class="axis">ffastdb</text>
-<rect x="190" y="1082" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1082" width="264.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1100" class="value">145</text>
+<rect x="190" y="930" width="313.6" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="948" class="value">186</text>
 
 </svg>
 </div>
@@ -1412,135 +1320,120 @@ a { color: var(--accent); }
       <h3>native-windows &#47; write_churn_stress</h3>
       <p>Larger insert&#47;update&#47;delete churn under deterministic IDs.</p>
     </div>
-    <div class="chart-meta">30 completed, 0 failed</div>
+    <div class="chart-meta">26 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
-  <span>records 40</span>
+  <span>records 10</span>
   <span>payload 256 bytes</span>
+  <span>release-aot</span>
   <span>median timing</span>
-  <span>2026-05-12T04:38:35.108364Z</span>
+  <span>2026-05-12T14:53:43.683350Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 328,947 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 7,500,000 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 1138" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">get_storage</text>
+<svg viewBox="0 0 950 986" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">hive</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
 <rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">87,925</text>
-<text x="0" y="75" class="axis">hive</text>
+<text x="824" y="36" class="value">15,734</text>
+<text x="0" y="75" class="axis">hive_ce</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="502.6" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">10,189</text>
-<text x="0" y="113" class="axis">objectbox</text>
+<rect x="190" y="56" width="586.9" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">9,393</text>
+<text x="0" y="113" class="axis">offline_db</text>
 <rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="496.9" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">9,170</text>
-<text x="0" y="151" class="axis">hive_ce</text>
+<rect x="190" y="94" width="574.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">7,715</text>
+<text x="0" y="151" class="axis">objectbox</text>
 <rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="132" width="465.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="150" class="value">5,106</text>
-<text x="0" y="189" class="axis">offline_db</text>
+<rect x="190" y="132" width="571.6" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="150" class="value">7,403</text>
+<text x="0" y="189" class="axis">sqlite_async</text>
 <rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="170" width="460.3" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="188" class="value">4,682</text>
-<text x="0" y="227" class="axis">isar_db</text>
+<rect x="190" y="170" width="552.3" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="188" class="value">5,479</text>
+<text x="0" y="227" class="axis">powersync</text>
 <rect x="190" y="208" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="208" width="451.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="226" class="value">3,987</text>
+<rect x="190" y="208" width="539.0" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="226" class="value">4,451</text>
 <text x="0" y="265" class="axis">isar_plus</text>
 <rect x="190" y="246" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="246" width="443.9" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="264" class="value">3,466</text>
-<text x="0" y="303" class="axis">sqlite_async</text>
+<rect x="190" y="246" width="536.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="264" class="value">4,248</text>
+<text x="0" y="303" class="axis">flutterdb</text>
 <rect x="190" y="284" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="284" width="441.6" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="302" class="value">3,321</text>
-<text x="0" y="341" class="axis">powersync</text>
+<rect x="190" y="284" width="535.6" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="302" class="value">4,221</text>
+<text x="0" y="341" class="axis">isar_db</text>
 <rect x="190" y="322" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="322" width="429.1" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="340" class="value">2,642</text>
-<text x="0" y="379" class="axis">isar_community</text>
+<rect x="190" y="322" width="535.5" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="340" class="value">4,217</text>
+<text x="0" y="379" class="axis">store_box</text>
 <rect x="190" y="360" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="360" width="421.4" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="378" class="value">2,290</text>
-<text x="0" y="417" class="axis">flutterdb</text>
+<rect x="190" y="360" width="516.9" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="378" class="value">3,153</text>
+<text x="0" y="417" class="axis">isar_community</text>
 <rect x="190" y="398" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="398" width="410.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="416" class="value">1,885</text>
+<rect x="190" y="398" width="513.5" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="416" class="value">2,992</text>
 <text x="0" y="455" class="axis">isar</text>
 <rect x="190" y="436" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="436" width="407.2" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="454" class="value">1,766</text>
-<text x="0" y="493" class="axis">drift</text>
+<rect x="190" y="436" width="511.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="454" class="value">2,916</text>
+<text x="0" y="493" class="axis">fdatabase</text>
 <rect x="190" y="474" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="474" width="385.6" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="492" class="value">1,188</text>
-<text x="0" y="531" class="axis">relax_orm</text>
+<rect x="190" y="474" width="508.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="492" class="value">2,756</text>
+<text x="0" y="531" class="axis">localstore</text>
 <rect x="190" y="512" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="512" width="384.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="530" class="value">1,153</text>
-<text x="0" y="569" class="axis">localstore</text>
+<rect x="190" y="512" width="495.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="530" class="value">2,251</text>
+<text x="0" y="569" class="axis">relax_orm</text>
 <rect x="190" y="550" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="550" width="379.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="568" class="value">1,054</text>
-<text x="0" y="607" class="axis">sqlite3</text>
+<rect x="190" y="550" width="471.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="568" class="value">1,563</text>
+<text x="0" y="607" class="axis">work_db</text>
 <rect x="190" y="588" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="588" width="379.0" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="606" class="value">1,051</text>
-<text x="0" y="645" class="axis">work_db</text>
+<rect x="190" y="588" width="466.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="606" class="value">1,445</text>
+<text x="0" y="645" class="axis">drift</text>
 <rect x="190" y="626" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="626" width="377.9" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="644" class="value">1,031</text>
-<text x="0" y="683" class="axis">sqlbrite</text>
+<rect x="190" y="626" width="462.9" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="644" class="value">1,359</text>
+<text x="0" y="683" class="axis">sqlite3</text>
 <rect x="190" y="664" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="664" width="372.4" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="682" class="value">931</text>
-<text x="0" y="721" class="axis">sqflite_common_ffi</text>
+<rect x="190" y="664" width="461.5" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="682" class="value">1,329</text>
+<text x="0" y="721" class="axis">sqlbrite</text>
 <rect x="190" y="702" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="702" width="367.2" height="24" rx="5" fill="#2563eb"></rect>
-<text x="824" y="720" class="value">847</text>
-<text x="0" y="759" class="axis">store_box</text>
+<rect x="190" y="702" width="458.1" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="720" class="value">1,261</text>
+<text x="0" y="759" class="axis">sqflite_common_ffi</text>
 <rect x="190" y="740" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="740" width="348.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="758" class="value">603</text>
-<text x="0" y="797" class="axis">reaxdb_dart</text>
+<rect x="190" y="740" width="456.6" height="24" rx="5" fill="#2563eb"></rect>
+<text x="824" y="758" class="value">1,231</text>
+<text x="0" y="797" class="axis">tiny_db</text>
 <rect x="190" y="778" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="778" width="344.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="796" class="value">559</text>
-<text x="0" y="835" class="axis">localstorage</text>
+<rect x="190" y="778" width="434.2" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="796" class="value">869</text>
+<text x="0" y="835" class="axis">objectdb</text>
 <rect x="190" y="816" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="816" width="340.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="834" class="value">514</text>
-<text x="0" y="873" class="axis">fdatabase</text>
+<rect x="190" y="816" width="400.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="834" class="value">513</text>
+<text x="0" y="873" class="axis">sembast</text>
 <rect x="190" y="854" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="854" width="330.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="872" class="value">432</text>
-<text x="0" y="911" class="axis">shared_preferences</text>
+<rect x="190" y="854" width="395.9" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="872" class="value">477</text>
+<text x="0" y="911" class="axis">ffastdb</text>
 <rect x="190" y="892" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="892" width="318.9" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="910" class="value">348</text>
-<text x="0" y="949" class="axis">sembast</text>
+<rect x="190" y="892" width="364.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="910" class="value">291</text>
+<text x="0" y="949" class="axis">reaxdb_dart</text>
 <rect x="190" y="930" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="930" width="309.8" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="948" class="value">294</text>
-<text x="0" y="987" class="axis">tiny_db</text>
-<rect x="190" y="968" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="968" width="290.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="986" class="value">205</text>
-<text x="0" y="1025" class="axis">local_shared</text>
-<rect x="190" y="1006" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1006" width="272.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1024" class="value">148</text>
-<text x="0" y="1063" class="axis">ffastdb</text>
-<rect x="190" y="1044" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1044" width="244.8" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1062" class="value">89</text>
-<text x="0" y="1101" class="axis">objectdb</text>
-<rect x="190" y="1082" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="1082" width="204.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="1100" class="value">41</text>
+<rect x="190" y="930" width="358.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="948" class="value">265</text>
 
 </svg>
 </div>
@@ -1552,39 +1445,32 @@ a { color: var(--accent); }
       <h3>web-js &#47; batched_transaction</h3>
       <p>Balanced CRUD with grouped write phases; transactional adapters use their native write transaction.</p>
     </div>
-    <div class="chart-meta">6 completed, 0 failed</div>
+    <div class="chart-meta">4 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
   <span>records 5</span>
   <span>payload 256 bytes</span>
+  <span>release-web-js</span>
   <span>median timing</span>
-  <span>2026-05-12T00:24:29.910Z</span>
+  <span>2026-05-12T14:50:52.273Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 1,125,000 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 750,000 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 226" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">shared_preferences</text>
+<svg viewBox="0 0 950 150" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">localstore</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">152,542</text>
-<text x="0" y="75" class="axis">get_storage</text>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="36" class="value">82,721</text>
+<text x="0" y="75" class="axis">hive_ce</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="607.5" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">120,000</text>
-<text x="0" y="113" class="axis">localstore</text>
+<rect x="190" y="56" width="525.0" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">14,587</text>
+<text x="0" y="113" class="axis">sembast_web</text>
 <rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="584.9" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">77,586</text>
-<text x="0" y="151" class="axis">hive_ce</text>
-<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="132" width="496.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="150" class="value">14,019</text>
-<text x="0" y="189" class="axis">sembast_web</text>
-<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="170" width="433.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="188" class="value">4,169</text>
+<rect x="190" y="94" width="453.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">3,942</text>
 
 </svg>
 </div>
@@ -1596,39 +1482,32 @@ a { color: var(--accent); }
       <h3>web-js &#47; crud_balanced</h3>
       <p>Balanced create&#47;read&#47;query&#47;update&#47;delete workload.</p>
     </div>
-    <div class="chart-meta">6 completed, 0 failed</div>
+    <div class="chart-meta">4 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
   <span>records 5</span>
   <span>payload 256 bytes</span>
+  <span>release-web-js</span>
   <span>median timing</span>
-  <span>2026-05-12T00:24:29.910Z</span>
+  <span>2026-05-12T14:50:52.273Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 272,727 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 266,272 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 226" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">get_storage</text>
+<svg viewBox="0 0 950 150" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">localstore</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">57,692</text>
-<text x="0" y="75" class="axis">shared_preferences</text>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="36" class="value">37,037</text>
+<text x="0" y="75" class="axis">hive_ce</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="615.5" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">53,254</text>
-<text x="0" y="113" class="axis">localstore</text>
+<rect x="190" y="56" width="492.4" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">4,249</text>
+<text x="0" y="113" class="axis">sembast_web</text>
 <rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="611.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">49,724</text>
-<text x="0" y="151" class="axis">hive_ce</text>
-<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="132" width="472.3" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="150" class="value">4,237</text>
-<text x="0" y="189" class="axis">sembast_web</text>
-<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="170" width="459.8" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="188" class="value">3,395</text>
+<rect x="190" y="94" width="445.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">1,900</text>
 
 </svg>
 </div>
@@ -1640,39 +1519,32 @@ a { color: var(--accent); }
       <h3>web-js &#47; large_payload</h3>
       <p>Fewer records with larger JSON-like payloads.</p>
     </div>
-    <div class="chart-meta">6 completed, 0 failed</div>
+    <div class="chart-meta">4 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
   <span>records 5</span>
   <span>payload 4096 bytes</span>
+  <span>release-web-js</span>
   <span>median timing</span>
-  <span>2026-05-12T00:24:29.910Z</span>
+  <span>2026-05-12T14:50:52.273Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 833,333 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 909,091 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 226" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">shared_preferences</text>
+<svg viewBox="0 0 950 150" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">localstore</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">91,743</text>
-<text x="0" y="75" class="axis">get_storage</text>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="36" class="value">39,651</text>
+<text x="0" y="75" class="axis">hive_ce</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="580.2" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">44,053</text>
-<text x="0" y="113" class="axis">localstore</text>
+<rect x="190" y="56" width="552.9" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">12,614</text>
+<text x="0" y="113" class="axis">sembast_web</text>
 <rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="574.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">39,841</text>
-<text x="0" y="151" class="axis">hive_ce</text>
-<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="132" width="508.5" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="150" class="value">11,751</text>
-<text x="0" y="189" class="axis">sembast_web</text>
-<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="170" width="449.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="188" class="value">3,978</text>
+<rect x="190" y="94" width="480.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">3,654</text>
 
 </svg>
 </div>
@@ -1684,39 +1556,32 @@ a { color: var(--accent); }
       <h3>web-js &#47; read_heavy</h3>
       <p>App startup&#47;feed style repeated point reads and filters.</p>
     </div>
-    <div class="chart-meta">6 completed, 0 failed</div>
+    <div class="chart-meta">4 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
   <span>records 5</span>
   <span>payload 256 bytes</span>
+  <span>release-web-js</span>
   <span>median timing</span>
-  <span>2026-05-12T00:24:29.910Z</span>
+  <span>2026-05-12T14:50:52.273Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 708,333 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 680,000 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 226" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">get_storage</text>
+<svg viewBox="0 0 950 150" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">localstore</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">139,344</text>
-<text x="0" y="75" class="axis">shared_preferences</text>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="36" class="value">80,645</text>
+<text x="0" y="75" class="axis">hive_ce</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="619.1" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">137,097</text>
-<text x="0" y="113" class="axis">localstore</text>
+<rect x="190" y="56" width="554.6" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">24,496</text>
+<text x="0" y="113" class="axis">sembast_web</text>
 <rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="592.3" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">82,126</text>
-<text x="0" y="151" class="axis">hive_ce</text>
-<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="132" width="527.7" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="150" class="value">23,876</text>
-<text x="0" y="189" class="axis">sembast_web</text>
-<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="170" width="463.2" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="188" class="value">6,964</text>
+<rect x="190" y="94" width="484.4" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">6,816</text>
 
 </svg>
 </div>
@@ -1728,39 +1593,32 @@ a { color: var(--accent); }
       <h3>web-js &#47; write_churn_stress</h3>
       <p>Larger insert&#47;update&#47;delete churn under deterministic IDs.</p>
     </div>
-    <div class="chart-meta">6 completed, 0 failed</div>
+    <div class="chart-meta">4 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
   <span>records 10</span>
   <span>payload 256 bytes</span>
+  <span>release-web-js</span>
   <span>median timing</span>
-  <span>2026-05-12T00:24:29.910Z</span>
+  <span>2026-05-12T14:50:52.273Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 1,000,000 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 1,100,917 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 226" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">shared_preferences</text>
+<svg viewBox="0 0 950 150" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">localstore</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">127,660</text>
-<text x="0" y="75" class="axis">get_storage</text>
+<rect x="190" y="18" width="620.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="36" class="value">51,392</text>
+<text x="0" y="75" class="axis">hive_ce</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="593.3" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">76,923</text>
-<text x="0" y="113" class="axis">localstore</text>
+<rect x="190" y="56" width="534.8" height="24" rx="5" fill="#b45309"></rect>
+<text x="824" y="74" class="value">11,571</text>
+<text x="0" y="113" class="axis">sembast_web</text>
 <rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="579.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">58,680</text>
-<text x="0" y="151" class="axis">hive_ce</text>
-<rect x="190" y="132" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="132" width="495.4" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="150" class="value">12,018</text>
-<text x="0" y="189" class="axis">sembast_web</text>
-<rect x="190" y="170" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="170" width="427.7" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="188" class="value">3,329</text>
+<rect x="190" y="94" width="460.6" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="112" class="value">3,162</text>
 
 </svg>
 </div>
@@ -1772,31 +1630,28 @@ a { color: var(--accent); }
       <h3>web-wasm &#47; batched_transaction</h3>
       <p>Balanced CRUD with grouped write phases; transactional adapters use their native write transaction.</p>
     </div>
-    <div class="chart-meta">4 completed, 0 failed</div>
+    <div class="chart-meta">3 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
   <span>records 5</span>
   <span>payload 256 bytes</span>
+  <span>release-web-wasm</span>
   <span>median timing</span>
-  <span>2026-05-12T00:26:31.350Z</span>
+  <span>2026-05-12T14:52:43.116Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 1,800,000 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 2,250,000 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 150" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">shared_preferences</text>
+<svg viewBox="0 0 950 112" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">hive_ce</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
 <rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">132,353</text>
-<text x="0" y="75" class="axis">hive_ce</text>
+<text x="824" y="36" class="value">17,045</text>
+<text x="0" y="75" class="axis">sembast_web</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="504.8" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">14,803</text>
-<text x="0" y="113" class="axis">sembast_web</text>
-<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="429.0" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">3,496</text>
+<rect x="190" y="56" width="531.1" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="74" class="value">4,217</text>
 
 </svg>
 </div>
@@ -1808,31 +1663,28 @@ a { color: var(--accent); }
       <h3>web-wasm &#47; crud_balanced</h3>
       <p>Balanced create&#47;read&#47;query&#47;update&#47;delete workload.</p>
     </div>
-    <div class="chart-meta">4 completed, 0 failed</div>
+    <div class="chart-meta">3 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
   <span>records 5</span>
   <span>payload 256 bytes</span>
+  <span>release-web-wasm</span>
   <span>median timing</span>
-  <span>2026-05-12T00:26:31.350Z</span>
+  <span>2026-05-12T14:52:43.116Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 900,000 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 1,125,000 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 150" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">shared_preferences</text>
+<svg viewBox="0 0 950 112" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">hive_ce</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
 <rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">46,201</text>
-<text x="0" y="75" class="axis">hive_ce</text>
+<text x="824" y="36" class="value">13,294</text>
+<text x="0" y="75" class="axis">sembast_web</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="530.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">9,709</text>
-<text x="0" y="113" class="axis">sembast_web</text>
-<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="460.6" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">2,917</text>
+<rect x="190" y="56" width="526.8" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="74" class="value">3,190</text>
 
 </svg>
 </div>
@@ -1844,31 +1696,28 @@ a { color: var(--accent); }
       <h3>web-wasm &#47; large_payload</h3>
       <p>Fewer records with larger JSON-like payloads.</p>
     </div>
-    <div class="chart-meta">4 completed, 0 failed</div>
+    <div class="chart-meta">3 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
   <span>records 5</span>
   <span>payload 4096 bytes</span>
+  <span>release-web-wasm</span>
   <span>median timing</span>
-  <span>2026-05-12T00:26:31.350Z</span>
+  <span>2026-05-12T14:52:43.116Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 1,282,051 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 1,250,000 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 150" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">shared_preferences</text>
+<svg viewBox="0 0 950 112" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">hive_ce</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
 <rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">42,955</text>
-<text x="0" y="75" class="axis">hive_ce</text>
+<text x="824" y="36" class="value">13,423</text>
+<text x="0" y="75" class="axis">sembast_web</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="525.8" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">8,498</text>
-<text x="0" y="113" class="axis">sembast_web</text>
-<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="465.1" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">2,986</text>
+<rect x="190" y="56" width="532.3" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="74" class="value">3,499</text>
 
 </svg>
 </div>
@@ -1880,31 +1729,28 @@ a { color: var(--accent); }
       <h3>web-wasm &#47; read_heavy</h3>
       <p>App startup&#47;feed style repeated point reads and filters.</p>
     </div>
-    <div class="chart-meta">4 completed, 0 failed</div>
+    <div class="chart-meta">3 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
   <span>records 5</span>
   <span>payload 256 bytes</span>
+  <span>release-web-wasm</span>
   <span>median timing</span>
-  <span>2026-05-12T00:26:31.350Z</span>
+  <span>2026-05-12T14:52:43.116Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 1,847,826 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 2,125,000 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 150" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">shared_preferences</text>
+<svg viewBox="0 0 950 112" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">hive_ce</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
 <rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">113,333</text>
-<text x="0" y="75" class="axis">hive_ce</text>
+<text x="824" y="36" class="value">27,508</text>
+<text x="0" y="75" class="axis">sembast_web</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="530.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">20,936</text>
-<text x="0" y="113" class="axis">sembast_web</text>
-<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="456.4" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">5,257</text>
+<rect x="190" y="56" width="519.0" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="74" class="value">5,202</text>
 
 </svg>
 </div>
@@ -1916,31 +1762,28 @@ a { color: var(--accent); }
       <h3>web-wasm &#47; write_churn_stress</h3>
       <p>Larger insert&#47;update&#47;delete churn under deterministic IDs.</p>
     </div>
-    <div class="chart-meta">4 completed, 0 failed</div>
+    <div class="chart-meta">3 completed, 0 failed</div>
   </div>
   <div class="facts">
   <span>samples 3</span>
   <span>records 10</span>
   <span>payload 256 bytes</span>
+  <span>release-web-wasm</span>
   <span>median timing</span>
-  <span>2026-05-12T00:26:31.350Z</span>
+  <span>2026-05-12T14:52:43.116Z</span>
 </div>
-  <p class="note">Synthetic memory ceiling: 2,352,941 ops/sec.</p>
+  <p class="note">Synthetic memory ceiling: 2,666,667 ops/sec.</p>
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   <div class="svg-wrap">
-<svg viewBox="0 0 950 150" role="img" aria-label="Ops per second by adapter">
-  <text x="0" y="37" class="axis">shared_preferences</text>
+<svg viewBox="0 0 950 112" role="img" aria-label="Ops per second by adapter">
+  <text x="0" y="37" class="axis">hive_ce</text>
 <rect x="190" y="18" width="620" height="24" rx="5" class="track"></rect>
 <rect x="190" y="18" width="620.0" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="36" class="value">109,091</text>
-<text x="0" y="75" class="axis">hive_ce</text>
+<text x="824" y="36" class="value">11,707</text>
+<text x="0" y="75" class="axis">sembast_web</text>
 <rect x="190" y="56" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="56" width="498.6" height="24" rx="5" fill="#b45309"></rect>
-<text x="824" y="74" class="value">11,257</text>
-<text x="0" y="113" class="axis">sembast_web</text>
-<rect x="190" y="94" width="620" height="24" rx="5" class="track"></rect>
-<rect x="190" y="94" width="429.5" height="24" rx="5" fill="#047857"></rect>
-<text x="824" y="112" class="value">3,088</text>
+<rect x="190" y="56" width="543.2" height="24" rx="5" fill="#047857"></rect>
+<text x="824" y="74" class="value">3,670</text>
 
 </svg>
 </div>
@@ -1951,320 +1794,267 @@ a { color: var(--accent); }
 <h2>Package Coverage</h2>
 <div class="table-wrap"><table data-sort-table>
 <thead><tr>
-<th data-sort-key="package" data-sort-type="text" data-sort-default="none" aria-sort="none" tabindex="0" title="Sort by Package">Package <span class="sort-indicator" aria-hidden="true">-</span></th><th data-sort-key="family" data-sort-type="text" data-sort-default="none" aria-sort="none" tabindex="0" title="Sort by Family">Family <span class="sort-indicator" aria-hidden="true">-</span></th><th data-sort-key="platforms" data-sort-type="text" data-sort-default="none" aria-sort="none" tabindex="0" title="Sort by Platforms">Platforms <span class="sort-indicator" aria-hidden="true">-</span></th><th data-sort-key="status" data-sort-type="text" data-sort-default="none" aria-sort="none" tabindex="0" title="Sort by Status">Status <span class="sort-indicator" aria-hidden="true">-</span></th>
+<th data-sort-key="package" data-sort-type="text" data-sort-default="none" aria-sort="none" tabindex="0" title="Sort by Package">Package <span class="sort-indicator" aria-hidden="true">-</span></th><th data-sort-key="scope" data-sort-type="text" data-sort-default="none" aria-sort="none" tabindex="0" title="Sort by Scope">Scope <span class="sort-indicator" aria-hidden="true">-</span></th><th data-sort-key="family" data-sort-type="text" data-sort-default="none" aria-sort="none" tabindex="0" title="Sort by Family">Family <span class="sort-indicator" aria-hidden="true">-</span></th><th data-sort-key="platforms" data-sort-type="text" data-sort-default="none" aria-sort="none" tabindex="0" title="Sort by Platforms">Platforms <span class="sort-indicator" aria-hidden="true">-</span></th><th data-sort-key="status" data-sort-type="text" data-sort-default="none" aria-sort="none" tabindex="0" title="Sort by Status">Status <span class="sort-indicator" aria-hidden="true">-</span></th>
 </tr></thead>
 <tbody>
 <tr>
 <td data-sort-value="drift"><a href="https://pub.dev/packages/drift">drift</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="SQL">SQL</td>
 <td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
 <td data-sort-value="Runnable on native targets; Web SQLite Wasm assets are outside the current measured adapter set">Runnable on native targets; Web SQLite Wasm assets are outside the current measured adapter set</td>
 </tr>
 <tr>
-<td data-sort-value="drift_flutter"><a href="https://pub.dev/packages/drift_flutter">drift_flutter</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
-<td data-sort-value="Adapter coverage maps this package to the Drift adapter because it configures Drift rather than adding a new database engine">Adapter coverage maps this package to the Drift adapter because it configures Drift rather than adding a new database engine</td>
-</tr>
-<tr>
-<td data-sort-value="drift_sqlite_async"><a href="https://pub.dev/packages/drift_sqlite_async">drift_sqlite_async</a></td>
-<td data-sort-value="SQL">SQL</td>
-<td data-sort-value="Dart and Flutter native targets">Dart and Flutter native targets</td>
-<td data-sort-value="Adapter coverage maps this bridge to the existing Drift and sqlite_async adapters">Adapter coverage maps this bridge to the existing Drift and sqlite_async adapters</td>
-</tr>
-<tr>
 <td data-sort-value="sqflite"><a href="https://pub.dev/packages/sqflite">sqflite</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="SQL">SQL</td>
 <td data-sort-value="Android, iOS, macOS">Android, iOS, macOS</td>
 <td data-sort-value="Runnable on Android and Apple targets; desktop runs use sqflite_common_ffi">Runnable on Android and Apple targets; desktop runs use sqflite_common_ffi</td>
 </tr>
 <tr>
-<td data-sort-value="sqflite_common_ffi"><a href="https://pub.dev/packages/sqflite_common_ffi">sqflite_common_ffi</a></td>
-<td data-sort-value="SQL">SQL</td>
-<td data-sort-value="Windows, Linux, macOS, tests">Windows, Linux, macOS, tests</td>
-<td data-sort-value="Runnable on Windows and Linux native targets">Runnable on Windows and Linux native targets</td>
-</tr>
-<tr>
 <td data-sort-value="sqflite_sqlcipher"><a href="https://pub.dev/packages/sqflite_sqlcipher">sqflite_sqlcipher</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="SQL">SQL</td>
 <td data-sort-value="Android, iOS, macOS">Android, iOS, macOS</td>
 <td data-sort-value="Adapter implemented for mobile&#47;Apple targets; desktop snapshots measure sqflite_common_ffi">Adapter implemented for mobile&#47;Apple targets; desktop snapshots measure sqflite_common_ffi</td>
 </tr>
 <tr>
 <td data-sort-value="sqlite3"><a href="https://pub.dev/packages/sqlite3">sqlite3</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="SQL">SQL</td>
 <td data-sort-value="Dart VM and Flutter native targets">Dart VM and Flutter native targets</td>
 <td data-sort-value="Runnable on native Flutter targets">Runnable on native Flutter targets</td>
 </tr>
 <tr>
-<td data-sort-value="sqlite3_flutter_libs"><a href="https://pub.dev/packages/sqlite3_flutter_libs">sqlite3_flutter_libs</a></td>
-<td data-sort-value="SQL">SQL</td>
-<td data-sort-value="Flutter native targets">Flutter native targets</td>
-<td data-sort-value="Removed from dependencies; sqlite3 3.x is measured directly">Removed from dependencies; sqlite3 3.x is measured directly</td>
-</tr>
-<tr>
 <td data-sort-value="sqlite_async"><a href="https://pub.dev/packages/sqlite_async">sqlite_async</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="SQL">SQL</td>
 <td data-sort-value="Flutter native targets">Flutter native targets</td>
 <td data-sort-value="Runnable on native targets; Web SQLite Wasm assets are outside the current measured adapter set">Runnable on native targets; Web SQLite Wasm assets are outside the current measured adapter set</td>
 </tr>
 <tr>
 <td data-sort-value="floor"><a href="https://pub.dev/packages/floor">floor</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="SQL">SQL</td>
 <td data-sort-value="Flutter targets supported by sqflite">Flutter targets supported by sqflite</td>
 <td data-sort-value="Coverage is explicit: Floor is represented as a generated sqflite ORM; raw storage performance is measured by sqflite">Coverage is explicit: Floor is represented as a generated sqflite ORM; raw storage performance is measured by sqflite</td>
 </tr>
 <tr>
 <td data-sort-value="sqlbrite"><a href="https://pub.dev/packages/sqlbrite">sqlbrite</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="SQL">SQL</td>
 <td data-sort-value="Flutter targets supported by sqflite">Flutter targets supported by sqflite</td>
 <td data-sort-value="Adapter implemented with BriteDatabase over sqflite&#47;sqflite_common_ffi">Adapter implemented with BriteDatabase over sqflite&#47;sqflite_common_ffi</td>
 </tr>
 <tr>
 <td data-sort-value="hive"><a href="https://pub.dev/packages/hive">hive</a></td>
-<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="primary">primary</td>
+<td data-sort-value="Key-value">Key-value</td>
 <td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
 <td data-sort-value="Adapter implemented with raw Map boxes">Adapter implemented with raw Map boxes</td>
 </tr>
 <tr>
 <td data-sort-value="hive_ce"><a href="https://pub.dev/packages/hive_ce">hive_ce</a></td>
-<td data-sort-value="Key-value baseline">Key-value baseline</td>
+<td data-sort-value="primary">primary</td>
+<td data-sort-value="Key-value">Key-value</td>
 <td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
 <td data-sort-value="Runnable in this repo">Runnable in this repo</td>
 </tr>
 <tr>
 <td data-sort-value="isar"><a href="https://pub.dev/packages/isar">isar</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Android, iOS, macOS, Windows, Linux">Android, iOS, macOS, Windows, Linux</td>
 <td data-sort-value="Adapter implemented with manual Isar schema and isar_flutter_libs native runtime">Adapter implemented with manual Isar schema and isar_flutter_libs native runtime</td>
 </tr>
 <tr>
 <td data-sort-value="isar_community"><a href="https://pub.dev/packages/isar_community">isar_community</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Android, iOS, macOS, Windows, Linux">Android, iOS, macOS, Windows, Linux</td>
 <td data-sort-value="Adapter implemented with generated Isar Community schema and native transactions">Adapter implemented with generated Isar Community schema and native transactions</td>
 </tr>
 <tr>
 <td data-sort-value="isar_db"><a href="https://pub.dev/packages/isar_db">isar_db</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Flutter native targets">Flutter native targets</td>
 <td data-sort-value="Adapter implemented with manual Isar DB schema; vendored 1.0.1+1 package patch fixes its placeholder core version guard for the 1.2.6 native runtime">Adapter implemented with manual Isar DB schema; vendored 1.0.1+1 package patch fixes its placeholder core version guard for the 1.2.6 native runtime</td>
 </tr>
 <tr>
 <td data-sort-value="isar_plus"><a href="https://pub.dev/packages/isar_plus">isar_plus</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Flutter native targets">Flutter native targets</td>
 <td data-sort-value="Adapter implemented with manual Isar Plus schema and isar_plus_flutter_libs native runtime">Adapter implemented with manual Isar Plus schema and isar_plus_flutter_libs native runtime</td>
 </tr>
 <tr>
 <td data-sort-value="objectbox"><a href="https://pub.dev/packages/objectbox">objectbox</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Android, iOS, macOS, Windows, Linux">Android, iOS, macOS, Windows, Linux</td>
 <td data-sort-value="Adapter implemented with generated ObjectBox model bindings">Adapter implemented with generated ObjectBox model bindings</td>
 </tr>
 <tr>
-<td data-sort-value="objectbox_flutter_libs"><a href="https://pub.dev/packages/objectbox_flutter_libs">objectbox_flutter_libs</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Android, iOS, macOS, Windows, Linux">Android, iOS, macOS, Windows, Linux</td>
-<td data-sort-value="Adapter coverage maps runtime-library coverage to objectbox">Adapter coverage maps runtime-library coverage to objectbox</td>
-</tr>
-<tr>
 <td data-sort-value="realm"><a href="https://pub.dev/packages/realm">realm</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Flutter native targets">Flutter native targets</td>
 <td data-sort-value="Solver coverage: realm_generator is incompatible with analyzer 10&#47;build_runner 2.15 in this checkout">Solver coverage: realm_generator is incompatible with analyzer 10&#47;build_runner 2.15 in this checkout</td>
 </tr>
 <tr>
 <td data-sort-value="cbl_flutter"><a href="https://pub.dev/packages/cbl_flutter">cbl_flutter</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Flutter native targets">Flutter native targets</td>
 <td data-sort-value="Coverage is explicit: native runtime initialization is represented by adapter coverage, not a synthetic placeholder">Coverage is explicit: native runtime initialization is represented by adapter coverage, not a synthetic placeholder</td>
 </tr>
 <tr>
-<td data-sort-value="couchbase_lite"><a href="https://pub.dev/packages/couchbase_lite">couchbase_lite</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Flutter native targets">Flutter native targets</td>
-<td data-sort-value="Coverage is explicit: older Couchbase Lite line is mapped to the maintained cbl_flutter runtime">Coverage is explicit: older Couchbase Lite line is mapped to the maintained cbl_flutter runtime</td>
-</tr>
-<tr>
 <td data-sort-value="sembast"><a href="https://pub.dev/packages/sembast">sembast</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Dart VM and Flutter native targets">Dart VM and Flutter native targets</td>
 <td data-sort-value="Runnable on native targets">Runnable on native targets</td>
 </tr>
 <tr>
-<td data-sort-value="sembast_web"><a href="https://pub.dev/packages/sembast_web">sembast_web</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Web">Web</td>
-<td data-sort-value="Runnable on Web">Runnable on Web</td>
-</tr>
-<tr>
-<td data-sort-value="sembast_sqflite"><a href="https://pub.dev/packages/sembast_sqflite">sembast_sqflite</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Android, iOS, macOS">Android, iOS, macOS</td>
-<td data-sort-value="Adapter implemented for mobile&#47;Apple targets; desktop snapshots measure file-backed sembast">Adapter implemented for mobile&#47;Apple targets; desktop snapshots measure file-backed sembast</td>
-</tr>
-<tr>
 <td data-sort-value="objectdb"><a href="https://pub.dev/packages/objectdb">objectdb</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Dart IO and Web storage backends">Dart IO and Web storage backends</td>
 <td data-sort-value="Adapter implemented with file-system storage">Adapter implemented with file-system storage</td>
 </tr>
 <tr>
 <td data-sort-value="tiny_db"><a href="https://pub.dev/packages/tiny_db">tiny_db</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Dart IO and Flutter native targets">Dart IO and Flutter native targets</td>
 <td data-sort-value="Adapter implemented with JsonStorage">Adapter implemented with JsonStorage</td>
 </tr>
 <tr>
 <td data-sort-value="store_box"><a href="https://pub.dev/packages/store_box">store_box</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="primary">primary</td>
+<td data-sort-value="Key-value">Key-value</td>
 <td data-sort-value="Dart IO and Flutter native targets">Dart IO and Flutter native targets</td>
 <td data-sort-value="Adapter implemented with Map boxes">Adapter implemented with Map boxes</td>
 </tr>
 <tr>
 <td data-sort-value="work_db"><a href="https://pub.dev/packages/work_db">work_db</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Dart IO, Flutter native targets, Web">Dart IO, Flutter native targets, Web</td>
 <td data-sort-value="Adapter implemented with IO WorkDB">Adapter implemented with IO WorkDB</td>
 </tr>
 <tr>
 <td data-sort-value="flutterdb"><a href="https://pub.dev/packages/flutterdb">flutterdb</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Flutter targets supported by sqflite">Flutter targets supported by sqflite</td>
 <td data-sort-value="Adapter implemented with FlutterDB collections over sqflite&#47;sqflite_common_ffi">Adapter implemented with FlutterDB collections over sqflite&#47;sqflite_common_ffi</td>
 </tr>
 <tr>
 <td data-sort-value="fdatabase"><a href="https://pub.dev/packages/fdatabase">fdatabase</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Flutter native targets">Flutter native targets</td>
 <td data-sort-value="Adapter implemented through FDatabase key&#47;value storage with JSON-encoded records">Adapter implemented through FDatabase key&#47;value storage with JSON-encoded records</td>
 </tr>
 <tr>
 <td data-sort-value="flutter_local_db"><a href="https://pub.dev/packages/flutter_local_db">flutter_local_db</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Android, iOS, macOS, Windows, Linux, Web facade">Android, iOS, macOS, Windows, Linux, Web facade</td>
 <td data-sort-value="Excluded: package declares Windows plugin support but does not ship a Windows plugin directory, breaking Flutter desktop generation">Excluded: package declares Windows plugin support but does not ship a Windows plugin directory, breaking Flutter desktop generation</td>
 </tr>
 <tr>
 <td data-sort-value="ffastdb"><a href="https://pub.dev/packages/ffastdb">ffastdb</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Dart IO and Web storage strategies">Dart IO and Web storage strategies</td>
 <td data-sort-value="Adapter implemented with WAL storage">Adapter implemented with WAL storage</td>
 </tr>
 <tr>
 <td data-sort-value="reaxdb_dart"><a href="https://pub.dev/packages/reaxdb_dart">reaxdb_dart</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Dart IO and Flutter native targets">Dart IO and Flutter native targets</td>
 <td data-sort-value="Adapter implemented with SimpleReaxDB">Adapter implemented with SimpleReaxDB</td>
 </tr>
 <tr>
 <td data-sort-value="relax_orm"><a href="https://pub.dev/packages/relax_orm">relax_orm</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Flutter native targets">Flutter native targets</td>
 <td data-sort-value="Adapter implemented with manual RelaxORM TableSchema over Drift&#47;SQLite">Adapter implemented with manual RelaxORM TableSchema over Drift&#47;SQLite</td>
 </tr>
 <tr>
-<td data-sort-value="local_shared"><a href="https://pub.dev/packages/local_shared">local_shared</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
-<td data-sort-value="Adapter implemented with secure JSON documents as a baseline candidate">Adapter implemented with secure JSON documents as a baseline candidate</td>
-</tr>
-<tr>
 <td data-sort-value="quanta_db"><a href="https://pub.dev/packages/quanta_db">quanta_db</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Dart &#47; Flutter targets declared by package">Dart &#47; Flutter targets declared by package</td>
 <td data-sort-value="Solver coverage: package depends on build ^2.4.x and conflicts with build_runner 2.15">Solver coverage: package depends on build ^2.4.x and conflicts with build_runner 2.15</td>
 </tr>
 <tr>
 <td data-sort-value="torex_local_store"><a href="https://pub.dev/packages/torex_local_store">torex_local_store</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Flutter native targets">Flutter native targets</td>
 <td data-sort-value="Adapter implemented with Torex boxes">Adapter implemented with Torex boxes</td>
 </tr>
 <tr>
-<td data-sort-value="torexstore"><a href="https://pub.dev/packages/torexstore">torexstore</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Flutter native targets">Flutter native targets</td>
-<td data-sort-value="Coverage is explicit: older Torex line is mapped to torex_local_store">Coverage is explicit: older Torex line is mapped to torex_local_store</td>
-</tr>
-<tr>
 <td data-sort-value="entidb_flutter"><a href="https://pub.dev/packages/entidb_flutter">entidb_flutter</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Android, iOS, macOS, Windows, Linux">Android, iOS, macOS, Windows, Linux</td>
 <td data-sort-value="Adapter implemented with EntiDB collections">Adapter implemented with EntiDB collections</td>
 </tr>
 <tr>
 <td data-sort-value="rxdb"><a href="https://pub.dev/packages/rxdb">rxdb</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Flutter targets declared by package">Flutter targets declared by package</td>
-<td data-sort-value="Solver coverage: rxdb pins shared_preferences 2.0.17, conflicting with shared_preferences 2.5.5">Solver coverage: rxdb pins shared_preferences 2.0.17, conflicting with shared_preferences 2.5.5</td>
-</tr>
-<tr>
-<td data-sort-value="instantdb_flutter"><a href="https://pub.dev/packages/instantdb_flutter">instantdb_flutter</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Flutter native targets and Web">Flutter native targets and Web</td>
-<td data-sort-value="Adapter coverage explains that a fair run requires configured Instant backend state, not a local-only synthetic adapter">Adapter coverage explains that a fair run requires configured Instant backend state, not a local-only synthetic adapter</td>
-</tr>
-<tr>
-<td data-sort-value="appwrite_offline"><a href="https://pub.dev/packages/appwrite_offline">appwrite_offline</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Flutter targets">Flutter targets</td>
-<td data-sort-value="Adapter coverage explains that a fair run requires configured Appwrite backend state">Adapter coverage explains that a fair run requires configured Appwrite backend state</td>
+<td data-sort-value="Solver coverage: package dependency pins conflict with the benchmark app dependency set">Solver coverage: package dependency pins conflict with the benchmark app dependency set</td>
 </tr>
 <tr>
 <td data-sort-value="offline_db"><a href="https://pub.dev/packages/offline_db">offline_db</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Flutter targets">Flutter targets</td>
 <td data-sort-value="Adapter implemented with OfflineDB standalone node over HiveOfflineDelegate">Adapter implemented with OfflineDB standalone node over HiveOfflineDelegate</td>
 </tr>
 <tr>
-<td data-sort-value="cloud_firestore"><a href="https://pub.dev/packages/cloud_firestore">cloud_firestore</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Android, iOS, macOS, Windows, Web">Android, iOS, macOS, Windows, Web</td>
-<td data-sort-value="Adapter coverage explains that local benchmark numbers would be dominated by Firebase project, network, and cache policy">Adapter coverage explains that local benchmark numbers would be dominated by Firebase project, network, and cache policy</td>
-</tr>
-<tr>
-<td data-sort-value="firebase_database"><a href="https://pub.dev/packages/firebase_database">firebase_database</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Android, iOS, macOS, Windows, Web">Android, iOS, macOS, Windows, Web</td>
-<td data-sort-value="Adapter coverage explains that local benchmark numbers would be dominated by Firebase project, network, and cache policy">Adapter coverage explains that local benchmark numbers would be dominated by Firebase project, network, and cache policy</td>
-</tr>
-<tr>
-<td data-sort-value="serverpod"><a href="https://pub.dev/packages/serverpod">serverpod</a></td>
-<td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Flutter client plus Dart server">Flutter client plus Dart server</td>
-<td data-sort-value="Adapter coverage excludes it from embedded adapter runs because it requires a running server&#47;database stack">Adapter coverage excludes it from embedded adapter runs because it requires a running server&#47;database stack</td>
-</tr>
-<tr>
 <td data-sort-value="powersync"><a href="https://pub.dev/packages/powersync">powersync</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="SQL">SQL</td>
 <td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
 <td data-sort-value="Adapter implemented with local-only PowerSync table">Adapter implemented with local-only PowerSync table</td>
 </tr>
 <tr>
 <td data-sort-value="localstore"><a href="https://pub.dev/packages/localstore">localstore</a></td>
+<td data-sort-value="primary">primary</td>
 <td data-sort-value="NoSQL">NoSQL</td>
 <td data-sort-value="Flutter targets declared by package">Flutter targets declared by package</td>
 <td data-sort-value="Runnable in this repo">Runnable in this repo</td>
 </tr>
 <tr>
-<td data-sort-value="localstorage"><a href="https://pub.dev/packages/localstorage">localstorage</a></td>
+<td data-sort-value="sqflite_common_ffi"><a href="https://pub.dev/packages/sqflite_common_ffi">sqflite_common_ffi</a></td>
+<td data-sort-value="companion">companion</td>
+<td data-sort-value="SQL">SQL</td>
+<td data-sort-value="Windows, Linux, macOS, tests">Windows, Linux, macOS, tests</td>
+<td data-sort-value="Runnable on Windows and Linux native targets">Runnable on Windows and Linux native targets</td>
+</tr>
+<tr>
+<td data-sort-value="objectbox_flutter_libs"><a href="https://pub.dev/packages/objectbox_flutter_libs">objectbox_flutter_libs</a></td>
+<td data-sort-value="companion">companion</td>
 <td data-sort-value="NoSQL">NoSQL</td>
-<td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
-<td data-sort-value="Adapter implemented as a key-value localStorage baseline with JSON-encoded records">Adapter implemented as a key-value localStorage baseline with JSON-encoded records</td>
+<td data-sort-value="Android, iOS, macOS, Windows, Linux">Android, iOS, macOS, Windows, Linux</td>
+<td data-sort-value="Adapter coverage maps runtime-library coverage to objectbox">Adapter coverage maps runtime-library coverage to objectbox</td>
 </tr>
 <tr>
-<td data-sort-value="get_storage"><a href="https://pub.dev/packages/get_storage">get_storage</a></td>
-<td data-sort-value="Key-value baseline">Key-value baseline</td>
-<td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
-<td data-sort-value="Runnable in this repo">Runnable in this repo</td>
-</tr>
-<tr>
-<td data-sort-value="shared_preferences"><a href="https://pub.dev/packages/shared_preferences">shared_preferences</a></td>
-<td data-sort-value="Key-value baseline">Key-value baseline</td>
-<td data-sort-value="Android, iOS, macOS, Windows, Linux, Web">Android, iOS, macOS, Windows, Linux, Web</td>
-<td data-sort-value="Runnable in this repo">Runnable in this repo</td>
+<td data-sort-value="sembast_web"><a href="https://pub.dev/packages/sembast_web">sembast_web</a></td>
+<td data-sort-value="companion">companion</td>
+<td data-sort-value="NoSQL">NoSQL</td>
+<td data-sort-value="Web">Web</td>
+<td data-sort-value="Runnable on Web">Runnable on Web</td>
 </tr>
 </tbody>
 </table></div>
@@ -2273,13 +2063,14 @@ a { color: var(--accent); }
 <section class="panel">
 <h2>Measurement Contract</h2>
 <dl class="policy">
-  <div><dt>Published source</dt><dd>Benchmark JSON files under results&#47; are rendered into README.md and docs&#47;results.html after the local one-command run.</dd></div>
+  <div><dt>Published source</dt><dd>Curated primary and mandatory companion package rows are rendered from data&#47;package_matrix.json; benchmark JSON under results&#47; is published only when it declares a release measurement mode.</dd></div>
   <div><dt>Private reruns</dt><dd>Scratch and personal reruns can be saved under gitignored local_results&#47;.</dd></div>
   <div><dt>Completion rule</dt><dd>Every adapter row in a published snapshot is a completed measurement for every workload scenario emitted by that snapshot.</dd></div>
+  <div><dt>Mode rule</dt><dd>Published result snapshots must declare a release measurement mode; native desktop results use release AOT.</dd></div>
   <div><dt>Ranking rule</dt><dd>Overall score normalizes each adapter against the fastest persistent adapter inside the same environment and scenario, then averages those percentages.</dd></div>
   <div><dt>Web JS</dt><dd>Flutter Web release build in Chrome through the JavaScript renderer output.</dd></div>
   <div><dt>Web Wasm</dt><dd>Flutter Web Wasm release build in Chrome through the same browser scraper.</dd></div>
-  <div><dt>Native</dt><dd>Flutter integration_test benchmark on the selected native device, windows by default on this checkout.</dd></div>
+  <div><dt>Native</dt><dd>Windows release AOT Flutter desktop executable, launched by the benchmark script and scraped from DBENCH_RESULT_JSON stdout.</dd></div>
   <div><dt>Flutter</dt><dd>Current local Flutter SDK.</dd></div>
 </dl>
 </section>

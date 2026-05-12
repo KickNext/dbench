@@ -76,13 +76,25 @@ void main() {
     final matrixNames = packages
         .map((package) => '${package['package']}')
         .toSet();
-    final databaseNames = catalog
-        .where((entry) => entry['scope'] == 'database')
+    final curatedNames = catalog
+        .where(
+          (entry) =>
+              entry['scope'] == 'primary' || entry['scope'] == 'companion',
+        )
         .map((entry) => '${entry['package']}')
         .toSet();
 
-    expect(databaseNames.difference(matrixNames), isEmpty);
-    expect(databaseNames.difference(adapterCoverageNames()), isEmpty);
+    expect(curatedNames.difference(matrixNames), isEmpty);
+    expect(curatedNames.difference(adapterCoverageNames()), isEmpty);
+    expect(matrixNames, isNot(contains('drift_flutter')));
+    expect(matrixNames, isNot(contains('drift_sqlite_async')));
+    expect(matrixNames, isNot(contains('sqlite3_flutter_libs')));
+    expect(matrixNames, isNot(contains('couchbase_lite')));
+    expect(matrixNames, isNot(contains('torexstore')));
+    expect(matrixNames, isNot(contains('shared_preferences')));
+    expect(matrixNames, isNot(contains('get_storage')));
+    expect(matrixNames, isNot(contains('localstorage')));
+    expect(matrixNames, isNot(contains('local_shared')));
   });
 
   test('HTML report exposes sortable tables', () {
@@ -129,6 +141,32 @@ void main() {
     }
   });
 
+  test('public result snapshots declare release measurement modes', () {
+    final resultFiles =
+        Directory('results')
+            .listSync()
+            .whereType<File>()
+            .where((file) => file.path.endsWith('.json'))
+            .toList()
+          ..sort((a, b) => a.path.compareTo(b.path));
+
+    for (final file in resultFiles) {
+      final report =
+          jsonDecode(file.readAsStringSync()) as Map<String, Object?>;
+      final environment = '${report['environment']}';
+      final mode = '${report['measurementMode'] ?? ''}';
+      if (environment == 'web-js') {
+        expect(mode, 'release-web-js', reason: file.path);
+      } else if (environment == 'web-wasm') {
+        expect(mode, 'release-web-wasm', reason: file.path);
+      } else if (environment.startsWith('native-')) {
+        expect(mode, 'release-aot', reason: file.path);
+      } else {
+        expect(mode, startsWith('release-'), reason: file.path);
+      }
+    }
+  });
+
   test('HTML report has an overall ranking instead of cross-target table', () {
     final html = File('docs/results.html').readAsStringSync();
 
@@ -158,8 +196,12 @@ void main() {
     expect(script, contains('web-wasm'));
     expect(script, contains('native'));
     expect(script, contains('flutter build web --release'));
-    expect(script, contains('flutter build web --wasm --release'));
-    expect(script, contains('integration_test/benchmark_test.dart'));
+    expect(script, contains('flutter build web --wasm'));
+    expect(script, contains('--no-wasm-dry-run'));
+    expect(script, contains('flutter build windows --release'));
+    expect(script, contains('DBENCH_MEASUREMENT_MODE=release-aot'));
+    expect(script, contains('flutter_database_benchmarks.exe'));
+    expect(script, isNot(contains('integration_test/benchmark_test.dart')));
     expect(script, contains('dart run tool/update_readme.dart'));
     expect(script, contains('dart run tool/validate_results.dart'));
   });
@@ -167,19 +209,10 @@ void main() {
   test(
     'Wasm-sensitive web adapters are hidden behind conditional wrappers',
     () {
-      final getStorage = File(
-        'lib/src/adapters/get_storage_adapter.dart',
-      ).readAsStringSync();
       final localstore = File(
         'lib/src/adapters/localstore_adapter.dart',
       ).readAsStringSync();
 
-      expect(getStorage, contains("if (dart.library.io)"));
-      expect(getStorage, contains("if (dart.library.html)"));
-      expect(
-        getStorage,
-        isNot(contains("package:get_storage/get_storage.dart")),
-      );
       expect(localstore, contains("if (dart.library.io)"));
       expect(localstore, contains("if (dart.library.html)"));
       expect(localstore, isNot(contains("package:localstore/localstore.dart")));

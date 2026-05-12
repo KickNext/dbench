@@ -14,8 +14,6 @@ import 'package:isar/isar.dart' as original_isar;
 import 'package:isar_community/isar.dart' as isar;
 import 'package:isar_db/isar_db.dart' as isar_db;
 import 'package:isar_plus/isar_plus.dart' as isar_plus;
-import 'package:local_shared/local_shared.dart' as local_shared;
-import 'package:localstorage/localstorage.dart' as localstorage;
 import 'package:objectdb/objectdb.dart' as objectdb;
 import 'package:objectbox/objectbox.dart' as objectbox;
 import 'package:offline_db/offline_db.dart' as offline_db;
@@ -25,7 +23,6 @@ import 'package:offline_db/offline_db.dart' as offline_db;
 import 'package:objectdb/src/objectdb_storage_filesystem.dart'
     as objectdb_storage;
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:powersync/powersync.dart' as powersync;
 import 'package:reaxdb_dart/reaxdb_dart.dart' as reaxdb;
 import 'package:relax_orm/relax_orm.dart' as relax_orm;
@@ -120,11 +117,10 @@ List<DatabaseAdapter> extendedAdapters() {
     ),
     FDatabaseAdapter(),
     RelaxOrmAdapter(),
-    LocalSharedAdapter(),
     const UnsupportedDatabaseAdapter(
       name: 'rxdb',
       reason:
-          'rxdb pins shared_preferences 2.0.17, conflicting with shared_preferences 2.5.5.',
+          'rxdb pins an obsolete settings-storage dependency, conflicting with the benchmark app dependency set.',
     ),
     const UnsupportedDatabaseAdapter(
       name: 'instantdb_flutter',
@@ -152,7 +148,6 @@ List<DatabaseAdapter> extendedAdapters() {
       reason:
           'serverpod is an app server framework, not an embedded Flutter database adapter.',
     ),
-    LocalStorageAdapter(),
   ];
 }
 
@@ -934,99 +929,6 @@ final class FDatabaseAdapter implements DatabaseAdapter {
   String _key(int id) => 'record:$id';
 }
 
-final class LocalSharedAdapter implements DatabaseAdapter {
-  local_shared.SharedCollection? _collection;
-
-  @override
-  String get name => 'local_shared';
-
-  @override
-  Future<bool> get isSupported async => true;
-
-  @override
-  Future<void> open() async {
-    await const local_shared.LocalShared('').initialize();
-    _collection = local_shared.Shared.col(_localSharedCollectionId);
-    await _collection!.create(replace: true);
-  }
-
-  @override
-  Future<void> clear() async {
-    await _requireOpen().delete();
-    await _requireOpen().create(replace: true);
-  }
-
-  @override
-  Future<void> write(BenchmarkRecord record) async {
-    final response = await _requireOpen()
-        .doc('${record.id}')
-        .create(record.toJson().cast<String, dynamic>(), merge: true);
-    _checkLocalSharedResponse(response, 'write', record.id);
-  }
-
-  @override
-  Future<BenchmarkRecord?> read(int id) async {
-    final response = await _requireOpen().doc('$id').read();
-    if (!response.success) {
-      return null;
-    }
-    return BenchmarkRecord.fromJson(response.data! as Map);
-  }
-
-  @override
-  Future<List<BenchmarkRecord>> readByGroup(String group) async {
-    final response = await _requireOpen().read();
-    if (!response.success) {
-      return const [];
-    }
-    final values = response.data! as List;
-    return [
-      for (final value in values)
-        if (BenchmarkRecord.fromJson(value).group == group)
-          BenchmarkRecord.fromJson(value),
-    ];
-  }
-
-  @override
-  Future<void> update(BenchmarkRecord record) async {
-    final response = await _requireOpen()
-        .doc('${record.id}')
-        .update(record.toJson().cast<String, dynamic>(), force: true);
-    _checkLocalSharedResponse(response, 'update', record.id);
-  }
-
-  @override
-  Future<void> delete(int id) async {
-    final response = await _requireOpen().doc('$id').delete();
-    _checkLocalSharedResponse(response, 'delete', id);
-  }
-
-  @override
-  Future<void> close() async {
-    _collection = null;
-  }
-
-  local_shared.SharedCollection _requireOpen() {
-    final collection = _collection;
-    if (collection == null) {
-      throw StateError('LocalSharedAdapter is not open.');
-    }
-    return collection;
-  }
-
-  void _checkLocalSharedResponse(
-    local_shared.SharedResponse response,
-    String operation,
-    int id,
-  ) {
-    if (!response.success) {
-      throw StateError('local_shared $operation failed for record $id.');
-    }
-  }
-
-  static const _localSharedCollectionId = 'dbench_local_shared_records';
-}
-
 final class RelaxOrmAdapter implements DatabaseAdapter {
   relax_orm.RelaxDB? _database;
   relax_orm.Collection<BenchmarkRecord>? _collection;
@@ -1113,103 +1015,6 @@ final _relaxBenchmarkRecordSchema = relax_orm.TableSchema<BenchmarkRecord>(
   ),
   toMap: _row,
 );
-
-final class LocalStorageAdapter implements DatabaseAdapter {
-  localstorage.LocalStorage? _storage;
-
-  @override
-  String get name => 'localstorage';
-
-  @override
-  Future<bool> get isSupported async => true;
-
-  @override
-  Future<void> open() async {
-    await _seedLocalStorageFile();
-    await localstorage.initLocalStorage();
-    _storage = localstorage.localStorage;
-  }
-
-  @override
-  Future<void> clear() async {
-    _requireOpen().clear();
-  }
-
-  @override
-  Future<void> write(BenchmarkRecord record) async {
-    _requireOpen().setItem(_key(record.id), jsonEncode(record.toJson()));
-  }
-
-  @override
-  Future<BenchmarkRecord?> read(int id) async {
-    final value = _requireOpen().getItem(_key(id));
-    return value == null
-        ? null
-        : BenchmarkRecord.fromJson(jsonDecode(value) as Map);
-  }
-
-  @override
-  Future<List<BenchmarkRecord>> readByGroup(String group) async {
-    final storage = _requireOpen();
-    final records = <BenchmarkRecord>[];
-    for (var index = 0; index < storage.length; index++) {
-      final key = storage.key(index);
-      if (key == null || !key.startsWith('record:')) {
-        continue;
-      }
-      final value = storage.getItem(key);
-      if (value == null) {
-        continue;
-      }
-      final record = BenchmarkRecord.fromJson(jsonDecode(value) as Map);
-      if (record.group == group) {
-        records.add(record);
-      }
-    }
-    return records;
-  }
-
-  @override
-  Future<void> update(BenchmarkRecord record) => write(record);
-
-  @override
-  Future<void> delete(int id) async {
-    _requireOpen().removeItem(_key(id));
-  }
-
-  @override
-  Future<void> close() async {
-    _storage = null;
-  }
-
-  localstorage.LocalStorage _requireOpen() {
-    final storage = _storage;
-    if (storage == null) {
-      throw StateError('LocalStorageAdapter is not open.');
-    }
-    return storage;
-  }
-
-  String _key(int id) => 'record:$id';
-}
-
-Future<void> _seedLocalStorageFile() async {
-  if (!Platform.isAndroid &&
-      !Platform.isIOS &&
-      !Platform.isMacOS &&
-      !Platform.isWindows &&
-      !Platform.isLinux) {
-    return;
-  }
-  final directory = await path_provider.getApplicationDocumentsDirectory();
-  final file = File(
-    p.join(directory.path, 'storage-61f76cb0-842b-4318-a644-e245f50a0b5a.json'),
-  );
-  if (!await file.exists()) {
-    await file.create(recursive: true);
-    await file.writeAsString('{}');
-  }
-}
 
 final class OfflineDbAdapter implements DatabaseAdapter {
   offline_db.OfflineDB? _database;

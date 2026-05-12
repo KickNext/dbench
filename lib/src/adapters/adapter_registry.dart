@@ -2,12 +2,10 @@ import '../benchmark/database_adapter.dart';
 import '../platform/package_coverage_adapters.dart';
 import 'drift_adapter.dart';
 import 'extended_adapters.dart';
-import 'get_storage_adapter.dart';
 import 'hive_ce_adapter.dart';
 import 'localstore_adapter.dart';
 import 'memory_adapter.dart';
 import 'sembast_adapter.dart';
-import 'shared_preferences_adapter.dart';
 import 'sqlite_async_adapter.dart';
 import 'sqlite3_adapter.dart';
 import 'sqlite_adapter.dart';
@@ -15,8 +13,6 @@ import 'sqlite_adapter.dart';
 List<DatabaseAdapter> availableAdapters() {
   return [
     MemoryAdapter(),
-    SharedPreferencesAdapter(),
-    createGetStorageAdapter(),
     HiveCeAdapter(),
     createLocalstoreAdapter(),
     SembastAdapter(),
@@ -31,8 +27,6 @@ List<DatabaseAdapter> availableAdapters() {
 
 Set<String> adapterCoverageNames() {
   return const {
-    'shared_preferences',
-    'get_storage',
     'hive_ce',
     'localstore',
     'sembast',
@@ -42,11 +36,7 @@ Set<String> adapterCoverageNames() {
     'sqlite3',
     'sqlite_async',
     'drift',
-    'drift_flutter',
-    'drift_sqlite_async',
     'sqflite_sqlcipher',
-    'sembast_sqflite',
-    'sqlite3_flutter_libs',
     'hive',
     'isar',
     'isar_community',
@@ -56,7 +46,6 @@ Set<String> adapterCoverageNames() {
     'objectbox_flutter_libs',
     'realm',
     'cbl_flutter',
-    'couchbase_lite',
     'floor',
     'sqlbrite',
     'objectdb',
@@ -69,19 +58,11 @@ Set<String> adapterCoverageNames() {
     'ffastdb',
     'reaxdb_dart',
     'relax_orm',
-    'local_shared',
     'quanta_db',
     'torex_local_store',
-    'torexstore',
     'entidb_flutter',
     'rxdb',
-    'instantdb_flutter',
-    'appwrite_offline',
     'offline_db',
-    'cloud_firestore',
-    'firebase_database',
-    'serverpod',
-    'localstorage',
     'powersync',
   };
 }

@@ -15,6 +15,10 @@ final class BenchmarkRunner {
   Future<BenchmarkReport> runAll(
     List<DatabaseAdapter> adapters, {
     required String environment,
+    String measurementMode = const String.fromEnvironment(
+      'DBENCH_MEASUREMENT_MODE',
+      defaultValue: 'test',
+    ),
   }) async {
     final results = <BenchmarkResult>[];
     final supportedAdapters = <DatabaseAdapter>[];
@@ -30,6 +34,7 @@ final class BenchmarkRunner {
     }
     return BenchmarkReport(
       environment: environment,
+      measurementMode: measurementMode,
       generatedAt: DateTime.timestamp().toUtc(),
       workload: workload,
       results: results,
@@ -292,6 +297,7 @@ final class _BenchmarkSample {
 final class BenchmarkReport {
   const BenchmarkReport({
     required this.environment,
+    required this.measurementMode,
     required this.generatedAt,
     required this.workload,
     required this.results,
@@ -299,6 +305,7 @@ final class BenchmarkReport {
   });
 
   final String environment;
+  final String measurementMode;
   final DateTime generatedAt;
   final BenchmarkWorkload workload;
   final List<BenchmarkResult> results;
@@ -307,6 +314,7 @@ final class BenchmarkReport {
   Map<String, Object?> toJson() {
     return {
       'environment': environment,
+      'measurementMode': measurementMode,
       'generatedAt': generatedAt.toIso8601String(),
       'workload': {
         'records': workload.records,

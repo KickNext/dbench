@@ -69,12 +69,13 @@ String _replaceSection(String readme, String marker, String content) {
 String _packageMatrix(List<Map<String, Object?>> packages) {
   final table = StringBuffer()
     ..writeln(
-      '| Package | Latest | Family | Type | Platforms | Transactions | Benchmark status |',
+      '| Package | Scope | Latest | Family | Type | Platforms | Transactions | Benchmark status |',
     )
-    ..writeln('| --- | ---: | --- | --- | --- | --- | --- |');
+    ..writeln('| --- | --- | ---: | --- | --- | --- | --- | --- |');
   for (final package in packages) {
     table.writeln(
       '| [${package['package']}](https://pub.dev/packages/${package['package']}) '
+      '| ${package['scope'] ?? 'primary'} '
       '| ${package['latest']} '
       '| ${_family(package)} '
       '| ${package['type']} '
@@ -85,7 +86,7 @@ String _packageMatrix(List<Map<String, Object?>> packages) {
   }
   return '''
 <details>
-<summary>Adapter-covered package matrix (${packages.length} packages)</summary>
+<summary>Curated package matrix (${_primaryPackageCount(packages)} primary, ${_companionPackageCount(packages)} companion)</summary>
 
 ${table.toString().trimRight()}
 
@@ -98,11 +99,8 @@ String _family(Map<String, Object?> package) {
   if (type.contains('sqlite')) {
     return 'SQL';
   }
-  if (name == 'shared_preferences' ||
-      name == 'get_storage' ||
-      name == 'hive' ||
-      name == 'hive_ce') {
-    return 'Key-value baseline';
+  if (name == 'hive' || name == 'hive_ce' || name == 'store_box') {
+    return 'Key-value';
   }
   return 'NoSQL';
 }
@@ -133,6 +131,7 @@ String _runVisualization(
       .map((report) => '${report['environment']}')
       .toSet();
   final completedPackages = _completedPackageNames(reports, packages);
+  final primaryPackages = _primaryPackageCount(packages);
 
   final buffer = StringBuffer()
     ..writeln(
@@ -145,7 +144,8 @@ String _runVisualization(
   buffer
     ..writeln()
     ..writeln(
-      'Measured packages in committed snapshots: ${completedPackages.length} of ${packages.length}. '
+      'Measured curated packages in committed snapshots: ${completedPackages.length} of ${packages.length}. '
+      'Primary package targets in scope: $primaryPackages. '
       'The public result set only includes completed scenario measurements.',
     )
     ..writeln()
@@ -221,8 +221,8 @@ String _benchmarkResults(
       .toSet();
   final completedPackages = _completedPackageNames(reports, packages).length;
   final rows = <String>[
-    '| Environment | JSON source | Generated | Scenario rows | Measured packages |',
-    '| --- | --- | --- | ---: | ---: |',
+    '| Environment | Mode | JSON source | Generated | Scenario rows | Measured packages |',
+    '| --- | --- | --- | --- | ---: | ---: |',
   ];
   for (final report in reports) {
     final environment = '${report['environment']}';
@@ -238,6 +238,7 @@ String _benchmarkResults(
         .length;
     rows.add(
       '| $environment '
+      '| `${report['measurementMode'] ?? 'unknown'}` '
       '| [`results/$environment.json`](results/$environment.json) '
       '| `${report['generatedAt'] ?? 'unknown'}` '
       '| ${results.length} '
@@ -247,7 +248,8 @@ String _benchmarkResults(
   return '''
 The readable dashboard is [docs/results.html](docs/results.html). Raw machine-readable snapshots stay in `results/*.json` instead of being duplicated into README tables.
 
-Measured packages across committed snapshots: $completedPackages of ${packages.length}.
+Measured curated packages across committed snapshots: $completedPackages of ${packages.length}.
+Primary package targets in scope: ${_primaryPackageCount(packages)}.
 
 ${rows.join('\n')}''';
 }
@@ -284,6 +286,18 @@ Set<String> _completedPackageNames(
     }
   }
   return completed;
+}
+
+int _primaryPackageCount(List<Map<String, Object?>> packages) {
+  return packages
+      .where((package) => '${package['scope'] ?? 'primary'}' == 'primary')
+      .length;
+}
+
+int _companionPackageCount(List<Map<String, Object?>> packages) {
+  return packages
+      .where((package) => '${package['scope'] ?? 'primary'}' == 'companion')
+      .length;
 }
 
 List<
@@ -410,8 +424,9 @@ String _fastestCompletedLabel(
                 result['database'] != 'memory_baseline' &&
                 (result['opsPerSecond'] as num) > 0 &&
                 (!databaseEnginesOnly ||
-                    _resultFamily('${result['database']}', packages) !=
-                        'Key-value baseline'),
+                    _isSqlOrDocumentFamily(
+                      _resultFamily('${result['database']}', packages),
+                    )),
           )
           .toList()
         ..sort(
@@ -472,13 +487,14 @@ String _resultFamily(String database, List<Map<String, Object?>> packages) {
   if (database.contains('sqflite') || database.contains('sqlite')) {
     return 'SQL';
   }
-  if (database == 'memory_baseline' ||
-      database == 'shared_preferences' ||
-      database == 'get_storage' ||
-      database == 'hive_ce') {
-    return 'Key-value baseline';
+  if (database == 'hive' || database == 'hive_ce' || database == 'store_box') {
+    return 'Key-value';
   }
   return 'NoSQL';
+}
+
+bool _isSqlOrDocumentFamily(String family) {
+  return family == 'SQL' || family == 'NoSQL';
 }
 
 String _sharedReadLabel(Object? value) {
@@ -518,7 +534,9 @@ String _htmlReport(
     ..writeln('<dl class="meta">')
     ..writeln('<div><dt>Generated</dt><dd>${_h(generatedAt)}</dd></div>')
     ..writeln('<div><dt>Reports</dt><dd>${reports.length}</dd></div>')
-    ..writeln('<div><dt>Tracked packages</dt><dd>${packages.length}</dd></div>')
+    ..writeln(
+      '<div><dt>Primary packages</dt><dd>${_primaryPackageCount(packages)}</dd></div>',
+    )
     ..writeln(
       '<div><dt>Result rows</dt><dd>${_completedResultRows(reports)}</dd></div>',
     )
@@ -550,7 +568,7 @@ String _htmlReport(
       ..writeln('<section class="panel">')
       ..writeln('<h2>Database-engine winners</h2>')
       ..writeln(
-        '<p class="note">This view excludes key-value and settings-style baselines so database engines can be compared without `shared_preferences`, `get_storage`, or memory ceilings.</p>',
+        '<p class="note">This view focuses on SQL and document/object stores; memory is excluded from all persistent rankings.</p>',
       )
       ..writeln(_summaryCards(reports, packages, databaseEnginesOnly: true))
       ..writeln('</section>')
@@ -634,7 +652,7 @@ String _heroStats(
   <small>${_h(leaderScore)} normalized score</small>
 </article>
 <article class="stat-card">
-  <span>Measured packages</span>
+  <span>Measured curated packages</span>
   <strong>$completedPackages</strong>
   <small>present in completed snapshots</small>
 </article>
@@ -723,8 +741,9 @@ String _summaryCards(
                     result['status'] == 'completed' &&
                     result['database'] != 'memory_baseline' &&
                     (!databaseEnginesOnly ||
-                        _resultFamily('${result['database']}', packages) !=
-                            'Key-value baseline'),
+                        _isSqlOrDocumentFamily(
+                          _resultFamily('${result['database']}', packages),
+                        )),
               )
               .toList()
             ..sort(
@@ -816,6 +835,7 @@ String _scenarioFacts(
   <span>samples ${_h('${first['sampleRuns'] ?? 1}')}</span>
   <span>records ${_h('${first['records'] ?? '-'}')}</span>
   <span>payload ${_h('${first['payloadBytes'] ?? '-'}')} bytes</span>
+  <span>${_h('${report['measurementMode'] ?? 'unknown'}')}</span>
   <span>median timing</span>
   <span>${_h('${report['generatedAt'] ?? 'unknown'}')}</span>
 </div>''';
@@ -886,7 +906,7 @@ String _chartLegend() {
 <div class="legend" aria-label="Chart color legend">
   <span><i style="background:#2563eb"></i>SQL</span>
   <span><i style="background:#047857"></i>NoSQL / document / object</span>
-  <span><i style="background:#b45309"></i>Key-value baseline</span>
+  <span><i style="background:#b45309"></i>Key-value database</span>
 </div>''';
 }
 
@@ -895,7 +915,7 @@ String _packageCoverageTable(List<Map<String, Object?>> packages) {
     ..writeln('<div class="table-wrap"><table data-sort-table>')
     ..writeln('<thead><tr>')
     ..writeln(
-      '${_sortHeader('Package', 'text')}${_sortHeader('Family', 'text')}${_sortHeader('Platforms', 'text')}${_sortHeader('Status', 'text')}',
+      '${_sortHeader('Package', 'text')}${_sortHeader('Scope', 'text')}${_sortHeader('Family', 'text')}${_sortHeader('Platforms', 'text')}${_sortHeader('Status', 'text')}',
     )
     ..writeln('</tr></thead>')
     ..writeln('<tbody>');
@@ -909,6 +929,7 @@ String _packageCoverageTable(List<Map<String, Object?>> packages) {
           escape: false,
         ),
       )
+      ..writeln(_sortCell('${package['scope'] ?? 'primary'}'))
       ..writeln(_sortCell(_family(package)))
       ..writeln(_sortCell('${package['platforms']}'))
       ..writeln(_sortCell('${package['benchmarkStatus']}'))
@@ -928,6 +949,7 @@ String _resultPolicy(Map<String, Object?> specs) {
   <div><dt>Published source</dt><dd>${_h('${policy['readmeResults']}')}</dd></div>
   <div><dt>Private reruns</dt><dd>${_h('${policy['localResults']}')}</dd></div>
   <div><dt>Completion rule</dt><dd>Every adapter row in a published snapshot is a completed measurement for every workload scenario emitted by that snapshot.</dd></div>
+  <div><dt>Mode rule</dt><dd>Published result snapshots must declare a release measurement mode; native desktop results use release AOT.</dd></div>
   <div><dt>Ranking rule</dt><dd>Overall score normalizes each adapter against the fastest persistent adapter inside the same environment and scenario, then averages those percentages.</dd></div>
   <div><dt>Web JS</dt><dd>${_h('${targets['webJs']}')}</dd></div>
   <div><dt>Web Wasm</dt><dd>${_h('${targets['webWasm']}')}</dd></div>
@@ -963,7 +985,7 @@ String _sortCell(Object display, {Object? sortValue, bool escape = true}) {
 String _familyColor(String family) {
   return switch (family) {
     'SQL' => '#2563eb',
-    'Key-value baseline' => '#b45309',
+    'Key-value' => '#b45309',
     _ => '#047857',
   };
 }
