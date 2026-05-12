@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 
 String environmentLabel() {
+  const configured = String.fromEnvironment('DBENCH_ENVIRONMENT');
+  if (configured.isNotEmpty) {
+    return configured;
+  }
   if (kIsWeb) {
     return 'web';
   }

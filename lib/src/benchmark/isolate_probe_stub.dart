@@ -22,12 +22,5 @@ final class IsolateProbeResult {
 }
 
 Future<List<IsolateProbeResult>> runIsolateProbes() async {
-  return const [
-    IsolateProbeResult(
-      database: 'all',
-      status: 'skipped',
-      sharedRead: null,
-      notes: 'Flutter Web does not expose Dart VM isolates for this benchmark.',
-    ),
-  ];
+  return const [];
 }

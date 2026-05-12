@@ -55,7 +55,7 @@ void main() {
     },
   );
 
-  test('runner reports unsupported adapters as skipped results', () async {
+  test('runner omits unsupported adapters from published results', () async {
     final runner = BenchmarkRunner(
       workload: const BenchmarkWorkload(
         scenarios: [
@@ -76,9 +76,7 @@ void main() {
       ),
     ], environment: 'web');
 
-    expect(report.results.single.status, BenchmarkStatus.skipped);
-    expect(report.results.single.notes, contains('not available here'));
-    expect(report.results.single.totalOps, 0);
+    expect(report.results, isEmpty);
   });
 
   test('runner fails adapters that do not persist updates', () async {

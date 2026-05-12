@@ -76,7 +76,7 @@ List<BenchmarkScenario> defaultBenchmarkScenarios({
     BenchmarkScenario(
       name: 'batched_transaction',
       description:
-          'Balanced CRUD wrapped in adapter-native write transactions when supported.',
+          'Balanced CRUD with grouped write phases; transactional adapters use their native write transaction.',
       records: baseRecords,
       payloadBytes: basePayloadBytes,
       pointReadRounds: 1,

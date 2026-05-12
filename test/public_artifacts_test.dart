@@ -90,6 +90,99 @@ void main() {
 
     expect(html, contains('data-sort-table'));
     expect(html, contains('data-sort-key'));
+    expect(html, contains('aria-sort="'));
+    expect(html, contains('Sort by '));
+    expect(html, contains('data-sort-default'));
     expect(html, contains('function sortTable'));
   });
+
+  test('public artifacts do not publish skipped benchmark rows', () {
+    final readme = File('README.md').readAsStringSync().toLowerCase();
+    final html = File('docs/results.html').readAsStringSync().toLowerCase();
+    final resultFiles =
+        Directory('results')
+            .listSync()
+            .whereType<File>()
+            .where((file) => file.path.endsWith('.json'))
+            .toList()
+          ..sort((a, b) => a.path.compareTo(b.path));
+
+    expect(readme, isNot(contains('skipped')));
+    expect(html, isNot(contains('skipped')));
+    for (final file in resultFiles) {
+      final report =
+          jsonDecode(file.readAsStringSync()) as Map<String, Object?>;
+      final results = (report['results'] as List).cast<Map<String, Object?>>();
+      final probes =
+          (report['isolateProbes'] as List?)?.cast<Map<String, Object?>>() ??
+          const [];
+      expect(
+        results.where((result) => result['status'] == 'skipped'),
+        isEmpty,
+        reason: file.path,
+      );
+      expect(
+        probes.where((probe) => probe['status'] == 'skipped'),
+        isEmpty,
+        reason: file.path,
+      );
+    }
+  });
+
+  test('HTML report has an overall ranking instead of cross-target table', () {
+    final html = File('docs/results.html').readAsStringSync();
+
+    expect(html, contains('Overall ranking'));
+    expect(html, contains('normalized score'));
+    expect(html, isNot(contains('Cross-target Comparison')));
+  });
+
+  test('public artifacts describe local-only benchmark runs, not CI', () {
+    final readme = File('README.md').readAsStringSync();
+    final specs =
+        jsonDecode(File('data/device_specs.json').readAsStringSync())
+            as Map<String, Object?>;
+
+    expect(Directory('.github/workflows').existsSync(), isFalse);
+    expect(readme, isNot(contains('GitHub Actions')));
+    expect(readme, isNot(contains(RegExp(r'\bCI\b'))));
+    expect(readme, contains('tool/run_all_benchmarks.ps1'));
+    expect(specs.containsKey('ci'), isFalse);
+    expect(specs.containsKey('targets'), isTrue);
+  });
+
+  test('single benchmark launcher covers web JS, web Wasm, and native', () {
+    final script = File('tool/run_all_benchmarks.ps1').readAsStringSync();
+
+    expect(script, contains('web-js'));
+    expect(script, contains('web-wasm'));
+    expect(script, contains('native'));
+    expect(script, contains('flutter build web --release'));
+    expect(script, contains('flutter build web --wasm --release'));
+    expect(script, contains('integration_test/benchmark_test.dart'));
+    expect(script, contains('dart run tool/update_readme.dart'));
+    expect(script, contains('dart run tool/validate_results.dart'));
+  });
+
+  test(
+    'Wasm-sensitive web adapters are hidden behind conditional wrappers',
+    () {
+      final getStorage = File(
+        'lib/src/adapters/get_storage_adapter.dart',
+      ).readAsStringSync();
+      final localstore = File(
+        'lib/src/adapters/localstore_adapter.dart',
+      ).readAsStringSync();
+
+      expect(getStorage, contains("if (dart.library.io)"));
+      expect(getStorage, contains("if (dart.library.html)"));
+      expect(
+        getStorage,
+        isNot(contains("package:get_storage/get_storage.dart")),
+      );
+      expect(localstore, contains("if (dart.library.io)"));
+      expect(localstore, contains("if (dart.library.html)"));
+      expect(localstore, isNot(contains("package:localstore/localstore.dart")));
+    },
+  );
 }

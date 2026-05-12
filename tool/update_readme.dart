@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
 
-const _ciResultEnvironments = {'web', 'linux', 'windows'};
 const _productName = 'Flutter Database Benchmarks';
 
 void main() {
@@ -22,8 +21,8 @@ void main() {
   readme = _replaceSection(readme, 'DEVICE_SPECS', _deviceSpecs(specs));
   readme = _replaceSection(
     readme,
-    'CI_VISUALIZATION',
-    _ciVisualization(results, packages),
+    'RUN_VISUALIZATION',
+    _runVisualization(results, packages),
   );
   readme = _replaceSection(
     readme,
@@ -48,10 +47,6 @@ List<Map<String, Object?>> _loadResults(Directory directory) {
       continue;
     }
     final decoded = jsonDecode(file.readAsStringSync()) as Map<String, Object?>;
-    final environment = '${decoded['environment']}';
-    if (!_ciResultEnvironments.contains(environment)) {
-      continue;
-    }
     reports.add(decoded);
   }
   reports.sort(
@@ -114,62 +109,50 @@ String _family(Map<String, Object?> package) {
 
 String _deviceSpecs(Map<String, Object?> specs) {
   final policy = (specs['resultPolicy'] as Map).cast<String, Object?>();
-  final ci = (specs['ci'] as Map).cast<String, Object?>();
+  final targets = (specs['targets'] as Map).cast<String, Object?>();
   return '''
 | Area | Value |
 | --- | --- |
 | README results | ${policy['readmeResults']} |
 | Local results | ${policy['localResults']} |
-| Flutter | ${ci['flutter']} |
-| Web CI | ${ci['web']} |
-| Linux CI | ${ci['linux']} |
-| Windows CI | ${ci['windows']} |
-| Android | ${ci['android']} |''';
+| Flutter | ${targets['flutter']} |
+| Web JS | ${targets['webJs']} |
+| Web Wasm | ${targets['webWasm']} |
+| Native | ${targets['native']} |''';
 }
 
-String _ciVisualization(
+String _runVisualization(
   List<Map<String, Object?>> reports,
   List<Map<String, Object?>> packages,
 ) {
   if (reports.isEmpty) {
-    return 'No CI benchmark result JSON files have been committed yet.';
+    return 'No benchmark result JSON files have been generated yet.';
   }
 
   final environments = reports
       .map((report) => '${report['environment']}')
       .toSet();
   final completedPackages = _completedPackageNames(reports, packages);
-  final unmeasuredPackages =
-      packages
-          .map((package) => '${package['package']}')
-          .where((name) => !completedPackages.contains(name))
-          .toList()
-        ..sort();
 
   final buffer = StringBuffer()
     ..writeln(
-      'Open [docs/results.html](docs/results.html) for the visual dashboard with SVG charts and cross-target tables.',
+      'Open [docs/results.html](docs/results.html) for the visual dashboard with overall ranking, scenario winners, and per-target charts.',
     )
     ..writeln()
     ..writeln(
       'Committed result snapshots currently present: ${environments.map((environment) => '`$environment`').join(', ')}.',
     );
-  if (!environments.contains('linux')) {
-    buffer.writeln(
-      '`linux` is configured in GitHub Actions but no Linux JSON snapshot is committed in this checkout yet. It should appear only after a real Linux workflow run generates `results/linux.json`.',
-    );
-  }
   buffer
     ..writeln()
     ..writeln(
       'Measured packages in committed snapshots: ${completedPackages.length} of ${packages.length}. '
-      'Skipped rows are target-specific platform or scenario limits, not hidden benchmark numbers.',
+      'The public result set only includes completed scenario measurements.',
     )
     ..writeln()
-    ..writeln('### Coverage Snapshot')
+    ..writeln('### Measurement Snapshot')
     ..writeln()
     ..writeln(
-      '| Environment | Completed adapters | Skipped rows | Failed rows |',
+      '| Environment | Measured adapters | Scenario rows | Failed rows |',
     )
     ..writeln('| --- | --- | ---: | ---: |');
   for (final report in reports) {
@@ -188,31 +171,23 @@ String _ciVisualization(
     buffer.writeln(
       '| ${report['environment']} '
       '| ${completed.isEmpty ? '-' : completed.map((name) => '`$name`').join(', ')} '
-      '| ${_statusCount(results, 'skipped')} '
+      '| ${results.length} '
       '| ${_statusCount(results, 'failed')} |',
     );
   }
 
-  if (unmeasuredPackages.isNotEmpty) {
-    buffer
-      ..writeln()
-      ..writeln('### Adapter-Covered But Not Present In CI Numbers')
-      ..writeln()
-      ..writeln(unmeasuredPackages.map((name) => '`$name`').join(', '))
-      ..writeln()
-      ..writeln(
-        'Reasons are kept in raw JSON skipped rows, typically platform-only adapters such as `sqflite` on Android/iOS/macOS or Web SQLite WASM/worker setup that is intentionally not counted as a completed CI number.',
-      );
-  }
-
   buffer
     ..writeln()
-    ..writeln('### Fastest Rows')
+    ..writeln('### Overall Ranking')
+    ..writeln()
+    ..writeln(_overallRankingMarkdown(reports, packages))
+    ..writeln()
+    ..writeln('### Scenario Winners')
     ..writeln()
     ..writeln(
-      '| Environment | Scenario | Fastest SQL/document adapter | Fastest persistent adapter | Completed | Skipped | Failed |',
+      '| Environment | Scenario | Fastest SQL/document adapter | Fastest persistent adapter | Completed | Failed |',
     )
-    ..writeln('| --- | --- | --- | --- | ---: | ---: | ---: |');
+    ..writeln('| --- | --- | --- | --- | ---: | ---: |');
   for (final report in reports) {
     final results = (report['results'] as List).cast<Map<String, Object?>>();
     final scenarioNames = results.map(_scenarioName).toSet().toList()..sort();
@@ -226,7 +201,6 @@ String _ciVisualization(
         '| ${_fastestCompletedLabel(scenarioResults, packages, databaseEnginesOnly: true)} '
         '| ${_fastestCompletedLabel(scenarioResults, packages)} '
         '| ${_statusCount(scenarioResults, 'completed')} '
-        '| ${_statusCount(scenarioResults, 'skipped')} '
         '| ${_statusCount(scenarioResults, 'failed')} |',
       );
     }
@@ -285,8 +259,7 @@ String _scenarioName(Map<String, Object?> result) {
 String _statusSummary(List<Map<String, Object?>> results) {
   final completed = results.where((result) => result['status'] == 'completed');
   final failed = results.where((result) => result['status'] == 'failed');
-  final skipped = results.where((result) => result['status'] == 'skipped');
-  return '${completed.length} completed, ${failed.length} failed, ${skipped.length} skipped';
+  return '${completed.length} completed, ${failed.length} failed';
 }
 
 int _statusCount(List<Map<String, Object?>> results, String status) {
@@ -311,6 +284,117 @@ Set<String> _completedPackageNames(
     }
   }
   return completed;
+}
+
+List<
+  ({
+    String database,
+    String family,
+    int appearances,
+    double score,
+    num averageRate,
+  })
+>
+_overallRankingRows(
+  List<Map<String, Object?>> reports,
+  List<Map<String, Object?>> packages,
+) {
+  final scoreByDatabase = <String, double>{};
+  final rateByDatabase = <String, num>{};
+  final countByDatabase = <String, int>{};
+
+  for (final report in reports) {
+    final results = (report['results'] as List).cast<Map<String, Object?>>();
+    final scenarioNames = results.map(_scenarioName).toSet().toList()..sort();
+    for (final scenarioName in scenarioNames) {
+      final completed =
+          results
+              .where(
+                (result) =>
+                    _scenarioName(result) == scenarioName &&
+                    result['status'] == 'completed' &&
+                    result['database'] != 'memory_baseline' &&
+                    (result['opsPerSecond'] as num) > 0,
+              )
+              .toList()
+            ..sort(
+              (a, b) => (b['opsPerSecond'] as num).compareTo(
+                a['opsPerSecond'] as num,
+              ),
+            );
+      if (completed.isEmpty) {
+        continue;
+      }
+      final fastestRate = completed.first['opsPerSecond'] as num;
+      for (final result in completed) {
+        final database = '${result['database']}';
+        final rate = result['opsPerSecond'] as num;
+        scoreByDatabase.update(
+          database,
+          (score) => score + rate / fastestRate * 100,
+          ifAbsent: () => rate / fastestRate * 100,
+        );
+        rateByDatabase.update(
+          database,
+          (total) => total + rate,
+          ifAbsent: () => rate,
+        );
+        countByDatabase.update(
+          database,
+          (count) => count + 1,
+          ifAbsent: () => 1,
+        );
+      }
+    }
+  }
+
+  final rows =
+      <
+        ({
+          String database,
+          String family,
+          int appearances,
+          double score,
+          num averageRate,
+        })
+      >[];
+  for (final entry in scoreByDatabase.entries) {
+    final appearances = countByDatabase[entry.key] ?? 1;
+    rows.add((
+      database: entry.key,
+      family: _resultFamily(entry.key, packages),
+      appearances: appearances,
+      score: entry.value / appearances,
+      averageRate: (rateByDatabase[entry.key] ?? 0) / appearances,
+    ));
+  }
+  rows.sort((a, b) {
+    final score = b.score.compareTo(a.score);
+    return score == 0 ? b.averageRate.compareTo(a.averageRate) : score;
+  });
+  return rows;
+}
+
+String _overallRankingMarkdown(
+  List<Map<String, Object?>> reports,
+  List<Map<String, Object?>> packages,
+) {
+  final rows = _overallRankingRows(reports, packages);
+  if (rows.isEmpty) {
+    return 'No completed persistent adapter measurements are available yet.';
+  }
+  final table = StringBuffer()
+    ..writeln(
+      '| Rank | Adapter | Family | Score | Avg ops/sec | Measurements |',
+    )
+    ..writeln('| ---: | --- | --- | ---: | ---: | ---: |');
+  for (var index = 0; index < rows.length && index < 12; index += 1) {
+    final row = rows[index];
+    table.writeln(
+      '| ${index + 1} | `${row.database}` | ${row.family} | ${row.score.toStringAsFixed(1)} | ${_formatRate(row.averageRate)} | ${row.appearances} |',
+    );
+  }
+  return table.toString().trimRight();
 }
 
 String _fastestCompletedLabel(
@@ -349,6 +433,9 @@ String _isolateResults(List<Map<String, Object?>> reports) {
     final probes =
         (report['isolateProbes'] as List?)?.cast<Map<String, Object?>>() ?? [];
     for (final probe in probes) {
+      if (probe['status'] == 'skipped') {
+        continue;
+      }
       rows.add(
         '| ${report['environment']} '
         '| ${probe['database']} '
@@ -424,48 +511,51 @@ String _htmlReport(
     ..writeln('<main>')
     ..writeln('<header class="hero">')
     ..writeln('<p class="eyebrow">Dart / Flutter database benchmark</p>')
-    ..writeln('<h1>$_productName CI Results</h1>')
+    ..writeln('<h1>$_productName Results</h1>')
     ..writeln(
-      '<p class="lede">Self-contained visual report generated from committed JSON results. Persistent adapters are charted separately from the synthetic memory ceiling; chart bars use a log scale so slower adapters remain visually comparable.</p>',
+      '<p class="lede">Self-contained visual report generated from one local benchmark pass. Persistent adapters are charted separately from the synthetic memory ceiling; chart bars use a log scale so slower adapters remain visually comparable.</p>',
     )
     ..writeln('<dl class="meta">')
     ..writeln('<div><dt>Generated</dt><dd>${_h(generatedAt)}</dd></div>')
     ..writeln('<div><dt>Reports</dt><dd>${reports.length}</dd></div>')
     ..writeln('<div><dt>Tracked packages</dt><dd>${packages.length}</dd></div>')
+    ..writeln(
+      '<div><dt>Result rows</dt><dd>${_completedResultRows(reports)}</dd></div>',
+    )
     ..writeln('</dl>')
     ..writeln('</header>');
 
   if (reports.isEmpty) {
     buffer
       ..writeln('<section class="panel">')
-      ..writeln('<h2>No committed CI results yet</h2>')
-      ..writeln('<p>Run the benchmark workflow and regenerate this report.</p>')
+      ..writeln('<h2>No benchmark results yet</h2>')
+      ..writeln('<p>Run the benchmark launcher and regenerate this report.</p>')
       ..writeln('</section>');
   } else {
     buffer
-      ..writeln('<section class="panel guardrails">')
-      ..writeln('<h2>Decision Guardrails</h2>')
-      ..writeln('<ul>')
+      ..writeln('<section class="scoreboard">')
+      ..writeln(_heroStats(reports, packages))
+      ..writeln('</section>')
+      ..writeln('<section class="panel ranking-panel">')
+      ..writeln('<div class="section-head compact">')
+      ..writeln('<div>')
+      ..writeln('<h2>Overall ranking</h2>')
       ..writeln(
-        '<li>Key-value baselines are included to set a ceiling, not to recommend them as replacements for SQL, document, or object databases.</li>',
+        '<p class="note">Score averages each adapter against the fastest persistent adapter in the same environment and scenario. Memory is excluded from the ranking.</p>',
       )
-      ..writeln(
-        '<li>Rows marked skipped are explicit coverage gaps or unsupported targets, not hidden failures.</li>',
-      )
-      ..writeln(
-        '<li>Push and pull-request runs are smoke-sized; scheduled CI runs use the larger stress record count declared in the workflow.</li>',
-      )
-      ..writeln('</ul>')
+      ..writeln('</div>')
+      ..writeln('</div>')
+      ..writeln(_overallRankingPanel(reports, packages))
       ..writeln('</section>')
       ..writeln('<section class="panel">')
-      ..writeln('<h2>Fastest SQL / Document Adapters</h2>')
+      ..writeln('<h2>Database-engine winners</h2>')
       ..writeln(
         '<p class="note">This view excludes key-value and settings-style baselines so database engines can be compared without `shared_preferences`, `get_storage`, or memory ceilings.</p>',
       )
       ..writeln(_summaryCards(reports, packages, databaseEnginesOnly: true))
       ..writeln('</section>')
       ..writeln('<section class="panel">')
-      ..writeln('<h2>Fastest Persistent Adapter By Scenario</h2>')
+      ..writeln('<h2>Scenario winners</h2>')
       ..writeln(_summaryCards(reports, packages))
       ..writeln('</section>')
       ..writeln('<section class="charts">')
@@ -485,15 +575,7 @@ String _htmlReport(
         );
       }
     }
-    buffer
-      ..writeln('</section>')
-      ..writeln('<section class="panel">')
-      ..writeln('<h2>Cross-target Comparison</h2>')
-      ..writeln(
-        '<p class="note">Cells show ops/sec for completed persistent adapters. Exhaustive package coverage is kept here after the charts so the visual comparison stays readable first.</p>',
-      )
-      ..writeln(_comparisonTable(reports, packages))
-      ..writeln('</section>');
+    buffer.writeln('</section>');
   }
 
   buffer
@@ -502,7 +584,7 @@ String _htmlReport(
     ..writeln(_packageCoverageTable(packages))
     ..writeln('</section>')
     ..writeln('<section class="panel">')
-    ..writeln('<h2>Result Policy</h2>')
+    ..writeln('<h2>Measurement Contract</h2>')
     ..writeln(_resultPolicy(specs))
     ..writeln('</section>')
     ..writeln('</main>')
@@ -521,6 +603,106 @@ String _reportGeneratedAt(List<Map<String, Object?>> reports) {
   return reports
       .map((report) => '${report['generatedAt'] ?? 'unknown'}')
       .join(' / ');
+}
+
+int _completedResultRows(List<Map<String, Object?>> reports) {
+  var count = 0;
+  for (final report in reports) {
+    final results = (report['results'] as List).cast<Map<String, Object?>>();
+    count += results.where((result) => result['status'] == 'completed').length;
+  }
+  return count;
+}
+
+String _heroStats(
+  List<Map<String, Object?>> reports,
+  List<Map<String, Object?>> packages,
+) {
+  final completedPackages = _completedPackageNames(reports, packages).length;
+  final scenarios = <String>{};
+  for (final report in reports) {
+    final results = (report['results'] as List).cast<Map<String, Object?>>();
+    scenarios.addAll(results.map(_scenarioName));
+  }
+  final rows = _overallRankingRows(reports, packages);
+  final leader = rows.isEmpty ? '-' : rows.first.database;
+  final leaderScore = rows.isEmpty ? '-' : rows.first.score.toStringAsFixed(1);
+  return '''
+<article class="stat-card primary-stat">
+  <span>Overall leader</span>
+  <strong>${_h(leader)}</strong>
+  <small>${_h(leaderScore)} normalized score</small>
+</article>
+<article class="stat-card">
+  <span>Measured packages</span>
+  <strong>$completedPackages</strong>
+  <small>present in completed snapshots</small>
+</article>
+<article class="stat-card">
+  <span>Scenarios</span>
+  <strong>${scenarios.length}</strong>
+  <small>measured per available adapter</small>
+</article>
+<article class="stat-card">
+  <span>Result rows</span>
+  <strong>${_completedResultRows(reports)}</strong>
+  <small>completed measurements</small>
+</article>''';
+}
+
+String _overallRankingPanel(
+  List<Map<String, Object?>> reports,
+  List<Map<String, Object?>> packages,
+) {
+  final rows = _overallRankingRows(reports, packages);
+  if (rows.isEmpty) {
+    return '<p class="note">No completed persistent adapter measurements are available yet.</p>';
+  }
+  final topCards = rows.take(3).toList();
+  final cards = <String>[];
+  for (var index = 0; index < topCards.length; index += 1) {
+    final row = topCards[index];
+    cards.add('''
+<article class="leader-card rank-${index + 1}">
+  <div class="leader-rank">#${index + 1}</div>
+  <div>
+    <h3>${_h(row.database)}</h3>
+    <p>${_h(row.family)}</p>
+  </div>
+  <strong>${row.score.toStringAsFixed(1)}</strong>
+  <small>${_formatRate(row.averageRate)} avg ops/sec across ${row.appearances} rows</small>
+</article>''');
+  }
+
+  final table = StringBuffer()
+    ..writeln('<div class="table-wrap compact-table"><table data-sort-table>')
+    ..writeln('<thead><tr>')
+    ..writeln(
+      '${_sortHeader('Rank', 'number')}${_sortHeader('Adapter', 'text')}${_sortHeader('Family', 'text')}${_sortHeader('Score', 'number')}${_sortHeader('Average ops/sec', 'number')}${_sortHeader('Measurements', 'number')}',
+    )
+    ..writeln('</tr></thead>')
+    ..writeln('<tbody>');
+  for (var index = 0; index < rows.length; index += 1) {
+    final row = rows[index];
+    table
+      ..writeln('<tr>')
+      ..writeln(_sortCell(index + 1, sortValue: index + 1))
+      ..writeln(_sortCell(row.database))
+      ..writeln(_sortCell(row.family))
+      ..writeln(_sortCell(row.score.toStringAsFixed(1), sortValue: row.score))
+      ..writeln(
+        _sortCell(_formatRate(row.averageRate), sortValue: row.averageRate),
+      )
+      ..writeln(_sortCell(row.appearances, sortValue: row.appearances))
+      ..writeln('</tr>');
+  }
+  table
+    ..writeln('</tbody>')
+    ..writeln('</table></div>');
+
+  return '''
+<div class="leader-grid">${cards.join('\n')}</div>
+${table.toString()}''';
 }
 
 String _summaryCards(
@@ -569,73 +751,6 @@ String _summaryCards(
   return '<div class="summary-grid">${cards.join('\n')}</div>';
 }
 
-String _comparisonTable(
-  List<Map<String, Object?>> reports,
-  List<Map<String, Object?>> packages,
-) {
-  final environments =
-      reports.map((report) => '${report['environment']}').toList()..sort();
-  final rows = <({String scenario, String database})>{};
-  final rates = <String, num>{};
-  for (final report in reports) {
-    final environment = '${report['environment']}';
-    final results = (report['results'] as List).cast<Map<String, Object?>>();
-    for (final result in results) {
-      if (result['database'] == 'memory_baseline') {
-        continue;
-      }
-      final key = (
-        scenario: _scenarioName(result),
-        database: '${result['database']}',
-      );
-      rows.add(key);
-      if (result['status'] == 'completed') {
-        rates['$environment|${key.scenario}|${key.database}'] =
-            result['opsPerSecond'] as num;
-      }
-    }
-  }
-  final sortedRows = rows.toList()
-    ..sort((a, b) {
-      final scenario = a.scenario.compareTo(b.scenario);
-      return scenario == 0 ? a.database.compareTo(b.database) : scenario;
-    });
-
-  final buffer = StringBuffer()
-    ..writeln('<div class="table-wrap"><table data-sort-table>')
-    ..writeln('<thead><tr>')
-    ..writeln(
-      '${_sortHeader('Scenario', 'text')}${_sortHeader('Family', 'text')}${_sortHeader('Adapter', 'text')}',
-    );
-  for (final environment in environments) {
-    buffer.writeln(_sortHeader(environment, 'number'));
-  }
-  buffer
-    ..writeln('</tr></thead>')
-    ..writeln('<tbody>');
-  for (final row in sortedRows) {
-    buffer
-      ..writeln('<tr>')
-      ..writeln(_sortCell(row.scenario))
-      ..writeln(_sortCell(_resultFamily(row.database, packages)))
-      ..writeln(_sortCell(row.database));
-    for (final environment in environments) {
-      final rate = rates['$environment|${row.scenario}|${row.database}'];
-      buffer.writeln(
-        _sortCell(
-          rate == null ? '-' : _formatRate(rate),
-          sortValue: rate ?? -1,
-        ),
-      );
-    }
-    buffer.writeln('</tr>');
-  }
-  buffer
-    ..writeln('</tbody>')
-    ..writeln('</table></div>');
-  return buffer.toString();
-}
-
 String _scenarioChart(
   Map<String, Object?> report,
   String scenarioName,
@@ -664,8 +779,8 @@ String _scenarioChart(
             result['status'] == 'completed',
       )
       .firstOrNull;
-  final notCompleted = scenarioResults
-      .where((result) => result['status'] != 'completed')
+  final failed = scenarioResults
+      .where((result) => result['status'] == 'failed')
       .toList();
   final description = scenarioResults.isEmpty
       ? ''
@@ -684,7 +799,7 @@ String _scenarioChart(
   ${memory == null ? '' : '<p class="note">Synthetic memory ceiling: ${_formatRate(memory['opsPerSecond'] as num)} ops/sec.</p>'}
   <p class="note">Bar length uses log10(ops/sec + 1); labels show raw median-sample ops/sec.</p>
   ${_barSvg(completed, maxRate, packages)}
-  ${notCompleted.isEmpty ? '' : _statusList(notCompleted)}
+  ${failed.isEmpty ? '' : _statusList(failed)}
 </article>''';
 }
 
@@ -761,7 +876,7 @@ String _statusList(List<Map<String, Object?>> results) {
       .join('\n');
   return '''
 <details class="status-details">
-  <summary>${results.length} skipped / failed adapters</summary>
+  <summary>${results.length} failed adapters</summary>
   <ul class="status-list">$items</ul>
 </details>''';
 }
@@ -807,16 +922,17 @@ String _packageCoverageTable(List<Map<String, Object?>> packages) {
 
 String _resultPolicy(Map<String, Object?> specs) {
   final policy = (specs['resultPolicy'] as Map).cast<String, Object?>();
-  final ci = (specs['ci'] as Map).cast<String, Object?>();
+  final targets = (specs['targets'] as Map).cast<String, Object?>();
   return '''
 <dl class="policy">
-  <div><dt>README results</dt><dd>${_h('${policy['readmeResults']}')}</dd></div>
-  <div><dt>Local results</dt><dd>${_h('${policy['localResults']}')}</dd></div>
-  <div><dt>Flutter</dt><dd>${_h('${ci['flutter']}')}</dd></div>
-  <div><dt>Web CI</dt><dd>${_h('${ci['web']}')}</dd></div>
-  <div><dt>Linux CI</dt><dd>${_h('${ci['linux']}')}</dd></div>
-  <div><dt>Windows CI</dt><dd>${_h('${ci['windows']}')}</dd></div>
-  <div><dt>Android</dt><dd>${_h('${ci['android']}')}</dd></div>
+  <div><dt>Published source</dt><dd>${_h('${policy['readmeResults']}')}</dd></div>
+  <div><dt>Private reruns</dt><dd>${_h('${policy['localResults']}')}</dd></div>
+  <div><dt>Completion rule</dt><dd>Every adapter row in a published snapshot is a completed measurement for every workload scenario emitted by that snapshot.</dd></div>
+  <div><dt>Ranking rule</dt><dd>Overall score normalizes each adapter against the fastest persistent adapter inside the same environment and scenario, then averages those percentages.</dd></div>
+  <div><dt>Web JS</dt><dd>${_h('${targets['webJs']}')}</dd></div>
+  <div><dt>Web Wasm</dt><dd>${_h('${targets['webWasm']}')}</dd></div>
+  <div><dt>Native</dt><dd>${_h('${targets['native']}')}</dd></div>
+  <div><dt>Flutter</dt><dd>${_h('${targets['flutter']}')}</dd></div>
 </dl>''';
 }
 
@@ -835,7 +951,7 @@ String _formatRate(num value) {
 }
 
 String _sortHeader(String label, String type) {
-  return '<th data-sort-key="${_h(label.toLowerCase())}" data-sort-type="$type" tabindex="0">${_h(label)} <span aria-hidden="true">sort</span></th>';
+  return '<th data-sort-key="${_h(label.toLowerCase())}" data-sort-type="$type" data-sort-default="none" aria-sort="none" tabindex="0" title="Sort by ${_h(label)}">${_h(label)} <span class="sort-indicator" aria-hidden="true">-</span></th>';
 }
 
 String _sortCell(Object display, {Object? sortValue, bool escape = true}) {
@@ -859,27 +975,34 @@ String _u(String value) => Uri.encodeComponent(value);
 const _htmlStyles = '''
 :root {
   color-scheme: light;
-  --ink: #172033;
-  --muted: #5d687c;
-  --line: #d8deea;
+  --ink: #152035;
+  --muted: #647087;
+  --line: #d9e0ec;
   --panel: #ffffff;
-  --bg: #f5f7fb;
-  --track: #e9edf5;
+  --panel-soft: #f8fafc;
+  --bg: #f3f5f1;
+  --track: #e8edf3;
+  --accent: #176b5d;
+  --accent-2: #b45b38;
+  --shadow: 0 18px 48px rgba(43, 54, 76, .10);
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 16% 0%, rgba(23, 107, 93, .12), transparent 28rem),
+    radial-gradient(circle at 90% 12%, rgba(180, 91, 56, .12), transparent 24rem),
+    linear-gradient(180deg, #f8faf7 0%, var(--bg) 42%, #eef2f5 100%);
   color: var(--ink);
-  font: 14px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font: 14px/1.5 "Aptos", "Segoe UI", system-ui, sans-serif;
 }
 main {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1280px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 32px 0 56px;
+  padding: 34px 0 64px;
 }
 .hero {
-  padding: 30px 0 18px;
+  padding: 34px 0 20px;
 }
 .eyebrow {
   margin: 0 0 8px;
@@ -892,8 +1015,10 @@ main {
 h1, h2, h3, p { margin-top: 0; }
 h1 {
   margin-bottom: 10px;
-  font-size: clamp(34px, 7vw, 64px);
+  max-width: 900px;
+  font-size: 56px;
   line-height: 1;
+  text-wrap: balance;
 }
 h2 {
   margin-bottom: 18px;
@@ -907,6 +1032,7 @@ h3 {
   max-width: 760px;
   color: var(--muted);
   font-size: 17px;
+  text-wrap: pretty;
 }
 .meta, .policy {
   display: grid;
@@ -915,10 +1041,11 @@ h3 {
   margin: 22px 0 0;
 }
 .meta div, .policy div {
-  padding: 12px;
+  padding: 14px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: var(--panel);
+  background: rgba(255, 255, 255, .78);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .75) inset;
 }
 dt {
   color: var(--muted);
@@ -929,11 +1056,91 @@ dt {
 dd { margin: 3px 0 0; }
 .panel, .chart-card {
   margin-top: 18px;
-  padding: 20px;
+  padding: 22px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: var(--panel);
+  background: rgba(255, 255, 255, .88);
+  box-shadow: var(--shadow);
 }
+.scoreboard {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+  gap: 12px;
+  margin: 10px 0 18px;
+}
+.stat-card {
+  min-height: 132px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .86);
+  box-shadow: var(--shadow);
+}
+.stat-card span, .leader-card small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+.stat-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 32px;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+.stat-card small {
+  color: var(--muted);
+}
+.primary-stat {
+  background: #17342f;
+  color: #f7fbf8;
+}
+.primary-stat span, .primary-stat small { color: #bad6cf; }
+.leader-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.leader-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 14px;
+  align-items: start;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-soft);
+}
+.leader-card strong {
+  grid-column: 1 / -1;
+  font-size: 30px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.leader-card h3 { margin: 0; }
+.leader-card p {
+  margin: 2px 0 0;
+  color: var(--muted);
+}
+.leader-rank {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-weight: 800;
+}
+.rank-1 {
+  background: #fff7ed;
+  border-color: #f1c9a8;
+}
+.rank-1 .leader-rank { background: var(--accent-2); }
+.compact { margin-top: 0; }
 .charts h2 { margin: 0; }
 .summary-grid {
   display: grid;
@@ -944,7 +1151,7 @@ dd { margin: 3px 0 0; }
   padding: 14px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #fbfcff;
+  background: var(--panel-soft);
 }
 .summary-key, .summary-family, .note {
   color: var(--muted);
@@ -1067,14 +1274,24 @@ th[data-sort-key] {
   cursor: pointer;
   user-select: none;
 }
+th[data-sort-direction="asc"] .sort-indicator::before { content: "^"; }
+th[data-sort-direction="desc"] .sort-indicator::before { content: "v"; }
+th[data-sort-direction] .sort-indicator {
+  font-size: 0;
+}
+th[data-sort-direction] .sort-indicator::before {
+  font-size: 12px;
+}
 th[data-sort-key]:focus-visible {
-  outline: 2px solid #1d4ed8;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
-a { color: #1d4ed8; }
+a { color: var(--accent); }
 @media (max-width: 760px) {
   main { width: min(100% - 20px, 1180px); padding-top: 18px; }
+  h1 { font-size: 38px; }
   .panel, .chart-card { padding: 14px; }
+  .scoreboard, .leader-grid { grid-template-columns: 1fr; }
   .section-head { display: block; }
   .legend { margin-top: 10px; }
   .chart-head { display: block; }
@@ -1103,8 +1320,10 @@ document.querySelectorAll('[data-sort-table]').forEach((table) => {
       const current = header.dataset.sortDirection === 'asc' ? 'desc' : 'asc';
       table.querySelectorAll('th[data-sort-key]').forEach((cell) => {
         delete cell.dataset.sortDirection;
+        cell.setAttribute('aria-sort', 'none');
       });
       header.dataset.sortDirection = current;
+      header.setAttribute('aria-sort', current === 'asc' ? 'ascending' : 'descending');
       sortTable(table, columnIndex, header.dataset.sortType || 'text', current === 'asc' ? 1 : -1);
     });
     header.addEventListener('keydown', (event) => {

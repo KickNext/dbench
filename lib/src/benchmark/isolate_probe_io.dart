@@ -45,42 +45,6 @@ Future<List<IsolateProbeResult>> runIsolateProbes() async {
     await _sembastProbe(basePath),
     if (Platform.isWindows || Platform.isLinux)
       await _sqfliteFfiProbe(basePath),
-    if (Platform.isWindows || Platform.isLinux)
-      const IsolateProbeResult(
-        database: 'sqlite3',
-        status: 'skipped',
-        sharedRead: null,
-        notes:
-            'Runnable adapter exists, but direct sqlite3 isolate reopening is not probed yet.',
-      ),
-    const IsolateProbeResult(
-      database: 'shared_preferences',
-      status: 'skipped',
-      sharedRead: null,
-      notes: 'Plugin-backed storage is not probed from a background isolate.',
-    ),
-    const IsolateProbeResult(
-      database: 'get_storage',
-      status: 'skipped',
-      sharedRead: null,
-      notes:
-          'Flutter/widget-bound package; isolate sharing needs a dedicated adapter.',
-    ),
-    const IsolateProbeResult(
-      database: 'localstore',
-      status: 'skipped',
-      sharedRead: null,
-      notes:
-          'Runnable adapter exists, but file-backed isolate sharing is not probed yet.',
-    ),
-    if (Platform.isAndroid || Platform.isIOS || Platform.isMacOS)
-      const IsolateProbeResult(
-        database: 'sqflite',
-        status: 'skipped',
-        sharedRead: null,
-        notes:
-            'Not yet probed; sqflite method-channel access needs a background-isolate-specific adapter.',
-      ),
   ];
 }
 

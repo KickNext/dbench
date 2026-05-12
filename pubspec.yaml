@@ -45,7 +45,6 @@ dependencies:
   localstore: ^1.4.0
   sqflite: ^2.4.2+1
   sqlite3: ^3.3.1
-  sqlite3_flutter_libs: ^0.6.0+eol
   drift: ^2.33.0
   sqlite_async: ^0.14.1
   sqflite_sqlcipher: ^3.4.0
@@ -57,9 +56,25 @@ dependencies:
   work_db: ^1.3.0
   ffastdb: ^0.2.7
   reaxdb_dart: ^1.4.1
-  torex_local_store: ^0.1.6
   entidb_flutter: ^2.0.0-alpha.3
   powersync: ^2.1.0
+  isar_community: ^3.3.2
+  isar_community_flutter_libs: ^3.3.2
+  objectbox: ^5.3.1
+  objectbox_flutter_libs: ^5.3.1
+  localstorage: ^6.0.0
+  fdatabase: ^0.0.7
+  flutterdb: ^0.0.4
+  offline_db: ^0.0.1
+  local_shared: ^3.0.0
+  sqlbrite: ^2.8.0
+  relax_orm: ^0.1.4
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  isar_plus: ^1.2.6
+  isar_plus_flutter_libs: ^1.2.6
+  isar_db:
+    path: third_party/isar_db
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +90,13 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.15.0
   path_provider_platform_interface: ^2.1.2
+  isar_community_generator: ^3.3.2
+  objectbox_generator: ^5.3.1
+
+dependency_overrides:
+  analyzer: 10.0.1
+  build: 4.0.4
+  source_gen: 4.2.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

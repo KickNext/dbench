@@ -76,9 +76,39 @@ List<DatabaseAdapter> extendedAdapters() {
           'Floor is a sqflite ORM that requires generated database classes; raw SQLite performance is measured by sqflite.',
     ),
     UnsupportedDatabaseAdapter(
+      name: 'sqlbrite',
+      reason:
+          'Sqlbrite is a reactive sqflite wrapper; storage performance is measured by sqflite and sqflite_common_ffi.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'flutterdb',
+      reason:
+          'FlutterDB is a Mongo-like wrapper over sqflite; storage performance is measured by sqflite.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'drift_flutter',
+      reason:
+          'drift_flutter configures Drift for Flutter platforms; storage performance is measured by the Drift adapter.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'drift_sqlite_async',
+      reason:
+          'drift_sqlite_async bridges Drift to sqlite_async; the underlying engines are measured by Drift and sqlite_async adapters.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'sqlite3_flutter_libs',
+      reason:
+          'sqlite3_flutter_libs is an end-of-life runtime package; sqlite3 3.x is measured directly without this dependency.',
+    ),
+    UnsupportedDatabaseAdapter(
       name: 'objectbox',
       reason:
           'ObjectBox requires generated model bindings for benchmark entities.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'objectbox_flutter_libs',
+      reason:
+          'objectbox_flutter_libs ships ObjectBox runtime libraries; object database coverage is represented by objectbox.',
     ),
     UnsupportedDatabaseAdapter(
       name: 'isar',
@@ -110,9 +140,59 @@ List<DatabaseAdapter> extendedAdapters() {
           'quanta_db depends on older build tooling incompatible with this Flutter SDK setup.',
     ),
     UnsupportedDatabaseAdapter(
+      name: 'fdatabase',
+      reason:
+          'fdatabase is a small synchronous local file package with sparse API documentation; package-level coverage records why a stable CRUD contract is not verified yet.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'relax_orm',
+      reason:
+          'relax_orm requires generated ORM code; underlying storage is Drift and is measured by the Drift adapter.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'local_shared',
+      reason:
+          'local_shared is secure local JSON/preferences storage, closer to settings storage than a database engine; it is covered as a baseline candidate.',
+    ),
+    UnsupportedDatabaseAdapter(
       name: 'rxdb',
       reason:
           'rxdb pins shared_preferences 2.0.17, conflicting with the benchmark app dependency set.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'instantdb_flutter',
+      reason:
+          'instantdb_flutter is an offline-first sync client; a fair benchmark requires a configured Instant backend instead of a local-only synthetic adapter.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'appwrite_offline',
+      reason:
+          'appwrite_offline is an Appwrite sync adapter; a fair benchmark requires an Appwrite project and sync workload.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'offline_db',
+      reason:
+          'offline_db delegates local persistence to hive_ce; storage performance is measured by the hive_ce adapter.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'cloud_firestore',
+      reason:
+          'cloud_firestore is a hosted database SDK; benchmark results would include Firebase project configuration, network, and cache policy rather than only local storage.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'firebase_database',
+      reason:
+          'firebase_database is a hosted realtime database SDK; benchmark results would include Firebase project configuration, network, and cache policy rather than only local storage.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'serverpod',
+      reason:
+          'serverpod is an app server framework, not an embedded Flutter database adapter.',
+    ),
+    UnsupportedDatabaseAdapter(
+      name: 'localstorage',
+      reason:
+          'localstorage is an AsyncStorage-style key-value baseline, not a queryable database engine.',
     ),
   ];
 }

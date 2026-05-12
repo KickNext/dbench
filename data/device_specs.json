@@ -1,14 +1,13 @@
 {
   "capturedAt": "2026-05-11",
   "resultPolicy": {
-    "readmeResults": "Committed benchmark JSON files under results/ are rendered into README.md and docs/results.html; GitHub Actions regenerates Web, Linux, and Windows snapshots on CI runs.",
-    "localResults": "Personal machine and physical-device runs should be saved under gitignored local_results/."
+    "readmeResults": "Benchmark JSON files under results/ are rendered into README.md and docs/results.html after the local one-command run.",
+    "localResults": "Scratch and personal reruns can be saved under gitignored local_results/."
   },
-  "ci": {
-    "flutter": "stable channel in GitHub Actions",
-    "web": "ubuntu-latest runner, Flutter Web release build, Chrome; push/pull_request smoke runs use DBENCH_RECORDS=100, scheduled stress runs use DBENCH_RECORDS=2000, manual dispatch defaults to 10000",
-    "linux": "ubuntu-latest runner, Flutter Linux desktop integration test target; push/pull_request smoke runs use DBENCH_RECORDS=100, scheduled stress runs use DBENCH_RECORDS=2000, manual dispatch defaults to 10000",
-    "windows": "windows-latest runner, Flutter Windows desktop test target; push/pull_request smoke runs use DBENCH_RECORDS=100, scheduled stress runs use DBENCH_RECORDS=2000, manual dispatch defaults to 10000",
-    "android": "Not published in README because GitHub-hosted runners do not provide the physical device used for local measurements"
+  "targets": {
+    "flutter": "Current local Flutter SDK.",
+    "webJs": "Flutter Web release build in Chrome through the JavaScript renderer output.",
+    "webWasm": "Flutter Web Wasm release build in Chrome through the same browser scraper.",
+    "native": "Flutter integration_test benchmark on the selected native device, windows by default on this checkout."
   }
 }

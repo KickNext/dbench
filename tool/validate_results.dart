@@ -53,6 +53,9 @@ void _validateReport(
   final scenarios = ((report['workload'] as Map)['scenarios'] as List)
       .cast<Map<String, Object?>>();
   final results = (report['results'] as List).cast<Map<String, Object?>>();
+  final isolateProbes =
+      (report['isolateProbes'] as List?)?.cast<Map<String, Object?>>() ??
+      const [];
   final scenarioSampleRuns = {
     for (final scenario in scenarios)
       '${scenario['name']}': (scenario['sampleRuns'] as num?)?.toInt() ?? 1,
@@ -70,6 +73,11 @@ void _validateReport(
     if (database != 'memory_baseline' && !packageNames.contains(database)) {
       failures.add(
         '${file.path}: result database $database is not in package matrix.',
+      );
+    }
+    if (result['status'] == 'skipped') {
+      failures.add(
+        '${file.path}: $environment/$scenario/$database is skipped.',
       );
     }
     if (result['status'] == 'completed') {
@@ -92,6 +100,14 @@ void _validateReport(
           '${file.path}: $environment/$scenario/$database has non-positive elapsed sample.',
         );
       }
+    }
+  }
+
+  for (final probe in isolateProbes) {
+    if (probe['status'] == 'skipped') {
+      failures.add(
+        '${file.path}: $environment isolate probe ${probe['database']} is skipped.',
+      );
     }
   }
 

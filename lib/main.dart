@@ -195,10 +195,7 @@ final class _ScenarioResultTable extends StatelessWidget {
     final failed = results
         .where((result) => result.status == BenchmarkStatus.failed)
         .length;
-    final skipped = results
-        .where((result) => result.status == BenchmarkStatus.skipped)
-        .length;
-    return '$completed completed, $failed failed, $skipped skipped';
+    return '$completed completed, $failed failed';
   }
 }
 
@@ -220,8 +217,8 @@ final class _ResultRow extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final statusColor = switch (result.status) {
       BenchmarkStatus.completed => colorScheme.primary,
-      BenchmarkStatus.skipped => colorScheme.tertiary,
       BenchmarkStatus.failed => colorScheme.error,
+      BenchmarkStatus.skipped => colorScheme.error,
     };
 
     return DecoratedBox(

@@ -10,7 +10,33 @@
     "migrations": "Explicit schema migrator",
     "transactions": "SQLite transactions",
     "ergonomics": "Best-in-class relational API; setup is heavier than raw sqflite",
-    "benchmarkStatus": "Runnable on native CI; Web is skipped until sqlite3 WASM assets are configured"
+    "benchmarkStatus": "Runnable on native targets; Web SQLite Wasm assets are outside the current measured adapter set"
+  },
+  {
+    "package": "drift_flutter",
+    "latest": "0.3.0",
+    "published": "2026-04-10",
+    "type": "Flutter setup helper for Drift",
+    "storage": "SQLite through Drift",
+    "platforms": "Android, iOS, macOS, Windows, Linux, Web",
+    "queryModel": "Drift typed SQL through FlutterQueryExecutor",
+    "migrations": "Drift schema migrator",
+    "transactions": "SQLite transactions through Drift",
+    "ergonomics": "Convenient Flutter bootstrap package; not a separate storage engine",
+    "benchmarkStatus": "Adapter coverage maps this package to the Drift adapter because it configures Drift rather than adding a new database engine"
+  },
+  {
+    "package": "drift_sqlite_async",
+    "latest": "0.3.0",
+    "published": "2026-04-21",
+    "type": "Drift/sqlite_async bridge",
+    "storage": "SQLite through sqlite_async",
+    "platforms": "Dart and Flutter native targets",
+    "queryModel": "Drift typed SQL over sqlite_async",
+    "migrations": "Drift schema migrator",
+    "transactions": "SQLite transactions through sqlite_async",
+    "ergonomics": "Useful when Drift and sqlite_async must share the same connection",
+    "benchmarkStatus": "Adapter coverage maps this bridge to the existing Drift and sqlite_async adapters"
   },
   {
     "package": "sqflite",
@@ -23,7 +49,7 @@
     "migrations": "OpenDatabase callbacks",
     "transactions": "SQLite transactions",
     "ergonomics": "Low-level and stable; more manual than Drift/Floor",
-    "benchmarkStatus": "Runnable on Android and Apple targets; desktop CI uses sqflite_common_ffi"
+    "benchmarkStatus": "Runnable on Android and Apple targets; desktop runs use sqflite_common_ffi"
   },
   {
     "package": "sqflite_common_ffi",
@@ -36,7 +62,7 @@
     "migrations": "OpenDatabase callbacks",
     "transactions": "SQLite transactions",
     "ergonomics": "Good desktop/test seam for sqflite-style code",
-    "benchmarkStatus": "Runnable on Windows and Linux CI"
+    "benchmarkStatus": "Runnable on Windows and Linux native targets"
   },
   {
     "package": "sqflite_sqlcipher",
@@ -49,7 +75,7 @@
     "migrations": "OpenDatabase callbacks",
     "transactions": "SQLite transactions",
     "ergonomics": "Useful when encrypted SQLite is required; platform support is narrower than sqflite_common_ffi",
-    "benchmarkStatus": "Adapter implemented; skipped on desktop CI because the plugin backend is mobile/Apple oriented"
+    "benchmarkStatus": "Adapter implemented for mobile/Apple targets; desktop snapshots measure sqflite_common_ffi"
   },
   {
     "package": "sqlite3",
@@ -65,6 +91,19 @@
     "benchmarkStatus": "Runnable on native Flutter targets"
   },
   {
+    "package": "sqlite3_flutter_libs",
+    "latest": "0.6.0+eol",
+    "published": "2026-04-11",
+    "type": "Deprecated SQLite runtime package",
+    "storage": "SQLite runtime libraries",
+    "platforms": "Flutter native targets",
+    "queryModel": "No database API",
+    "migrations": "No database API",
+    "transactions": "No database API",
+    "ergonomics": "The package description says it is no longer used with sqlite3 3.x",
+    "benchmarkStatus": "Removed from dependencies; sqlite3 3.x is measured directly"
+  },
+  {
     "package": "sqlite_async",
     "latest": "0.14.1",
     "published": "2026-04-21",
@@ -75,7 +114,7 @@
     "migrations": "Manual SQL",
     "transactions": "SQLite transactions",
     "ergonomics": "Performance-focused SQLite API; needs dedicated adapter",
-    "benchmarkStatus": "Runnable on native CI; Web is skipped until sqlite3 WASM assets are configured"
+    "benchmarkStatus": "Runnable on native targets; Web SQLite Wasm assets are outside the current measured adapter set"
   },
   {
     "package": "floor",
@@ -89,6 +128,19 @@
     "transactions": "sqflite transactions through generated code",
     "ergonomics": "Comfortable DAO layer, but benchmark entities require generated classes",
     "benchmarkStatus": "Coverage is explicit: Floor is represented as a generated sqflite ORM; raw storage performance is measured by sqflite"
+  },
+  {
+    "package": "sqlbrite",
+    "latest": "2.8.0",
+    "published": "2026-01-18",
+    "type": "Reactive SQLite wrapper",
+    "storage": "SQLite through sqflite",
+    "platforms": "Flutter targets supported by sqflite",
+    "queryModel": "Reactive streams around SQL operations",
+    "migrations": "sqflite database callbacks",
+    "transactions": "sqflite transactions",
+    "ergonomics": "Adds stream semantics rather than a new storage engine",
+    "benchmarkStatus": "Adapter implemented with BriteDatabase over sqflite/sqflite_common_ffi"
   },
   {
     "package": "hive",
@@ -126,8 +178,8 @@
     "queryModel": "Generated collection schemas and fluent queries",
     "migrations": "Schema-versioned object model changes",
     "transactions": "Native Isar read/write transactions",
-    "ergonomics": "Strong object API, but benchmark schema must be generated",
-    "benchmarkStatus": "Coverage is explicit: generator-required adapter surface is documented, not replaced with a placeholder"
+    "ergonomics": "Strong object API; this benchmark uses a manual schema to avoid generator collisions",
+    "benchmarkStatus": "Adapter implemented with manual Isar schema and isar_flutter_libs native runtime"
   },
   {
     "package": "isar_community",
@@ -140,7 +192,7 @@
     "migrations": "Schema-versioned object model changes",
     "transactions": "Native Isar read/write transactions",
     "ergonomics": "Maintained Isar fork; still generator-first",
-    "benchmarkStatus": "Coverage is explicit: generator-required adapter surface is documented, not replaced with a placeholder"
+    "benchmarkStatus": "Adapter implemented with generated Isar Community schema and native transactions"
   },
   {
     "package": "isar_db",
@@ -149,11 +201,11 @@
     "type": "Object database fork",
     "storage": "Isar-derived object store",
     "platforms": "Flutter native targets",
-    "queryModel": "Generated collection schemas",
+    "queryModel": "Generated or manually declared collection schemas",
     "migrations": "Schema-versioned object model changes",
     "transactions": "Native object-store transactions",
     "ergonomics": "Isar-style API with older build tooling constraints",
-    "benchmarkStatus": "Solver coverage: package depends on build ^2.4.x and conflicts with build_runner 2.15"
+    "benchmarkStatus": "Adapter implemented with manual Isar DB schema; vendored 1.0.1+1 package patch fixes its placeholder core version guard for the 1.2.6 native runtime"
   },
   {
     "package": "isar_plus",
@@ -165,8 +217,8 @@
     "queryModel": "Generated collection schemas",
     "migrations": "Schema-versioned object model changes",
     "transactions": "Native object-store transactions",
-    "ergonomics": "Isar-style API with generated schemas",
-    "benchmarkStatus": "Coverage is explicit: generator-required adapter surface is documented, not replaced with a placeholder"
+    "ergonomics": "Isar-style API; this benchmark uses a manual generated-schema equivalent",
+    "benchmarkStatus": "Adapter implemented with manual Isar Plus schema and isar_plus_flutter_libs native runtime"
   },
   {
     "package": "objectbox",
@@ -179,7 +231,20 @@
     "migrations": "ObjectBox model metadata",
     "transactions": "Native ObjectBox transactions",
     "ergonomics": "High-performance object store; benchmark entities require generated bindings",
-    "benchmarkStatus": "Coverage is explicit: generator-required adapter surface is documented, not replaced with a placeholder"
+    "benchmarkStatus": "Adapter implemented with generated ObjectBox model bindings"
+  },
+  {
+    "package": "objectbox_flutter_libs",
+    "latest": "5.3.1",
+    "published": "2026-04-29",
+    "type": "ObjectBox Flutter runtime libraries",
+    "storage": "ObjectBox native object store",
+    "platforms": "Android, iOS, macOS, Windows, Linux",
+    "queryModel": "No standalone database API",
+    "migrations": "ObjectBox model metadata through objectbox",
+    "transactions": "Native ObjectBox transactions through objectbox",
+    "ergonomics": "Runtime companion package required by ObjectBox Flutter apps",
+    "benchmarkStatus": "Adapter coverage maps runtime-library coverage to objectbox"
   },
   {
     "package": "realm",
@@ -244,7 +309,7 @@
     "migrations": "Manual application-level migrations",
     "transactions": "Sembast transaction API",
     "ergonomics": "Keeps the Sembast API usable on Flutter Web",
-    "benchmarkStatus": "Runnable on Web CI"
+    "benchmarkStatus": "Runnable on Web"
   },
   {
     "package": "sembast_sqflite",
@@ -257,7 +322,7 @@
     "migrations": "Manual application-level migrations",
     "transactions": "Sembast transaction API over sqflite",
     "ergonomics": "Sembast API with a sqflite-backed journal",
-    "benchmarkStatus": "Adapter implemented; skipped on desktop CI because sqflite backend is mobile/Apple oriented"
+    "benchmarkStatus": "Adapter implemented for mobile/Apple targets; desktop snapshots measure file-backed sembast"
   },
   {
     "package": "objectdb",
@@ -312,6 +377,32 @@
     "benchmarkStatus": "Adapter implemented with IO WorkDB"
   },
   {
+    "package": "flutterdb",
+    "latest": "0.0.4",
+    "published": "2025-01-24",
+    "type": "Mongo-like document API over sqflite",
+    "storage": "SQLite through sqflite",
+    "platforms": "Flutter targets supported by sqflite",
+    "queryModel": "Collection-style document API",
+    "migrations": "sqflite-level migrations",
+    "transactions": "sqflite transactions through underlying database",
+    "ergonomics": "Convenient document facade over SQLite",
+    "benchmarkStatus": "Adapter implemented with FlutterDB collections over sqflite/sqflite_common_ffi"
+  },
+  {
+    "package": "fdatabase",
+    "latest": "0.0.7",
+    "published": "2024-06-16",
+    "type": "Synchronous local file database",
+    "storage": "Package-defined local files",
+    "platforms": "Flutter native targets",
+    "queryModel": "Package-defined key/data API",
+    "migrations": "Package-defined migration semantics",
+    "transactions": "No documented transaction model",
+    "ergonomics": "Small package with sparse public CRUD documentation",
+    "benchmarkStatus": "Adapter implemented through FDatabase key/value storage with JSON-encoded records"
+  },
+  {
     "package": "flutter_local_db",
     "latest": "1.5.1",
     "published": "2026-04-28",
@@ -349,6 +440,32 @@
     "transactions": "Advanced transaction API",
     "ergonomics": "Simple API for common JSON documents, advanced API for tuning",
     "benchmarkStatus": "Adapter implemented with SimpleReaxDB"
+  },
+  {
+    "package": "relax_orm",
+    "latest": "0.1.4",
+    "published": "2026-04-14",
+    "type": "Local-first ORM",
+    "storage": "SQLite through Drift",
+    "platforms": "Flutter native targets",
+    "queryModel": "Generated ORM models and streams",
+    "migrations": "Generated ORM migrations",
+    "transactions": "Drift/SQLite transactions",
+    "ergonomics": "Generator-driven local-first API",
+    "benchmarkStatus": "Adapter implemented with manual RelaxORM TableSchema over Drift/SQLite"
+  },
+  {
+    "package": "local_shared",
+    "latest": "3.0.0",
+    "published": "2026-04-13",
+    "type": "Secure JSON collections/preferences",
+    "storage": "shared_preferences plus secure storage",
+    "platforms": "Android, iOS, macOS, Windows, Linux, Web",
+    "queryModel": "JSON collections and documents",
+    "migrations": "Package migration semantics",
+    "transactions": "Batch operations, no database transaction model",
+    "ergonomics": "Useful for settings and secure small local collections",
+    "benchmarkStatus": "Adapter implemented with secure JSON documents as a baseline candidate"
   },
   {
     "package": "quanta_db",
@@ -416,6 +533,84 @@
     "benchmarkStatus": "Solver coverage: rxdb pins shared_preferences 2.0.17, conflicting with shared_preferences 2.5.5"
   },
   {
+    "package": "instantdb_flutter",
+    "latest": "0.2.6",
+    "published": "2025-09-18",
+    "type": "Offline-first realtime sync client",
+    "storage": "SQLite cache plus Instant backend sync",
+    "platforms": "Flutter native targets and Web",
+    "queryModel": "Reactive synced document queries",
+    "migrations": "Backend/schema-driven sync semantics",
+    "transactions": "Package-defined sync/write semantics",
+    "ergonomics": "Application database client rather than embedded-only storage",
+    "benchmarkStatus": "Adapter coverage explains that a fair run requires configured Instant backend state, not a local-only synthetic adapter"
+  },
+  {
+    "package": "appwrite_offline",
+    "latest": "0.0.5",
+    "published": "2024-11-25",
+    "type": "Appwrite offline data adapter",
+    "storage": "Flutter Data cache plus Appwrite backend",
+    "platforms": "Flutter targets",
+    "queryModel": "Flutter Data repository models",
+    "migrations": "Backend/model-driven sync semantics",
+    "transactions": "Package-defined sync/write semantics",
+    "ergonomics": "Appwrite-specific offline adapter",
+    "benchmarkStatus": "Adapter coverage explains that a fair run requires configured Appwrite backend state"
+  },
+  {
+    "package": "offline_db",
+    "latest": "0.0.1",
+    "published": "2026-05-09",
+    "type": "Offline data management wrapper",
+    "storage": "Hive CE local backend",
+    "platforms": "Flutter targets",
+    "queryModel": "Reactive local CRUD wrapper",
+    "migrations": "Package-defined migration semantics",
+    "transactions": "Hive CE backend semantics",
+    "ergonomics": "Small wrapper around local/offline delegates",
+    "benchmarkStatus": "Adapter implemented with OfflineDB standalone node over HiveOfflineDelegate"
+  },
+  {
+    "package": "cloud_firestore",
+    "latest": "6.4.0",
+    "published": "2026-05-08",
+    "type": "Hosted NoSQL database SDK",
+    "storage": "Firestore backend plus client cache",
+    "platforms": "Android, iOS, macOS, Windows, Web",
+    "queryModel": "Collections, documents, realtime queries",
+    "migrations": "Backend-managed schema rules/indexes",
+    "transactions": "Firestore transactions and batched writes",
+    "ergonomics": "Cloud database with offline cache on supported targets",
+    "benchmarkStatus": "Adapter coverage explains that local benchmark numbers would be dominated by Firebase project, network, and cache policy"
+  },
+  {
+    "package": "firebase_database",
+    "latest": "12.4.0",
+    "published": "2026-05-08",
+    "type": "Hosted realtime database SDK",
+    "storage": "Firebase Realtime Database backend plus client cache",
+    "platforms": "Android, iOS, macOS, Windows, Web",
+    "queryModel": "Realtime tree paths and events",
+    "migrations": "Backend rules/data-shape management",
+    "transactions": "Realtime Database transactions",
+    "ergonomics": "Cloud realtime database with offline support on clients",
+    "benchmarkStatus": "Adapter coverage explains that local benchmark numbers would be dominated by Firebase project, network, and cache policy"
+  },
+  {
+    "package": "serverpod",
+    "latest": "3.4.8",
+    "published": "2026-05-01",
+    "type": "Dart app server framework",
+    "storage": "Server-side database through generated APIs",
+    "platforms": "Flutter client plus Dart server",
+    "queryModel": "Serverpod protocol and generated endpoints",
+    "migrations": "Server-side migrations",
+    "transactions": "Server-side database transactions",
+    "ergonomics": "Backend framework, not an embedded Flutter database",
+    "benchmarkStatus": "Adapter coverage excludes it from embedded adapter runs because it requires a running server/database stack"
+  },
+  {
     "package": "powersync",
     "latest": "2.1.0",
     "published": "2026-05-08",
@@ -440,6 +635,19 @@
     "transactions": "No general transaction model",
     "ergonomics": "Firebase-like local document API",
     "benchmarkStatus": "Runnable in this repo"
+  },
+  {
+    "package": "localstorage",
+    "latest": "6.0.0",
+    "published": "2025-04-21",
+    "type": "AsyncStorage-style key-value storage",
+    "storage": "Platform local storage/files",
+    "platforms": "Android, iOS, macOS, Windows, Linux, Web",
+    "queryModel": "Key-value only",
+    "migrations": "Manual application-level migrations",
+    "transactions": "No transaction model",
+    "ergonomics": "Simple baseline for small values, not a queryable database",
+    "benchmarkStatus": "Adapter implemented as a key-value localStorage baseline with JSON-encoded records"
   },
   {
     "package": "get_storage",

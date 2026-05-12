@@ -17,8 +17,14 @@ final class BenchmarkRunner {
     required String environment,
   }) async {
     final results = <BenchmarkResult>[];
+    final supportedAdapters = <DatabaseAdapter>[];
+    for (final adapter in adapters) {
+      if (await adapter.isSupported) {
+        supportedAdapters.add(adapter);
+      }
+    }
     for (final scenario in workload.effectiveScenarios) {
-      for (final adapter in adapters) {
+      for (final adapter in supportedAdapters) {
         results.add(await _runOne(adapter, scenario));
       }
     }
@@ -41,15 +47,6 @@ final class BenchmarkRunner {
           : 'Adapter is not supported on this target.';
       return BenchmarkResult.skipped(adapter.name, scenario, reason);
     }
-    if (scenario.requiresWriteTransaction &&
-        adapter is! TransactionalDatabaseAdapter) {
-      return BenchmarkResult.skipped(
-        adapter.name,
-        scenario,
-        'Scenario requires adapter-native write transactions.',
-      );
-    }
-
     final samples = <_BenchmarkSample>[];
     try {
       for (
@@ -237,9 +234,10 @@ final class BenchmarkRunner {
     if (!scenario.requiresWriteTransaction) {
       return action();
     }
-    return (adapter as TransactionalDatabaseAdapter).runWriteTransaction(
-      action,
-    );
+    if (adapter is TransactionalDatabaseAdapter) {
+      return adapter.runWriteTransaction(action);
+    }
+    return action();
   }
 
   int _scenarioSampleRuns(BenchmarkScenario scenario) {

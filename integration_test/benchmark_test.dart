@@ -23,10 +23,21 @@ void main() {
         ) ??
         256;
 
+    final adapterFilter = const String.fromEnvironment('DBENCH_ADAPTERS')
+        .split(',')
+        .map((name) => name.trim())
+        .where((name) => name.isNotEmpty)
+        .toSet();
+    final adapters = adapterFilter.isEmpty
+        ? availableAdapters()
+        : availableAdapters()
+              .where((adapter) => adapterFilter.contains(adapter.name))
+              .toList();
+
     final report = await BenchmarkRunner(
       workload: BenchmarkWorkload(records: records, payloadBytes: payloadBytes),
       includeIsolateProbes: true,
-    ).runAll(availableAdapters(), environment: environmentLabel());
+    ).runAll(adapters, environment: environmentLabel());
 
     // CI and local scripts scrape this single-line marker.
     // ignore: avoid_print

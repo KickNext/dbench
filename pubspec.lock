@@ -10,7 +10,7 @@ packages:
     source: hosted
     version: "93.0.0"
   analyzer:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: analyzer
       sha256: de7148ed2fcec579b19f122c1800933dfa028f6d9fd38a152b04b1516cec120b
@@ -42,21 +42,13 @@ packages:
     source: hosted
     version: "2.1.2"
   build:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: build
-      sha256: a156715e7cd728130c592f30552575908aae5b100005fbc1f0fb16b3c03a3d10
+      sha256: "275bf6bb2a00a9852c28d4e0b410da1d833a734d57d39d44f94bfc895a484ec3"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.6"
-  build_cli_annotations:
-    dependency: transitive
-    description:
-      name: build_cli_annotations
-      sha256: e563c2e01de8974566a1998410d3f6f03521788160a02503b0b1f1a46c7b3d95
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
+    version: "4.0.4"
   build_config:
     dependency: transitive
     description:
@@ -169,6 +161,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.9"
+  dart_either:
+    dependency: transitive
+    description:
+      name: dart_either
+      sha256: "928895b8266ac5906eb4e2993fead563a73b17fc86eec6b40172100d56ca2507"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   dart_style:
     dependency: transitive
     description:
@@ -177,6 +177,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.7"
+  dartx:
+    dependency: transitive
+    description:
+      name: dartx
+      sha256: "8b25435617027257d43e6508b5fe061012880ddfdaa75a71d607c3de2a13d244"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   deeply:
     dependency: transitive
     description:
@@ -193,6 +201,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.33.0"
+  drift_flutter:
+    dependency: transitive
+    description:
+      name: drift_flutter
+      sha256: "887fdec622174dc7eaefd0048403e34ee07cc18626ac8a7544cc3b8a4a172166"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   entidb_dart:
     dependency: transitive
     description:
@@ -225,6 +241,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.3"
+  fdatabase:
+    dependency: "direct main"
+    description:
+      name: fdatabase
+      sha256: ce07855e2a13e91bddb831e23fd14d3b02eae08578802b450b9071f2d33af71a
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
   ffastdb:
     dependency: "direct main"
     description:
@@ -241,6 +265,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  ffi_leak_tracker:
+    dependency: transitive
+    description:
+      name: ffi_leak_tracker
+      sha256: "4093d4ef9ca06ffe2786e73bfb25e22aa92112b9bb4ec941f11e3e6b61489a97"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.2"
   file:
     dependency: transitive
     description:
@@ -257,6 +289,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  flat_buffers:
+    dependency: transitive
+    description:
+      name: flat_buffers
+      sha256: "7c1de2d6eb5f3e61e5c50040841109f509deaaf2b12ec0d57b92456d9ea50345"
+      url: "https://pub.dev"
+    source: hosted
+    version: "25.9.23"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -275,14 +315,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
-  flutter_rust_bridge:
+  flutter_secure_storage:
     dependency: transitive
     description:
-      name: flutter_rust_bridge
-      sha256: e87d6b9ee934dcd24a128ccb2bd91905d2d5fe5c06245d6a8f5477d4907a437a
+      name: flutter_secure_storage
+      sha256: "6848263f9744072d0977347c383fb8b57d9780319a6bf5238b5a2866a029de62"
       url: "https://pub.dev"
     source: hosted
-    version: "2.12.0"
+    version: "10.2.0"
+  flutter_secure_storage_darwin:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_darwin
+      sha256: "67cd1ff671add31dc13e45194398187a04bb63804b37fa47866afae296d73fcb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
+  flutter_secure_storage_linux:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_linux
+      sha256: "2b5c76dce569ab752d55a1cee6a2242bcc11fdba927078fb88c503f150767cda"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
+  flutter_secure_storage_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_platform_interface
+      sha256: "8ceea1223bee3c6ac1a22dabd8feefc550e4729b3675de4b5900f55afcb435d6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
+  flutter_secure_storage_web:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_web
+      sha256: "073a62b3aeb866ab4ce795f960413948e51e5a42a9b0c8333b6daf5bb3208a1c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
+  flutter_secure_storage_windows:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_windows
+      sha256: "0191ba6ae4fca37144d7231a8df5cbdb450f2a858d90a0b60b8ded0af9f40ce7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -293,6 +373,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutterdb:
+    dependency: "direct main"
+    description:
+      name: flutterdb
+      sha256: "4b21d73961fe9730907eca9a3fd324ec01431365895cfa3466d4961fc7775452"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   fuchsia_remote_debug_protocol:
     dependency: transitive
     description: flutter
@@ -346,6 +434,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.19.3"
+  hive_ce_flutter:
+    dependency: transitive
+    description:
+      name: hive_ce_flutter
+      sha256: "2677e95a333ff15af43ccd06af7eb7abbf1a4f154ea071997f3de4346cae913a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.4"
   hooks:
     dependency: transitive
     description:
@@ -399,6 +495,69 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  isar:
+    dependency: "direct main"
+    description:
+      name: isar
+      sha256: "99165dadb2cf2329d3140198363a7e7bff9bbd441871898a87e26914d25cf1ea"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0+1"
+  isar_community:
+    dependency: "direct main"
+    description:
+      name: isar_community
+      sha256: "683fd093956eac3a660776afb70d65d50a3391b3587b40b89e3d12586b8cc47f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.2"
+  isar_community_flutter_libs:
+    dependency: "direct main"
+    description:
+      name: isar_community_flutter_libs
+      sha256: c44340fa38c81ef16d924202d443bbe799cde4826be9a31a9dc92ee612e1966f
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.2"
+  isar_community_generator:
+    dependency: "direct dev"
+    description:
+      name: isar_community_generator
+      sha256: fd5a2a5df2aac2fccba82425005bf47fd2a48f34190536d0c9fd732dc7303fb3
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.2"
+  isar_db:
+    dependency: "direct main"
+    description:
+      path: "third_party/isar_db"
+      relative: true
+    source: path
+    version: "1.0.1+1"
+  isar_flutter_libs:
+    dependency: "direct main"
+    description:
+      name: isar_flutter_libs
+      sha256: bc6768cc4b9c61aabff77152e7f33b4b17d2fc93134f7af1c3dd51500fe8d5e8
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0+1"
+  isar_plus:
+    dependency: "direct main"
+    description:
+      name: isar_plus
+      sha256: ff5fff21fbe3a5f9307cc47af087f890273c288ad6f75992e1582fa85e7b5456
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.6"
+  isar_plus_flutter_libs:
+    dependency: "direct main"
+    description:
+      name: isar_plus_flutter_libs
+      sha256: "232baeaa9b28da4ecc8277348fecb3563e77b508a2c4e3803cb467317cd9c669"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.6"
   isolate_channel:
     dependency: transitive
     description:
@@ -423,6 +582,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  js:
+    dependency: transitive
+    description:
+      name: js
+      sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.7"
   json_annotation:
     dependency: transitive
     description:
@@ -463,6 +630,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  local_shared:
+    dependency: "direct main"
+    description:
+      name: local_shared
+      sha256: ae124f89121538d3c86f44ebd7492ae9f0d790b8af62688b02b49725acdeee3b
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
+  localstorage:
+    dependency: "direct main"
+    description:
+      name: localstorage
+      sha256: e037e1db61f846e007206ef27f37d1d0cf53f9e25db5de983034803dd3356734
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
   localstore:
     dependency: "direct main"
     description:
@@ -471,6 +654,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  logger:
+    dependency: transitive
+    description:
+      name: logger
+      sha256: "25aee487596a6257655a1e091ec2ae66bc30e7af663592cc3a27e6591e05035c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.0"
   logging:
     dependency: transitive
     description:
@@ -527,6 +718,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.17.6"
+  objectbox:
+    dependency: "direct main"
+    description:
+      name: objectbox
+      sha256: "83d58e0ab5c4180a2f67086c449a4f2d1475932b31819271923dfc82a76f73c6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.1"
+  objectbox_flutter_libs:
+    dependency: "direct main"
+    description:
+      name: objectbox_flutter_libs
+      sha256: fd4e8ed03e2b2bfeb8aa965435d7c5523ec7e962f1ffecf6e7da6c1f4d170419
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.1"
+  objectbox_generator:
+    dependency: "direct dev"
+    description:
+      name: objectbox_generator
+      sha256: daa95f21c7140c619ffc1abee2465541d4f0317b8c3bbf2141be1a9e5c507a1d
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.1"
   objectdb:
     dependency: "direct main"
     description:
@@ -551,6 +766,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.3.0"
+  offline_db:
+    dependency: "direct main"
+    description:
+      name: offline_db
+      sha256: f2faba894707a9cfc208d507e1c970f0b87887176e4d7b1ce98f73f33c2a6229
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   package_config:
     dependency: transitive
     description:
@@ -703,6 +926,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.0"
+  relax_orm:
+    dependency: "direct main"
+    description:
+      name: relax_orm
+      sha256: "979bc5759dc0ecb5e738fb9a2e35dc3ae65598903df74068e245fdc3357328a8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.4"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      sha256: "5c3004a4a8dbb94bd4bf5412a4def4acdaa12e12f269737a5751369e12d1a962"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.28.0"
+  rxdart_ext:
+    dependency: transitive
+    description:
+      name: rxdart_ext
+      sha256: "95df7e8b13140e2c3fdb3b943569a51f18090e82aaaf6ca6e8e6437e434a6fb0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   sembast:
     dependency: "direct main"
     description:
@@ -804,6 +1051,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  source_gen:
+    dependency: "direct overridden"
+    description:
+      name: source_gen
+      sha256: ec37cc0e6694374cbef59ed79685572c870a54ede6fa30a3e420feb3adffea02
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.3"
   source_span:
     dependency: transitive
     description:
@@ -868,6 +1123,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.0"
+  sqlbrite:
+    dependency: "direct main"
+    description:
+      name: sqlbrite
+      sha256: "4050a4ee4ece48cf9174028a356cbd44347e0305befd8f9bb26965ebb56f887f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.8.0"
   sqlcipher_flutter_libs:
     dependency: transitive
     description:
@@ -893,7 +1156,7 @@ packages:
     source: hosted
     version: "0.2.4"
   sqlite3_flutter_libs:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: sqlite3_flutter_libs
       sha256: "3ed7553eee7bb368f8950f58ba29f634e06e813c029aff6a0d60862b96de8454"
@@ -988,6 +1251,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.10"
+  time:
+    dependency: transitive
+    description:
+      name: time
+      sha256: "46187cf30bffdab28c56be9a63861b36e4ab7347bf403297595d6a97e10c789f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.6"
   tiny_db:
     dependency: "direct main"
     description:
@@ -996,14 +1267,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.2"
-  torex_local_store:
-    dependency: "direct main"
-    description:
-      name: torex_local_store
-      sha256: e36166974c4373ba29a21b0355213e0d7586fe1a16c5cba5f57b396776b03d32
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.6"
   typed_data:
     dependency: transitive
     description:
@@ -1076,6 +1339,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  win32:
+    dependency: transitive
+    description:
+      name: win32
+      sha256: a1fc9eb9248baa05dfc12ed5b66e377b3e23f095eec078e0371622b9033810d9
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.0"
   work_db:
     dependency: "direct main"
     description:
@@ -1092,6 +1363,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  xxh3:
+    dependency: transitive
+    description:
+      name: xxh3
+      sha256: "399a0438f5d426785723c99da6b16e136f4953fb1e9db0bf270bd41dd4619916"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   yaml:
     dependency: transitive
     description:
